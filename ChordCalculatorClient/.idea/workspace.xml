@@ -2,22 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="73e9d68d-5963-4583-a85f-e53e76e29acc" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../ChordCalculator/src/main/java/com/example/ChordCalculator/ChordieController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ChordCalculator/src/main/java/com/example/ChordCalculator/ChordieController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChordCalculator/src/main/java/com/example/ChordCalculator/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ChordCalculator/src/main/java/com/example/ChordCalculator/MainController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChordCalculator/src/main/java/com/example/ChordCalculator/Model/Catch.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ChordCalculator/src/main/java/com/example/ChordCalculator/Model/Catch.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChordCalculator/src/main/java/com/example/ChordCalculator/Model/Chord/Chord.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ChordCalculator/src/main/java/com/example/ChordCalculator/Model/Chord/Chord.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChordCalculator/src/main/java/com/example/ChordCalculator/Model/Instrumental.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ChordCalculator/src/main/java/com/example/ChordCalculator/Model/Instrumental.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChordCalculator/src/main/java/com/example/ChordCalculator/Model/MString.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ChordCalculator/src/main/java/com/example/ChordCalculator/Model/MString.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChordCalculator/src/main/java/com/example/ChordCalculator/Model/Repositories/InstrumentalRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ChordCalculator/src/main/java/com/example/ChordCalculator/Model/Repositories/InstrumentalRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChordCalculator/src/main/java/com/example/ChordCalculator/Model/Repositories/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ChordCalculator/src/main/java/com/example/ChordCalculator/Model/Repositories/UserRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChordCalculator/src/main/java/com/example/ChordCalculator/Model/Rule/FirstSoundIsRootRule.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ChordCalculator/src/main/java/com/example/ChordCalculator/Model/Rule/FirstSoundIsRootRule.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChordCalculator/src/main/java/com/example/ChordCalculator/Model/Rule/MaxBundDifRule.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ChordCalculator/src/main/java/com/example/ChordCalculator/Model/Rule/MaxBundDifRule.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChordCalculator/src/main/java/com/example/ChordCalculator/Model/Rule/MinStringsRule.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ChordCalculator/src/main/java/com/example/ChordCalculator/Model/Rule/MinStringsRule.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChordCalculator/src/main/java/com/example/ChordCalculator/Model/Rule/NeighborStringDifSoundRule.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ChordCalculator/src/main/java/com/example/ChordCalculator/Model/Rule/NeighborStringDifSoundRule.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChordCalculator/src/main/java/com/example/ChordCalculator/Model/Rule/Rule.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ChordCalculator/src/main/java/com/example/ChordCalculator/Model/Rule/Rule.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChordCalculator/src/main/java/com/example/ChordCalculator/Model/Rule/StringOrderIsConstantRule.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ChordCalculator/src/main/java/com/example/ChordCalculator/Model/Rule/StringOrderIsConstantRule.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ChordCalculator/src/main/java/com/example/ChordCalculator/Model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ChordCalculator/src/main/java/com/example/ChordCalculator/Model/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ChordChooserPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/ChordChooserPage.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -67,8 +52,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ChordChooserPage.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="29">
-              <caret line="84" column="58" selection-start-line="84" selection-start-column="58" selection-end-line="84" selection-end-column="58" />
+            <state relative-caret-position="235">
+              <caret line="100" column="42" selection-start-line="100" selection-start-column="42" selection-end-line="100" selection-end-column="42" />
             </state>
           </provider>
         </entry>
@@ -291,12 +276,12 @@
       <workItem from="1565853036864" duration="2120000" />
       <workItem from="1565962504504" duration="3314000" />
       <workItem from="1566138231991" duration="1302000" />
-      <workItem from="1566146801871" duration="1230000" />
+      <workItem from="1566146801871" duration="1297000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="175376000" />
+    <option name="totallyTimeSpent" value="175443000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="54" y="-8" width="1320" height="784" extended-state="6" />
@@ -481,8 +466,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ChordChooserPage.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="29">
-          <caret line="84" column="58" selection-start-line="84" selection-start-column="58" selection-end-line="84" selection-end-column="58" />
+        <state relative-caret-position="235">
+          <caret line="100" column="42" selection-start-line="100" selection-start-column="42" selection-end-line="100" selection-end-column="42" />
         </state>
       </provider>
     </entry>
