@@ -7,20 +7,20 @@ import java.util.List;
 
 public class Catch {
     private Chord chord;
-    private Instrumental instrumental;
+    private Instrumental instrument;
     private List<StringCatch> stringCatches;   //.size()=instumentals strings
     private int difficulty; //1-5
     private CatchPerfection perfection;
 
-    public Catch(Chord chord, Instrumental instrumental, List<StringCatch> stringCatches, int difficulty) {
+    public Catch(Chord chord, Instrumental instrument, List<StringCatch> stringCatches, int difficulty) {
         this.chord = chord;
-        this.instrumental = instrumental;
+        this.instrument = instrument;
         this.stringCatches = stringCatches;
         this.difficulty = difficulty;
     }
     public int getBundDif(){
         int maxBund = 0;
-        int minBund = instrumental.getBundNumber();
+        int minBund = instrument.getBundNumber();
         for(StringCatch sc : stringCatches){
             if(sc.getBund()>maxBund){
                 maxBund = sc.getBund();
@@ -42,12 +42,12 @@ public class Catch {
         this.chord = chord;
     }
 
-    public Instrumental getInstrumental() {
-        return instrumental;
+    public Instrumental getInstrument() {
+        return instrument;
     }
 
-    public void setInstrumental(Instrumental instrumental) {
-        this.instrumental = instrumental;
+    public void setInstrument(Instrumental instrument) {
+        this.instrument = instrument;
     }
 
     public List<StringCatch> getStringCatches() {

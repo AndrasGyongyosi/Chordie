@@ -1,6 +1,5 @@
 package com.example.ChordCalculator.Model.Rule;
 
-import com.example.ChordCalculator.Model.Catch;
 import com.example.ChordCalculator.Model.Instrumental;
 import com.example.ChordCalculator.Model.Sound;
 import com.example.ChordCalculator.Model.StringCatch;
@@ -14,8 +13,8 @@ public class NeighborStringDifSoundRule extends Rule {
     public NeighborStringDifSoundRule(){
 
     }
-    public NeighborStringDifSoundRule(Instrumental instrumental) {
-        this.instrumental = instrumental;
+    public NeighborStringDifSoundRule(Instrumental instrument) {
+        this.instrument = instrument;
     }
 
     @Override

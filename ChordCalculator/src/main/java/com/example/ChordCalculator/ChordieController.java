@@ -205,14 +205,13 @@ public class ChordieController {
         return result;
     }
 
-    @RequestMapping(path="/catch/{instrumentalName}/{baseSoundString}/{baseTypeString}/{chordTypeString}")
-    public HashMap<String, Object> getChordCatches(@PathVariable String instrumentalName, @PathVariable String baseSoundString, @PathVariable String baseTypeString, @PathVariable String chordTypeString) {
+    @RequestMapping(path="/catch/{instrumentName}/{baseSoundString}/{baseTypeString}/{chordTypeString}")
+    public HashMap<String, Object> getChordCatches(@PathVariable String instrumentName, @PathVariable String baseSoundString, @PathVariable String baseTypeString, @PathVariable String chordTypeString) {
         HashMap<String, Object> result = new HashMap();
         //TODO: encode URI
-        Instrumental instrumental = instrumentalRepository.findByName(instrumentalName.replace("_"," "));
+        Instrumental instrument = instrumentalRepository.findByName(instrumentName.replace("_"," "));
         Chord chord = getChord(baseSoundString,baseTypeString,chordTypeString);
-        //System.out.println(chord.getSounds());
-        List<Catch> catches = chord.getCatches(instrumental);
+        List<Catch> catches = chord.getCatches(instrument);
 
         List<HashMap> catchList = new ArrayList();
         int bundDif = 0;
@@ -251,13 +250,13 @@ public class ChordieController {
     public List<HashMap<String, String>> getInstrumentalsByUser(@PathVariable String userToken){
         List result = new ArrayList();
         User user = userRepository.findByUserToken(userToken);
-        List<Instrumental> publicInstrumentals = instrumentalRepository.findAllByPublc(true);
+        List<Instrumental> publicInstruments = instrumentalRepository.findAllByPublc(true);
         if (user!=null)
-            publicInstrumentals.addAll(user.getInstrumentals());
-        for(Instrumental instrumental : publicInstrumentals){
+            publicInstruments.addAll(user.getInstrumentals());
+        for(Instrumental instrument : publicInstruments){
             HashMap<String,String> subResult = new HashMap<String,String>();
-            subResult.put("name",instrumental.getName());
-            subResult.put("token",instrumental.getInstrumentalToken());
+            subResult.put("name", instrument.getName());
+            subResult.put("token", instrument.getInstrumentToken());
             result.add(subResult);
         }
         return result;
@@ -267,9 +266,9 @@ public class ChordieController {
         Instrumental newInstr = new Instrumental();
         //System.out.println((String) params.get("user"));
         User owner = userRepository.findByUserToken((String) params.get("user"));
-        List<Instrumental> ownerInstrumentals = owner.getInstrumentals();
-        ownerInstrumentals.add(newInstr);
-        owner.setInstrumentals(ownerInstrumentals);
+        List<Instrumental> ownerInstruments = owner.getInstrumentals();
+        ownerInstruments.add(newInstr);
+        owner.setInstrumentals(ownerInstruments);
 
         newInstr.setUsers(new ArrayList<User>(){{add(owner);}});
 
@@ -309,9 +308,9 @@ public class ChordieController {
     }
     @RequestMapping(path="/strings/{instrumentalName}")
     public List<String> getStrings(@PathVariable String instrumentalName){
-        Instrumental instrumental = instrumentalRepository.findByName(instrumentalName.replace("_"," "));
+        Instrumental instrument = instrumentalRepository.findByName(instrumentalName.replace("_"," "));
         List<String> result = new ArrayList();
-        for(MString mString : instrumental.getMStrings()){
+        for(MString mString : instrument.getMStrings()){
             result.add(mString.getName());
         }
         return result;

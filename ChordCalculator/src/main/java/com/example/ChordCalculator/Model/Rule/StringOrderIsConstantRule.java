@@ -1,6 +1,5 @@
 package com.example.ChordCalculator.Model.Rule;
 
-import com.example.ChordCalculator.Model.Catch;
 import com.example.ChordCalculator.Model.Instrumental;
 import com.example.ChordCalculator.Model.MString;
 import com.example.ChordCalculator.Model.StringCatch;
@@ -11,7 +10,7 @@ import java.util.List;
 @Entity
 public class StringOrderIsConstantRule extends Rule {
     public StringOrderIsConstantRule(Instrumental inst, int value) {
-        instrumental = inst;
+        instrument = inst;
         this.value = value;
     }
 
@@ -21,7 +20,7 @@ public class StringOrderIsConstantRule extends Rule {
     @Override
     public boolean isValid(List<StringCatch> stringCatchList) {
         if (value!=0){
-            List<MString> mStrings = instrumental.getMStrings();
+            List<MString> mStrings = instrument.getMStrings();
             for(int i=0; i< stringCatchList.size()-1;i++){
                 //System.out.println("prev: "+mStrings.get(i).getName());
                 double actualStringFrequency = mStrings.get(i).getFrequency();

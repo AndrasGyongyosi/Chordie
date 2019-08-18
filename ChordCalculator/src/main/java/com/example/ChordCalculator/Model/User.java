@@ -1,6 +1,5 @@
 package com.example.ChordCalculator.Model;
 
-import com.example.ChordCalculator.Helper.RandomToken;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;

@@ -28,24 +28,24 @@ public class MString {
     private int id;
 
     @ManyToOne
-    private Instrumental instrumental;
+    private Instrumental instrument;
 
     public MString(){
         super();
     }
-    public MString(Sound s, int o, Instrumental instrumental, int order) throws InaudibleVoiceException{
-        this(s,o,instrumental);
+    public MString(Sound s, int o, Instrumental instrument, int order) throws InaudibleVoiceException{
+        this(s,o, instrument);
         this.orderNum=order;
     }
-    public MString(Sound s, int o, Instrumental instrumental)throws InaudibleVoiceException{
-        this.instrumental = instrumental;
+    public MString(Sound s, int o, Instrumental instrument)throws InaudibleVoiceException{
+        this.instrument = instrument;
         if (Math.abs(o)<4){
             octave = o;
         }
         else{
             throw new InaudibleVoiceException("Too high or too short voice, human ear cannot hear it.");
         }
-        this.orderNum = instrumental.getMStrings().size();
+        this.orderNum = instrument.getMStrings().size();
         sound = s;
     }
     public ArrayList<Integer> getBundNumberBySound(Sound searchedSound){
@@ -53,7 +53,7 @@ public class MString {
         int actualBund = (searchedSound.ordinal()-sound.ordinal());
         if (actualBund<0) actualBund+=12;
 
-        while (actualBund<instrumental.getBundNumber()){
+        while (actualBund< instrument.getBundNumber()){
             result.add(actualBund);
             actualBund+=12;
         }
@@ -87,12 +87,12 @@ public class MString {
         this.octave = octave;
     }
 
-    public Instrumental getInstrumental() {
-        return instrumental;
+    public Instrumental getInstrument() {
+        return instrument;
     }
 
-    public void setInstrumental(Instrumental instrumental) {
-        this.instrumental = instrumental;
+    public void setInstrument(Instrumental instrument) {
+        this.instrument = instrument;
     }
 
     public int getId() {

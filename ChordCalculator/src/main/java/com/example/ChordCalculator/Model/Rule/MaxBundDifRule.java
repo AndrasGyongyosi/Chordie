@@ -1,6 +1,5 @@
 package com.example.ChordCalculator.Model.Rule;
 
-import com.example.ChordCalculator.Model.Catch;
 import com.example.ChordCalculator.Model.Instrumental;
 import com.example.ChordCalculator.Model.StringCatch;
 
@@ -10,8 +9,8 @@ import java.util.List;
 @Entity
 public class MaxBundDifRule extends Rule {
 
-    public MaxBundDifRule(Instrumental inst,int value) {
-        instrumental = inst;
+    public MaxBundDifRule(Instrumental inst, int value) {
+        instrument = inst;
         this.value = value;
     }
 
@@ -21,7 +20,7 @@ public class MaxBundDifRule extends Rule {
     @Override
     public boolean isValid(List<StringCatch> stringCatchList) {
         int max=1;
-        int min=instrumental.getBundNumber();
+        int min= instrument.getBundNumber();
 
         for (StringCatch sc:
                 stringCatchList) {

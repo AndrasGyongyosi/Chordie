@@ -2,7 +2,6 @@ package com.example.ChordCalculator.Model.Rule;
 
 import com.example.ChordCalculator.Model.Catch;
 import com.example.ChordCalculator.Model.Instrumental;
-import com.example.ChordCalculator.Model.Sound;
 import com.example.ChordCalculator.Model.StringCatch;
 
 import javax.persistence.Entity;
@@ -16,8 +15,8 @@ public class FirstSoundIsRootRule extends Rule{
     public FirstSoundIsRootRule() {
     }
 
-    public FirstSoundIsRootRule(Instrumental instrumental){
-        this.instrumental = instrumental;
+    public FirstSoundIsRootRule(Instrumental instrument){
+        this.instrument = instrument;
     }
     @Override
     public boolean isValid(Catch c) {

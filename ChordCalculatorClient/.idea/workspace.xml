@@ -1,7 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="73e9d68d-5963-4583-a85f-e53e76e29acc" name="Default Changelist" comment="" />
+    <list default="true" id="73e9d68d-5963-4583-a85f-e53e76e29acc" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../ChordCalculator/src/main/java/com/example/ChordCalculator/ChordieController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ChordCalculator/src/main/java/com/example/ChordCalculator/ChordieController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ChordCalculator/src/main/java/com/example/ChordCalculator/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ChordCalculator/src/main/java/com/example/ChordCalculator/MainController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ChordCalculator/src/main/java/com/example/ChordCalculator/Model/Catch.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ChordCalculator/src/main/java/com/example/ChordCalculator/Model/Catch.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ChordCalculator/src/main/java/com/example/ChordCalculator/Model/Chord/Chord.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ChordCalculator/src/main/java/com/example/ChordCalculator/Model/Chord/Chord.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ChordCalculator/src/main/java/com/example/ChordCalculator/Model/Instrumental.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ChordCalculator/src/main/java/com/example/ChordCalculator/Model/Instrumental.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ChordCalculator/src/main/java/com/example/ChordCalculator/Model/MString.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ChordCalculator/src/main/java/com/example/ChordCalculator/Model/MString.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ChordCalculator/src/main/java/com/example/ChordCalculator/Model/Repositories/InstrumentalRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ChordCalculator/src/main/java/com/example/ChordCalculator/Model/Repositories/InstrumentalRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ChordCalculator/src/main/java/com/example/ChordCalculator/Model/Repositories/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ChordCalculator/src/main/java/com/example/ChordCalculator/Model/Repositories/UserRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ChordCalculator/src/main/java/com/example/ChordCalculator/Model/Rule/FirstSoundIsRootRule.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ChordCalculator/src/main/java/com/example/ChordCalculator/Model/Rule/FirstSoundIsRootRule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ChordCalculator/src/main/java/com/example/ChordCalculator/Model/Rule/MaxBundDifRule.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ChordCalculator/src/main/java/com/example/ChordCalculator/Model/Rule/MaxBundDifRule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ChordCalculator/src/main/java/com/example/ChordCalculator/Model/Rule/MinStringsRule.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ChordCalculator/src/main/java/com/example/ChordCalculator/Model/Rule/MinStringsRule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ChordCalculator/src/main/java/com/example/ChordCalculator/Model/Rule/NeighborStringDifSoundRule.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ChordCalculator/src/main/java/com/example/ChordCalculator/Model/Rule/NeighborStringDifSoundRule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ChordCalculator/src/main/java/com/example/ChordCalculator/Model/Rule/Rule.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ChordCalculator/src/main/java/com/example/ChordCalculator/Model/Rule/Rule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ChordCalculator/src/main/java/com/example/ChordCalculator/Model/Rule/StringOrderIsConstantRule.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ChordCalculator/src/main/java/com/example/ChordCalculator/Model/Rule/StringOrderIsConstantRule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ChordCalculator/src/main/java/com/example/ChordCalculator/Model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ChordCalculator/src/main/java/com/example/ChordCalculator/Model/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />

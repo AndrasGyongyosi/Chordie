@@ -17,7 +17,7 @@ public abstract class Rule {
     private int id;
 
     @ManyToOne
-    protected Instrumental instrumental;
+    protected Instrumental instrument;
 
     protected int value;
     public boolean isValid(Catch c){

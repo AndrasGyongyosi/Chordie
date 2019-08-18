@@ -8,7 +8,6 @@ import com.example.ChordCalculator.Model.Repositories.MStringRepository;
 import com.example.ChordCalculator.Model.Repositories.UserRepository;
 import com.example.ChordCalculator.Model.Rule.*;
 import com.example.ChordCalculator.Model.Sound;
-import com.example.ChordCalculator.Model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

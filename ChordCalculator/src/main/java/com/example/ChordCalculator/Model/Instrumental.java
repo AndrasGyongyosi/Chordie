@@ -3,12 +3,9 @@ package com.example.ChordCalculator.Model;
 import com.example.ChordCalculator.Helper.RandomToken;
 import com.example.ChordCalculator.Model.Rule.Rule;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.mapping.Collection;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 @Entity
@@ -17,7 +14,7 @@ public class Instrumental {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    private String instrumentalToken = RandomToken.randomString(32);
+    private String instrumentToken = RandomToken.randomString(32);
 
     public Instrumental(){
         super();
@@ -25,7 +22,7 @@ public class Instrumental {
         users = new ArrayList();
         publc = false;
     }
-    @OneToMany(mappedBy = "instrumental", cascade = CascadeType.ALL,fetch=FetchType.EAGER)
+    @OneToMany(mappedBy = "instrument", cascade = CascadeType.ALL,fetch=FetchType.EAGER)
     private List<MString> mStrings;
 
     @ManyToMany(mappedBy = "instrumentals")
@@ -34,7 +31,7 @@ public class Instrumental {
 
     private java.lang.String name;
 
-    @OneToMany(mappedBy="instrumental", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy="instrument", cascade = CascadeType.ALL)
     private List<Rule> rules;
     private int bundNumber;
 
@@ -124,11 +121,11 @@ public class Instrumental {
         this.users = users;
     }
 
-    public String getInstrumentalToken() {
-        return instrumentalToken;
+    public String getInstrumentToken() {
+        return instrumentToken;
     }
 
-    public void setInstrumentalToken(String instrumentalToken) {
-        this.instrumentalToken = instrumentalToken;
+    public void setInstrumentToken(String instrumentToken) {
+        this.instrumentToken = instrumentToken;
     }
 }

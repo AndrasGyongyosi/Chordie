@@ -47,9 +47,9 @@ public class Chord {
             sounds.add(Sound.values()[(rootNoteNumber + note)%12]);
         }
     }
-    public LinkedHashMap<MString,HashMap<Integer, Sound>> getPossibleFingerPoints(Instrumental instrumental){
+    public LinkedHashMap<MString,HashMap<Integer, Sound>> getPossibleFingerPoints(Instrumental instrument){
         LinkedHashMap<MString, HashMap<Integer, Sound>> possibleFingerPoints = new LinkedHashMap<>();
-        List<MString> strings = instrumental.getMStrings();
+        List<MString> strings = instrument.getMStrings();
         Collections.sort(strings, new Comparator<MString>() {
             @Override
             public int compare(MString o1, MString o2) {
@@ -58,7 +58,7 @@ public class Chord {
         });
         for (MString mString : strings) {
             HashMap<Integer, Sound> mStringMap = new LinkedHashMap<Integer,Sound>(){{put(-1,null);}};
-            for(int actualBund=0; actualBund<instrumental.getBundNumber();actualBund++) {
+            for(int actualBund = 0; actualBund< instrument.getBundNumber(); actualBund++) {
                 for (Sound actualSound : sounds) {
                     if (mString.BundValue(actualBund).equals(actualSound)){
                         mStringMap.put(actualBund,actualSound);
@@ -71,7 +71,7 @@ public class Chord {
         return possibleFingerPoints;
     }
     //recursive!
-    public void getAllCatches (List<MString> strings, LinkedHashMap<MString, HashMap<Integer, Sound>> options, Instrumental instrumental, List<StringCatch> stringCatches, List<List<StringCatch>> futureResult){
+    public void getAllCatches (List<MString> strings, LinkedHashMap<MString, HashMap<Integer, Sound>> options, Instrumental instrument, List<StringCatch> stringCatches, List<List<StringCatch>> futureResult){
         MString actualString = strings.get(0);
         List<List<StringCatch>> result;
         //System.out.println("Remaining Strings: "+strings.size());
@@ -89,8 +89,8 @@ public class Chord {
             //other mStrings
             else {
                 try {
-                    if (instrumental.isValid(scResult))
-                        getAllCatches(strings.subList(1, strings.size()), options, instrumental, scResult, futureResult);
+                    if (instrument.isValid(scResult))
+                        getAllCatches(strings.subList(1, strings.size()), options, instrument, scResult, futureResult);
                 }catch(Exception e){
                     System.out.println(e.getMessage());
                 }
@@ -98,29 +98,29 @@ public class Chord {
         }
     }
 
-    public List<Catch> getCatches(Instrumental instrumental) {
-        LinkedHashMap<MString, HashMap<Integer, Sound>> options = getPossibleFingerPoints(instrumental);
+    public List<Catch> getCatches(Instrumental instrument) {
+        LinkedHashMap<MString, HashMap<Integer, Sound>> options = getPossibleFingerPoints(instrument);
 
         List<MString> strings = new ArrayList<MString>(options.keySet());
         //for(MString string : strings)
         //    System.out.println(string.getSound());
         List<List<StringCatch>> stringCatches = new ArrayList();
 
-        getAllCatches(strings,options,instrumental, new ArrayList(),stringCatches);
+        getAllCatches(strings,options, instrument, new ArrayList(),stringCatches);
 
         //System.out.println("String Catches: " + stringCatches.size());
         List<Catch> catches = new ArrayList();
         for(List<StringCatch>  scs : stringCatches) {
-            Catch actCatch = new Catch(this, instrumental, scs, 0);
-            catches.add(new Catch(this, instrumental, scs, 0));
+            Catch actCatch = new Catch(this, instrument, scs, 0);
+            catches.add(new Catch(this, instrument, scs, 0));
         }
         //System.out.println("Catches: "+catches.size());
-        List<Catch> validatedCatches = validateCatches(catches, instrumental);
+        List<Catch> validatedCatches = validateCatches(catches, instrument);
         //System.out.println("ValidatedCatches: "+validatedCatches.size());
         return validatedCatches;
     }
 
-    public List<Catch> validateCatches(List<Catch> catches, Instrumental instrumental){
+    public List<Catch> validateCatches(List<Catch> catches, Instrumental instrument){
         List<Catch> result = new ArrayList();
         for(Catch catcha : catches){
             List<Sound> usedSounds = new ArrayList(sounds);
@@ -138,7 +138,7 @@ public class Chord {
 
             System.out.println(baseSound.getSoundName());
             //System.out.println(stringCatches.get(lastUsedStringIndex).getSound());
-            if (usedSounds.size()==0 && instrumental.isValid(catcha)){
+            if (usedSounds.size()==0 && instrument.isValid(catcha)){
                 if (stringCatches.get(lastUsedStringIndex).getSound().equals(baseSound))
                     catcha.setPerfection(CatchPerfection.HIGH);
                 else
