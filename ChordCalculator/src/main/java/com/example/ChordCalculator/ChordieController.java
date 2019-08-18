@@ -12,18 +12,12 @@ import com.example.ChordCalculator.Model.Rule.*;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken.Payload;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
-import com.google.api.client.http.HttpTransport;
-import com.google.api.client.http.LowLevelHttpRequest;
 import com.google.api.client.http.javanet.NetHttpTransport;
-import com.google.api.client.json.JsonFactory;
-import com.google.api.client.json.JsonGenerator;
-import com.google.api.client.json.JsonParser;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.*;
-import java.nio.charset.Charset;
 import java.security.GeneralSecurityException;
 import java.util.*;
 
@@ -220,11 +214,11 @@ public class ChordieController {
         //System.out.println(chord.getSounds());
         List<Catch> catches = chord.getCatches(instrumental);
 
-        List<Object> catchList = new ArrayList();
+        List<HashMap> catchList = new ArrayList();
         int bundDif = 0;
         for(Catch catcha: catches) {
 
-            List<HashMap> fps = new ArrayList();
+            List<HashMap> fingerPoints = new ArrayList();
             HashMap catchInfo = new HashMap<String, Object>();
             int actualBundDif = catcha.getBundDif();
             if ( bundDif<actualBundDif) bundDif = actualBundDif;
@@ -232,14 +226,22 @@ public class ChordieController {
                 HashMap stringCatchInfo = new HashMap<String, Object>();
                 stringCatchInfo.put("bund",sc.getBund());
                 stringCatchInfo.put("sound",(sc.getSound()==null ? null : sc.getSound().getSoundName()));
-                fps.add(stringCatchInfo);
+                fingerPoints.add(stringCatchInfo);
             }
 
-            catchInfo.put("fingerPoints",fps);
+            catchInfo.put("fingerPoints",fingerPoints);
             catchInfo.put("perfection",catcha.getPerfection());
             catchList.add(catchInfo);
-            //Collections.reverse(fps);
         }
+        //sort catches by best to worst.
+        catchList.sort(new Comparator<HashMap>() {
+
+            @Override
+            public int compare(HashMap o1, HashMap o2) {
+                return -((CatchPerfection)o1.get("perfection")).getWeight().compareTo(((CatchPerfection)o2.get("perfection")).getWeight());
+            }
+        });
+
         result.put("catches", catchList);
         result.put("bundDif", bundDif);
         return result;

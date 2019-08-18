@@ -1,8 +1,7 @@
 package com.example.ChordCalculator.Model.Chord;
 
-import com.example.ChordCalculator.Exceptions.NotRegularChordException;
 import com.example.ChordCalculator.Model.*;
-import com.example.ChordCalculator.Model.Rule.CatchPerfection;
+import com.example.ChordCalculator.Model.CatchPerfection;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

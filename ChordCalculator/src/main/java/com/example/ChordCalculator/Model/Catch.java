@@ -1,7 +1,6 @@
 package com.example.ChordCalculator.Model;
 
 import com.example.ChordCalculator.Model.Chord.Chord;
-import com.example.ChordCalculator.Model.Rule.CatchPerfection;
 
 import java.util.ArrayList;
 import java.util.List;
