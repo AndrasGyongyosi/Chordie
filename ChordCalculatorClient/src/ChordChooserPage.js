@@ -242,7 +242,7 @@ class ChordChooserList extends React.Component{
                             </div>
                         </div>
                     </React.Fragment>
-                ) : (<h3>Loading...</h3>)}
+                ) : (<h3></h3>)}
             </div>
         )
     }
@@ -287,7 +287,6 @@ class ChordChooserPage extends React.Component {
     }
 
     catchQuery(){
-        //if (this.state.instrumental.name!=undefined) {
             var instrumental = this.state.instrumental.name;
             let catchURL = url + "catch/" + instrumental.split(" ").join("_") + "/" + this.state.baseSound + "/" + this.state.baseType + "/" + this.state.chordType;
             if (this.isValid()) {
@@ -302,7 +301,6 @@ class ChordChooserPage extends React.Component {
 
                     }).catch(error => this.setState({error, catchLoaded: false}));
             }
-        //}
     }
     componentDidMount() {
         //Strings query

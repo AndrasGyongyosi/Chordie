@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="73e9d68d-5963-4583-a85f-e53e76e29acc" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../ChordCalculator/src/main/java/com/example/ChordCalculator/ChordieController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ChordCalculator/src/main/java/com/example/ChordCalculator/ChordieController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ChordCalculator/src/main/java/com/example/ChordCalculator/Config/WebSecurityConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ChordCalculator/src/main/java/com/example/ChordCalculator/Config/WebSecurityConfiguration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ChordChooserPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/ChordChooserPage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/OAuth.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/OAuth.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -40,8 +44,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Instruments.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="527">
-              <caret line="34" column="49" selection-start-line="34" selection-start-column="49" selection-end-line="34" selection-end-column="49" />
+            <state relative-caret-position="119">
+              <caret line="10" column="24" selection-start-line="10" selection-start-column="24" selection-end-line="10" selection-end-column="24" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
               </folding>
@@ -49,20 +53,20 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ChordChooserPage.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="235">
-              <caret line="100" column="42" selection-start-line="100" selection-start-column="42" selection-end-line="100" selection-end-column="42" />
+            <state relative-caret-position="4080">
+              <caret line="244" column="25" selection-start-line="244" selection-start-column="25" selection-end-line="244" selection-end-column="25" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/OAuth.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="357">
-              <caret line="23" column="26" selection-start-line="23" selection-start-column="26" selection-end-line="23" selection-end-column="26" />
+            <state relative-caret-position="-221">
+              <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
               <folding>
                 <element signature="e#0#40#0" expanded="true" />
               </folding>
@@ -104,11 +108,12 @@
       <find>Setinst</find>
       <find>user</find>
       <find>string</find>
-      <find>ChordChooserL</find>
       <find>input</find>
       <find>catch</find>
       <find>catch/</find>
       <find>ChordView</find>
+      <find>ChordChoo</find>
+      <find>ChordChooserL</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -126,11 +131,11 @@
         <option value="$PROJECT_DIR$/src/Instrumentals.js" />
         <option value="$PROJECT_DIR$/src/Instrumentals.js" />
         <option value="$PROJECT_DIR$/src/Instrumentals - old.js" />
-        <option value="$PROJECT_DIR$/src/OAuth.js" />
         <option value="$PROJECT_DIR$/src/Instruments.js" />
         <option value="$PROJECT_DIR$/src/App.js" />
         <option value="$PROJECT_DIR$/src/index.css" />
         <option value="$PROJECT_DIR$/src/ChordChooserPage.js" />
+        <option value="$PROJECT_DIR$/src/OAuth.js" />
       </list>
     </option>
   </component>
@@ -276,18 +281,20 @@
       <workItem from="1565853036864" duration="2120000" />
       <workItem from="1565962504504" duration="3314000" />
       <workItem from="1566138231991" duration="1302000" />
-      <workItem from="1566146801871" duration="1297000" />
+      <workItem from="1566146801871" duration="1803000" />
+      <workItem from="1566227745517" duration="3984000" />
+      <workItem from="1566565566047" duration="2040000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="175443000" />
+    <option name="totallyTimeSpent" value="181973000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="54" y="-8" width="1320" height="784" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.11031746" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.113492064" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Image Layers" order="3" />
@@ -297,7 +304,7 @@
       <window_info id="Favorites" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.21044546" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.21044546" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3997923" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -446,28 +453,28 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Instruments.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="527">
-          <caret line="34" column="49" selection-start-line="34" selection-start-column="49" selection-end-line="34" selection-end-column="49" />
+        <state relative-caret-position="119">
+          <caret line="10" column="24" selection-start-line="10" selection-start-column="24" selection-end-line="10" selection-end-column="24" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/OAuth.js">
+    <entry file="file://$PROJECT_DIR$/src/ChordChooserPage.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="23" column="26" selection-start-line="23" selection-start-column="26" selection-end-line="23" selection-end-column="26" />
-          <folding>
-            <element signature="e#0#40#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="4080">
+          <caret line="244" column="25" selection-start-line="244" selection-start-column="25" selection-end-line="244" selection-end-column="25" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ChordChooserPage.js">
+    <entry file="file://$PROJECT_DIR$/src/OAuth.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="235">
-          <caret line="100" column="42" selection-start-line="100" selection-start-column="42" selection-end-line="100" selection-end-column="42" />
+        <state relative-caret-position="-221">
+          <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
+          <folding>
+            <element signature="e#0#40#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

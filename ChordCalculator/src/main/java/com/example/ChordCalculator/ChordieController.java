@@ -55,7 +55,7 @@ public class ChordieController {
                 String locale = (String) payload.get("locale");
                 String familyName = (String) payload.get("family_name");
                 String givenName = (String) payload.get("given_name");
-
+                System.out.println(name);
                 User user = userRepository.findByEmail(email);
                 if (user==null){
                     User newUser = new User();
@@ -80,6 +80,8 @@ public class ChordieController {
         String jwtToken = (String) params.get("token");
         String email = (String) params.get("email");
         //TODO: need to validate token
+        System.out.println(jwtToken);
+        getUserFromToken(jwtToken);
         User user = userRepository.findByEmail(email);
         if (user == null) {
             User newUser = new User();
