@@ -21,9 +21,9 @@ function ModalDialog(props) {
                         </div>
                         <div className="modal-footer">
                             <form>
-                                <button type="button" className="btn btn-danger" onClick={props.handleReject}>Elutasítom
+                                <button type="button" className="btn btn-danger" onClick={props.handleReject}>Reject
                                 </button>
-                                <button type="button" className="btn btn-success" onClick={props.handleAccept}>Elfogadom
+                                <button type="button" className="btn btn-success" onClick={props.handleAccept}>Accept
                                 </button>
                             </form>
                         </div>

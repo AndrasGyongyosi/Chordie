@@ -2,7 +2,6 @@ import React from 'react';
 import './App.css';
 import OAuth from "./OAuth";
 import ChordChooserPage from "./ChordChooserPage";
-import axios from "axios";
 
 const url= 'http://localhost:8080/'
 
@@ -55,7 +54,6 @@ class App extends React.Component {
                       </div>
                   </div>
                   <ChordChooserPage token={this.state.token}></ChordChooserPage>
-                <span>Access token: {this.state.token}</span>
               </div>
           </div>    
         );

@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import {GoogleLogin, GoogleLogout} from 'react-google-login'
 import axios from "axios";
-
-const url= 'http://localhost:8080/'
+import myURLs from './myURLs.js';
 
 export default class OAuth extends Component {
     state={}
@@ -10,7 +9,7 @@ export default class OAuth extends Component {
         const responseGoogle = (response) => {
             console.log("LoginSuccess");
 
-            let newUserURL = url + "newUser/";
+            let newUserURL = myURLs.getURL() + "newUser/";
             console.log(response);
             let passedParameters = {
                 "email": response.profileObj.email,
@@ -23,7 +22,7 @@ export default class OAuth extends Component {
                 .then(res=>{
                     if (res){
                         console.log("New User added.");
-                        this.props.ancestor.setToken(response.Zi.access_token, response.profileObj.email);
+                        this.props.ancestor.setToken(response.tokenId, response.profileObj.email);
                     }
                     else {
                         console.log("User adding failed.");
@@ -40,6 +39,9 @@ export default class OAuth extends Component {
         const logout = () => {
             console.log("Logout");
             this.props.ancestor.setToken(null, "nobody");
+        }
+        const logoutfail = () => {
+            console.log("Logout Fail");
         }
         return (
             <div>
@@ -58,6 +60,7 @@ export default class OAuth extends Component {
                     (   <GoogleLogout
                         buttonText="Logout"
                         onLogoutSuccess={logout}
+                        onFailure={logoutfail}
                     >
                     </GoogleLogout>)
                 }

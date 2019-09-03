@@ -2,9 +2,8 @@ import React from 'react';
 import './App.css';
 import axios from 'axios';
 import Instruments from "./Instruments";
-import OAuth from "./App";
+import myURLs from './myURLs.js';
 
-const url= 'http://localhost:8080/'
 
 class ChordView extends React.Component {
     render() {
@@ -102,9 +101,6 @@ class Catch extends React.Component{
                         </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        {catcha.perfection}
-                    </tr>
                     {catcha.fingerPoints.map(string =>{
                         return(
                             <tr>
@@ -161,8 +157,8 @@ class ChordChooserList extends React.Component{
     constructor(props) {
         super(props);
         this.ancestor = props.ancestor;
-        this.chordComponentURL = url+"chordComponents/";
-        this.freeTextChordURL = url+"chordText/";
+        this.chordComponentURL = myURLs.getURL()+"chordComponents/";
+        this.freeTextChordURL = myURLs.getURL()+"chordText/";
         this.baseSoundChange = this.baseSoundChange.bind(this);
         this.baseTypeChange = this.baseTypeChange.bind(this);
         this.chordTypeChange = this.chordTypeChange.bind(this);
@@ -288,7 +284,7 @@ class ChordChooserPage extends React.Component {
 
     catchQuery(){
             var instrumental = this.state.instrumental.name;
-            let catchURL = url + "catch/" + instrumental.split(" ").join("_") + "/" + this.state.baseSound + "/" + this.state.baseType + "/" + this.state.chordType;
+            let catchURL = myURLs.getURL() + "catch/" + instrumental.split(" ").join("_") + "/" + this.state.baseSound + "/" + this.state.baseType + "/" + this.state.chordType;
             if (this.isValid()) {
                 axios.get(catchURL)
                     .then(res => {
@@ -305,7 +301,7 @@ class ChordChooserPage extends React.Component {
     componentDidMount() {
         //Strings query
         //if (this.state.instrumental.name!=undefined) {
-            let stringURL = url + "strings/" + this.state.instrumental.name;
+            let stringURL = myURLs.getURL() + "strings/" + this.state.instrumental.name;
             axios.get(stringURL)
                 .then(res => {
                     this.setState(

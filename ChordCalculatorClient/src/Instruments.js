@@ -2,8 +2,7 @@ import React from 'react';
 import './App.css';
 import axios from "axios";
 import Dashboard from './Modal/Dashboard';
-
-const url= 'http://localhost:8080/'
+import myURLs from './myURLs.js';
 
 class Instruments extends React.Component {
     state={instruments : [],
@@ -12,7 +11,7 @@ class Instruments extends React.Component {
             newInstrumentalStrings: [],
     };
     componentDidMount() {
-        let instrumentURL = url + "instrumental/" + this.props.chordChooserList.ancestor.props.token;
+        let instrumentURL = myURLs.getURL() + "instrumental/" + this.props.chordChooserList.ancestor.props.token;
         axios.get(encodeURI(instrumentURL))
             .then(res => {
                 this.setState(
@@ -35,7 +34,8 @@ class Instruments extends React.Component {
         this.props.chordChooserList.instrumentalChange(instrumental.name);
     }
     newInstrument(){
-        let newInstrumentURL = url + "newinstrument/";
+
+        let newInstrumentURL = myURLs.getURL() + "newinstrument/";
         let passedParameters = {
             "user": this.ancestor.props.chordChooserList.ancestor.props.token,
             "instrumentalName": document.getElementById("instrumentName").value,
@@ -46,7 +46,6 @@ class Instruments extends React.Component {
         this.ancestor.setState({newInstrumentalStrings : [] });
         axios.post(newInstrumentURL, passedParameters)
             .then(res=>{
-                console.log(res);
                 if (res){
                     console.log("New instrumental added.");
                     var newInstruments = this.ancestor.state.instruments;
@@ -60,7 +59,7 @@ class Instruments extends React.Component {
     }
     canceledModal(){
         this.ancestor.setState({newInstrumentalStrings : [] });
-        console.log(this.ancestor.state);
+        //console.log(this.ancestor.state);
         console.log("Modal cancelled.");
     }
     deleteString(string){
@@ -69,7 +68,7 @@ class Instruments extends React.Component {
         if(index>-1){
             strings.splice(index,1);
         }
-        console.log(strings);
+        //console.log(strings);
         this.setState({newInstrumentalStrings: strings});
     }
     render(){
@@ -99,7 +98,7 @@ class Instruments extends React.Component {
                             <div className="row">
                             <div className="col-lg-5">
                                 <label htmlFor="instumentName">Instrument name</label>
-                                <input type="text" className="form-control" id="instrumentName" placeholder="Instrumental name" autofocus="true"/>
+                                <input type="text" className="form-control" id="instrumentName" placeholder="Instrument name" autofocus="true"/>
                             </div>
                             <div className="col-lg-5">
                             <label htmlFor="maxBundDif">Maximum bund difference</label>
