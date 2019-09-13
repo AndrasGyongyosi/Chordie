@@ -5,4 +5,4 @@ Konfiguráció:
   - "chord_cal_db" néven adatbázis létrehozása
   - User létrehozása az application.properties-ben található paraméterekkel
   - Az első futtatás után a táblákhoz jogok adása:
-  GRANT ALL PRIVILEGES ON autsoft_test_db.* TO 'springuser'@'localhost';
+  GRANT ALL PRIVILEGES ON chord_cal_db.* TO 'springuser'@'localhost';
