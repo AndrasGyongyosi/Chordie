@@ -187,7 +187,6 @@ class ChordChooserList extends React.Component{
     }
     instrumentalChange(instr){
         this.ancestor.setInstrument(instr);
-        this.ancestor.setInstrument(instr);
     }
     sendFreeTextChord(){
         let freeText = document.getElementById("freeTextChord").value;
@@ -249,7 +248,7 @@ class ChordChooserPage extends React.Component {
         baseSound : "C",
         baseType: "maj",
         chordType: "n",
-        instrumental: {"name": "Acoustic guitar"},
+        instrumental: {},
         bundDif : 5,
 
         strings: [],
@@ -274,18 +273,18 @@ class ChordChooserPage extends React.Component {
         this.catchQuery();
     }
     setInstrument(inst){
-        this.state.instrumental.name = inst;
+        this.state.instrumental = inst;
+        this.stringQuery();
         this.catchQuery();
     }
 
     isValid() {
-        return (this.state.instrumental.name != null && this.state.baseSound != null && this.state.baseType != null && this.state.chordType != null);
+        return (this.state.instrumental && this.state.instrumental.token != null && this.state.baseSound != null && this.state.baseType != null && this.state.chordType != null);
     }
 
     catchQuery(){
-            var instrumental = this.state.instrumental.name;
-            let catchURL = myURLs.getURL() + "catch/" + instrumental.split(" ").join("_") + "/" + this.state.baseSound + "/" + this.state.baseType + "/" + this.state.chordType;
             if (this.isValid()) {
+            let catchURL = myURLs.getURL() + "catch/" + this.state.instrumental.token + "/" + this.state.baseSound + "/" + this.state.baseType + "/" + this.state.chordType;
                 axios.get(catchURL)
                     .then(res => {
                         this.setState(
@@ -298,10 +297,9 @@ class ChordChooserPage extends React.Component {
                     }).catch(error => this.setState({error, catchLoaded: false}));
             }
     }
-    componentDidMount() {
-        //Strings query
-        //if (this.state.instrumental.name!=undefined) {
-            let stringURL = myURLs.getURL() + "strings/" + this.state.instrumental.name;
+    stringQuery(){
+        if (this.state.instrumental) {
+            let stringURL = myURLs.getURL() + "strings/" + this.state.instrumental.token;
             axios.get(stringURL)
                 .then(res => {
                     this.setState(
@@ -310,8 +308,7 @@ class ChordChooserPage extends React.Component {
                             stringLoaded: true
                         });
                 }).catch(error => this.setState({error, stringLoaded: false}));
-            this.catchQuery();
-        //}
+        }
     }
     render() {
         const {catches, strings, catchLoaded, stringLoaded, bundDif} = this.state;

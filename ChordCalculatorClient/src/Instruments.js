@@ -31,7 +31,7 @@ class Instruments extends React.Component {
         this.setState({newInstrumentalStrings : refreshedStrings})
     }
     setInstrument(instrumental){
-        this.props.chordChooserList.instrumentalChange(instrumental.name);
+        this.props.chordChooserList.instrumentalChange(instrumental);
     }
     newInstrument(){
 

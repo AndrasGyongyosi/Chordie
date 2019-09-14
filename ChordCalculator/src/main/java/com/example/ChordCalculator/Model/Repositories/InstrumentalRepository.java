@@ -9,6 +9,7 @@ import java.util.List;
 @Repository
 public interface InstrumentalRepository extends CrudRepository<Instrumental, Integer> {
     Instrumental findByUsers_email(String email);
+    Instrumental findByInstrumentToken(String instrumentToken);
     Instrumental findByName(String name);
     List<Instrumental> findAllByPublc(boolean publc);
 }
