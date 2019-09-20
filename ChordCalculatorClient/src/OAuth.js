@@ -45,9 +45,6 @@ export default class OAuth extends Component {
         }
         return (
             <div>
-                <span>Logged in by {this.props.ancestor.state.logged_user}</span><br/>
-                {this.state.img==null? <p></p>:<div><p>{this.state.img}</p><img src={this.state.img}></img></div>}
-
                 {(this.props.ancestor.state.logged_user=="nobody") ?
                     (<GoogleLogin
                     clientId="902904919760-8uea185c8i6meeap7gga8lhjivgtt33t.apps.googleusercontent.com"

@@ -110,10 +110,10 @@ class Catch extends React.Component{
                                 <td>
                                 {
                                     (string.bund == -1) ?
-                                        (<img src="view/nut_unplayed.png" height="20" weight="60"></img>) :
+                                        (<img src="view/nut_unplayed.png" height="20" width="60" max-width="12%"></img>) :
                                         ((string.bund==0)?
-                                        (<img src="view/nut_open.png" height="20" weight="60"></img>):
-                                            (<img src="view/nut_default.png" height="20" weight="60"></img>))
+                                        (<img src="view/nut_open.png" height="20" width="60" max-width="12%"></img>):
+                                            (<img src="view/nut_default.png" height="20" width="60" max-width="12%"></img>))
                                 }
                                 </td>
                                 {
@@ -121,8 +121,8 @@ class Catch extends React.Component{
                                         return (<td>
                                                     {
                                                         (bund == 1) ?
-                                                            (<img src="view/bund_played.png" height="20" weight="60"></img>) :
-                                                            (<img src="view/bund_unplayed.png" height="20" weight="60"></img>)
+                                                            (<img src="view/bund_played.png" height="20" width="60" max-width="12%"></img>) :
+                                                            (<img src="view/bund_unplayed.png" height="20" width="60" max-width="12%"></img>)
                                                     }
                                                 </td>);
                                     })

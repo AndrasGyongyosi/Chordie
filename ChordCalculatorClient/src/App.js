@@ -41,21 +41,60 @@ class App extends React.Component {
         //this.state.logged_user = email;
         //this.state.token = jwtToken;
     }
+    changeBackgroundColor(event){
+        console.log(event.target.value);
+
+        var style = document.createElement('style');
+        document.head.appendChild(style);
+        style.sheet.insertRule(':root {--background: '+event.target.value+'}');
+        style.sheet.insertRule('#backgroundpicker {value: '+event.target.value+'}');
+        console.log("backGroundColorChange");
+        return;
+    }
+
+    changeButtonColor(){
+        let bcButton = document.getElementById("buttonpicker");
+        console.log(bcButton.value);
+        console.log("buttonColorChange");
+    }
+    changeForegroundColor(){
+        let fgcButton = document.getElementById("foregroundpicker");
+        console.log(fgcButton.value);
+        console.log("foreGroundColorChange");
+    }
     render() {
         return (
           <div className="row App">
-              <div className="col-lg-12">
-                  <div className="row">
-                      <div className="col-lg-10">
-                  <h1 className="align-middle">Chordie</h1>
-                      </div>
-                      <div className="col-lg-2">
-                          <OAuth className="align-right" ancestor={this}></OAuth>
-                      </div>
-                  </div>
+                <div className="col-lg-12">
+                    <div className="row">
+                        <div className="col-lg-2">
+                        <span>Logged in by {this.state.logged_user}</span><br/>
+                        {this.state.img==null? <p></p>:<div><p>{this.state.img}</p><img src={this.state.img}></img></div>}
+                        </div>
+                        <div className="col-lg-8">
+                            <h1 className="align-middle">Chordie</h1>
+                        </div>
+                        <div className="col-lg-2">
+                            <OAuth className="align-right" ancestor={this}></OAuth>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-lg-3">
+                            <label for="backgroundpicker">Background: </label>
+                            <input type="color" id="backgroundpicker" value="#ffffff" onChange={this.changeBackgroundColor.bind(this)}></input>    
+                        </div>
+                        <div className="col-lg-3">
+                            <label for="buttonpicker">Buttons: </label>
+                            <input type="color" id="buttonpicker" value="#33cc33" onChange={this.changeButtonColor} ></input>    
+                        </div>
+                        <div className="col-lg-3">
+                            <label for="foregroundpicker">Foreground: </label>
+                            <input type="color" id="foregroundpicker" value="#000000" onChange={this.changeForegroundColor} ></input>    
+                        </div>
+                    </div>
                   <ChordChooserPage token={this.state.token}></ChordChooserPage>
-              </div>
-          </div>    
+                </div>
+            </div>    
         );
   }
 }
