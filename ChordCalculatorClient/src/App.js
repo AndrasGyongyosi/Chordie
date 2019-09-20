@@ -3,12 +3,14 @@ import './App.css';
 import OAuth from "./OAuth";
 import ChordChooserPage from "./ChordChooserPage";
 
-const url= 'http://localhost:8080/'
 
 
 class App extends React.Component {
     state={ token: null,
             logged_user: "nobody",
+            backGroundColor: "#ffffff",
+            foreGroundColor: "#000000",
+            buttonColor: "#33cc33"
     };
 
     componentDidMount(){
@@ -42,22 +44,26 @@ class App extends React.Component {
         //this.state.token = jwtToken;
     }
     changeBackgroundColor(event){
-        console.log(event.target.value);
+        this.setState({backGroundColor: event.target.value});
 
         var style = document.createElement('style');
         document.head.appendChild(style);
         style.sheet.insertRule(':root {--background: '+event.target.value+'}');
-        style.sheet.insertRule('#backgroundpicker {value: '+event.target.value+'}');
+
         console.log("backGroundColorChange");
         return;
     }
 
-    changeButtonColor(){
+    changeButtonColor(event){
+        this.setState({buttonColor: event.target.value});
+
         let bcButton = document.getElementById("buttonpicker");
         console.log(bcButton.value);
         console.log("buttonColorChange");
     }
-    changeForegroundColor(){
+    changeForegroundColor(event){
+        this.setState({foreGroundColor: event.target.value});
+
         let fgcButton = document.getElementById("foregroundpicker");
         console.log(fgcButton.value);
         console.log("foreGroundColorChange");
@@ -81,15 +87,15 @@ class App extends React.Component {
                     <div className="row">
                         <div className="col-lg-3">
                             <label for="backgroundpicker">Background: </label>
-                            <input type="color" id="backgroundpicker" value="#ffffff" onChange={this.changeBackgroundColor.bind(this)}></input>    
+                            <input type="color" id="backgroundpicker" value={this.state.backGroundColor} onChange={this.changeBackgroundColor.bind(this)}></input>    
                         </div>
                         <div className="col-lg-3">
                             <label for="buttonpicker">Buttons: </label>
-                            <input type="color" id="buttonpicker" value="#33cc33" onChange={this.changeButtonColor} ></input>    
+                            <input type="color" id="buttonpicker" value={this.state.buttonColor} onChange={this.changeButtonColor.bind(this)} ></input>    
                         </div>
                         <div className="col-lg-3">
                             <label for="foregroundpicker">Foreground: </label>
-                            <input type="color" id="foregroundpicker" value="#000000" onChange={this.changeForegroundColor} ></input>    
+                            <input type="color" id="foregroundpicker" value={this.state.foreGroundColor} onChange={this.changeForegroundColor.bind(this)} ></input>    
                         </div>
                     </div>
                   <ChordChooserPage token={this.state.token}></ChordChooserPage>
