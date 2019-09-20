@@ -118,10 +118,11 @@ class Catch extends React.Component{
                                 </td>
                                 {
                                     this.getBunds(min, string.bund, max).map(bund => {
+                                        var playedBundSrc = "view/bund_played_"+string.finger+".png";
                                         return (<td>
                                                     {
                                                         (bund == 1) ?
-                                                            (<img src="view/bund_played.png" height="20" width="60" max-width="12%"></img>) :
+                                                            (<img src={playedBundSrc} height="20" width="60" max-width="12%"></img>) :
                                                             (<img src="view/bund_unplayed.png" height="20" width="60" max-width="12%"></img>)
                                                     }
                                                 </td>);
@@ -287,6 +288,7 @@ class ChordChooserPage extends React.Component {
             let catchURL = myURLs.getURL() + "catch/" + this.state.instrumental.token + "/" + this.state.baseSound + "/" + this.state.baseType + "/" + this.state.chordType;
                 axios.get(catchURL)
                     .then(res => {
+                        console.log(res.data);
                         this.setState(
                             {
                                 catches: res.data.catches,
@@ -319,7 +321,7 @@ class ChordChooserPage extends React.Component {
                     <div className="row">
                         {( this.isValid()) ?
                             <ChordView catches={catches} strings={strings} catchLoaded={catchLoaded} stringLoaded={stringLoaded} bundDif = {bundDif}></ChordView>
-                            : (<h3>Add Chord parameters</h3>)}
+                            : (<h3> </h3>)}
                     </div>
                 </div>
             </div>

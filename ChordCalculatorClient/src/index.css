@@ -1,5 +1,6 @@
 :root{
-  --background: #ffffff;
+  --backgroundPrimary: #ffffff;
+  --backgroundSecondary: #f8f9fa;
   --foreground: #000000;
   --buttons: #33cc33;
 }
@@ -12,9 +13,12 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: var(--background);
+  background: var(--backgroundPrimary);
+  color: var(--foreground);
 }
-
+nav{
+  background-color: var(--backgroundSecondary);
+}
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;

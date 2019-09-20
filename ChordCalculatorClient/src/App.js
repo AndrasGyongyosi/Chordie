@@ -8,7 +8,8 @@ import ChordChooserPage from "./ChordChooserPage";
 class App extends React.Component {
     state={ token: null,
             logged_user: "nobody",
-            backGroundColor: "#ffffff",
+            backGroundPrimaryColor: "#ffffff",
+            backGroundSecondaryColor: "#f8f9fa",
             foreGroundColor: "#000000",
             buttonColor: "#33cc33"
     };
@@ -43,19 +44,34 @@ class App extends React.Component {
         //this.state.logged_user = email;
         //this.state.token = jwtToken;
     }
-    changeBackgroundColor(event){
-        this.setState({backGroundColor: event.target.value});
+    changeBackgroundPrimaryColor(event){
+        this.setState({backGroundPrimaryColor: event.target.value});
 
         var style = document.createElement('style');
         document.head.appendChild(style);
-        style.sheet.insertRule(':root {--background: '+event.target.value+'}');
+        style.sheet.insertRule(':root {--backgroundPrimary: '+event.target.value+'}');
 
-        console.log("backGroundColorChange");
+        console.log("backGroundPrimaryColorChange");
+        return;
+    }
+
+    changeBackgroundSecondaryColor(event){
+        this.setState({backGroundSecondaryColor: event.target.value});
+
+        var style = document.createElement('style');
+        document.head.appendChild(style);
+        style.sheet.insertRule(':root {--backgroundSecondary: '+event.target.value+'}');
+
+        console.log("backGroundSecondaryColorChange");
         return;
     }
 
     changeButtonColor(event){
         this.setState({buttonColor: event.target.value});
+
+        var style = document.createElement('style');
+        document.head.appendChild(style);
+        style.sheet.insertRule(':root {--buttons: '+event.target.value+'}');
 
         let bcButton = document.getElementById("buttonpicker");
         console.log(bcButton.value);
@@ -63,6 +79,10 @@ class App extends React.Component {
     }
     changeForegroundColor(event){
         this.setState({foreGroundColor: event.target.value});
+
+        var style = document.createElement('style');
+        document.head.appendChild(style);
+        style.sheet.insertRule(':root {--foreground: '+event.target.value+'}');
 
         let fgcButton = document.getElementById("foregroundpicker");
         console.log(fgcButton.value);
@@ -72,6 +92,29 @@ class App extends React.Component {
         return (
           <div className="row App">
                 <div className="col-lg-12">
+                <div className="row">
+                        <div className="col-lg-3">
+                            <label for="backgroundprimarypicker">Background1: </label>
+                            <input type="color" id="backgroundprimarypicker" value={this.state.backGroundPrimaryColor} onChange={this.changeBackgroundPrimaryColor.bind(this)}></input>    
+                            <p>{this.state.backGroundPrimaryColor}</p>
+                        </div>
+                        <div className="col-lg-3">
+                            <label for="backgroundsecondarypicker">Background2: </label>
+                            <input type="color" id="backgroundsecondarypicker" value={this.state.backGroundSecondaryColor} onChange={this.changeBackgroundSecondaryColor.bind(this)}></input>    
+                            <p>{this.state.backGroundSecondaryColor}</p>
+                        </div>
+                        <div className="col-lg-3">
+                            <label for="buttonpicker">Buttons: </label>
+                            <input type="color" id="buttonpicker" value={this.state.buttonColor} onChange={this.changeButtonColor.bind(this)} ></input>    
+                            <p>{this.state.buttonColor}</p>
+                        </div>
+                        <div className="col-lg-3">
+                            <label for="foregroundpicker">Foreground: </label>
+                            <input type="color" id="foregroundpicker" value={this.state.foreGroundColor} onChange={this.changeForegroundColor.bind(this)} ></input>    
+                            <p>{this.state.foreGroundColor}</p>
+                        </div>
+                    </div>
+                    <hr></hr>
                     <div className="row">
                         <div className="col-lg-2">
                         <span>Logged in by {this.state.logged_user}</span><br/>
@@ -84,20 +127,7 @@ class App extends React.Component {
                             <OAuth className="align-right" ancestor={this}></OAuth>
                         </div>
                     </div>
-                    <div className="row">
-                        <div className="col-lg-3">
-                            <label for="backgroundpicker">Background: </label>
-                            <input type="color" id="backgroundpicker" value={this.state.backGroundColor} onChange={this.changeBackgroundColor.bind(this)}></input>    
-                        </div>
-                        <div className="col-lg-3">
-                            <label for="buttonpicker">Buttons: </label>
-                            <input type="color" id="buttonpicker" value={this.state.buttonColor} onChange={this.changeButtonColor.bind(this)} ></input>    
-                        </div>
-                        <div className="col-lg-3">
-                            <label for="foregroundpicker">Foreground: </label>
-                            <input type="color" id="foregroundpicker" value={this.state.foreGroundColor} onChange={this.changeForegroundColor.bind(this)} ></input>    
-                        </div>
-                    </div>
+                    
                   <ChordChooserPage token={this.state.token}></ChordChooserPage>
                 </div>
             </div>    

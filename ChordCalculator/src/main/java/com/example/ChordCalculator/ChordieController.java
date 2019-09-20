@@ -226,6 +226,7 @@ public class ChordieController {
                 HashMap stringCatchInfo = new HashMap<String, Object>();
                 stringCatchInfo.put("bund",sc.getBund());
                 stringCatchInfo.put("sound",(sc.getSound()==null ? null : sc.getSound().getSoundName()));
+                stringCatchInfo.put("finger",sc.getFinger());
                 fingerPoints.add(stringCatchInfo);
             }
 

@@ -3,10 +3,23 @@ package com.example.ChordCalculator.Model;
 public class StringCatch {
     private MString string;
     private int bund;
-
+    private int finger;
+    /*finger numbers:
+        1)  forefinger
+        2)  middle finger
+        3)  ring finger
+        4)  little finger
+        5)  thumb
+     */
+    public StringCatch(StringCatch stringCatch){
+        this.string = stringCatch.string;
+        this.bund = stringCatch.bund;
+        this.finger = stringCatch.finger;
+    }
     public StringCatch(MString string, int bund) {
         this.string = string;
         this.bund = bund;
+        //this.finger = 5;
     }
     public double getFrequency(){
         int index = string.getSound().ordinal()+bund;
@@ -32,5 +45,13 @@ public class StringCatch {
 
     public void setBund(int bund) {
         this.bund = bund;
+    }
+
+    public int getFinger() {
+        return finger;
+    }
+
+    public void setFinger(int finger) {
+        this.finger = finger;
     }
 }

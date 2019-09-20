@@ -1,5 +1,3 @@
-
-
 class myURLs {
 
     static getURL(){

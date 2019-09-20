@@ -3,7 +3,9 @@ package com.example.ChordCalculator.Model;
 import com.example.ChordCalculator.Model.Chord.Chord;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Catch {
     private Chord chord;
@@ -57,7 +59,19 @@ public class Catch {
     public void setStringCatches(ArrayList<StringCatch> stringCatches) {
         this.stringCatches = stringCatches;
     }
-
+    public Map<Integer, List<StringCatch>> getStringCatchesByBund(){
+        Map<Integer, List<StringCatch>> result = new HashMap();
+        for(int bund=1; bund<=instrument.getBundNumber();bund++){
+            List<StringCatch> actualScs = new ArrayList<>();
+            for(StringCatch sc: stringCatches){
+                if (sc.getBund()==bund){
+                    actualScs.add(sc);
+                }
+            }
+            result.put(bund, actualScs);
+        }
+        return result;
+    }
     public int getDifficulty() {
         return difficulty;
     }

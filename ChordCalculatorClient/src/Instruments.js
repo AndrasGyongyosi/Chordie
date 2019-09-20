@@ -74,7 +74,7 @@ class Instruments extends React.Component {
     render(){
         const {loaded, instruments, newInstrumentalStrings} = this.state;
         return (<React.Fragment>
-                    <nav className="navbar navbar-expand-sm navbar-light bg-light">
+                    <nav className="navbar navbar-expand-sm navbar-light">
                         <button className="navbar-toggler" type="button" data-toggle="collapse"
                                 data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                                 aria-expanded="false" aria-label="Toggle navigation">

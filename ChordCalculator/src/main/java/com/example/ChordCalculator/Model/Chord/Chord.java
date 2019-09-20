@@ -73,18 +73,21 @@ public class Chord {
     //recursive!
     public void getAllCatches (List<MString> strings, LinkedHashMap<MString, HashMap<Integer, Sound>> options, Instrumental instrument, List<StringCatch> stringCatches, List<List<StringCatch>> futureResult){
         MString actualString = strings.get(0);
-        List<List<StringCatch>> result;
-        //System.out.println("Remaining Strings: "+strings.size());
+
         for (Map.Entry<Integer, Sound> entry : options.get(actualString).entrySet()) {
             //last mString
             StringCatch stringCatch = new StringCatch(actualString, entry.getKey());
             List<StringCatch> scResult = new ArrayList<StringCatch>(stringCatches) {{
                 add(stringCatch);
             }};
-            //System.out.println("Actual catch strings: "+scResult.size());
+
             if (strings.size() == 1) {
-                futureResult.add(scResult);
-                //System.out.println("result find.");
+                //there is possible getting more result with the same root. But we dont need catches references to the same stringcatch.
+                List<StringCatch> uniqueScResult = new ArrayList<>();
+                for(StringCatch sc: scResult){
+                    uniqueScResult.add(new StringCatch(sc));
+                }
+                futureResult.add(uniqueScResult);
             }
             //other mStrings
             else {
@@ -114,13 +117,40 @@ public class Chord {
             Catch actCatch = new Catch(this, instrument, scs, 0);
             catches.add(new Catch(this, instrument, scs, 0));
         }
-        //System.out.println("Catches: "+catches.size());
         List<Catch> validatedCatches = validateCatches(catches, instrument);
-        //System.out.println("ValidatedCatches: "+validatedCatches.size());
+        validatedCatches = addFingerNumbers(validatedCatches);
+
         return validatedCatches;
     }
+    private List<Catch> addFingerNumbers(List<Catch> catches){
+        List<Catch> result = new ArrayList<>();
+        for (Catch actualCatch : catches){
+            int fingerNumber = 1;
+            boolean isFirst = true;
+            Map<Integer, List<StringCatch>> SCHashByBund = actualCatch.getStringCatchesByBund();
+            for(Map.Entry entry: SCHashByBund.entrySet()){
+                List<StringCatch> scs = (List<StringCatch>)entry.getValue();
+                if (scs.size()>0) {
+                    //iterate backwards through the list
+                    ListIterator listIterator = scs.listIterator(scs.size());
+                    while(listIterator.hasPrevious()) {
+                        StringCatch stringCatch = (StringCatch) listIterator.previous();
+                        stringCatch.setFinger(isFirst ? fingerNumber : fingerNumber++);
+                    }
+                    if (isFirst) {
+                        fingerNumber++;
+                        isFirst = false;
+                    }
+                }
+            }
+            if (fingerNumber<=5){
+                result.add(actualCatch);
+            }
+        }
+        return result;
+    }
 
-    public List<Catch> validateCatches(List<Catch> catches, Instrumental instrument){
+    private List<Catch> validateCatches(List<Catch> catches, Instrumental instrument){
         List<Catch> result = new ArrayList();
         for(Catch catcha : catches){
             List<Sound> usedSounds = new ArrayList(sounds);
@@ -136,7 +166,7 @@ public class Chord {
                 }
             }
 
-            System.out.println(baseSound.getSoundName());
+            //System.out.println(baseSound.getSoundName());
             //System.out.println(stringCatches.get(lastUsedStringIndex).getSound());
             if (usedSounds.size()==0 && instrument.isValid(catcha)){
                 if (stringCatches.get(lastUsedStringIndex).getSound().equals(baseSound))
