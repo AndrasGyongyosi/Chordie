@@ -249,16 +249,23 @@ public class ChordieController {
     }
 
     @RequestMapping(path="/instrumental/{userToken:.+}")
-    public List<HashMap<String, String>> getInstrumentalsByUser(@PathVariable String userToken){
+    public List<HashMap<String, Object>> getInstrumentalsByUser(@PathVariable String userToken) {
         List result = new ArrayList();
         User user = userRepository.findByUserToken(userToken);
         List<Instrumental> publicInstruments = instrumentalRepository.findAllByPublc(true);
-        if (user!=null)
+        if (user != null)
             publicInstruments.addAll(user.getInstrumentals());
-        for(Instrumental instrument : publicInstruments){
-            HashMap<String,String> subResult = new HashMap<String,String>();
+        for (Instrumental instrument : publicInstruments) {
+            HashMap<String, Object> subResult = new HashMap<String, Object>();
             subResult.put("name", instrument.getName());
             subResult.put("token", instrument.getInstrumentToken());
+            subResult.put("bundNumber", instrument.getBundNumber());
+            List<HashMap> strings = new ArrayList();
+            for (MString actualString : instrument.getMStrings())
+            {
+                strings.add(new HashMap(){{put("value", actualString.getSound().name());put("name",actualString.getSound().getSoundName());}});
+            }
+            subResult.put("strings", strings);
             result.add(subResult);
         }
         return result;
@@ -267,6 +274,49 @@ public class ChordieController {
     public boolean addNewInstrumentForUser(@RequestBody LinkedHashMap<String, Object> params ){
         Instrumental newInstr = new Instrumental();
         //System.out.println((String) params.get("user"));
+        User owner = userRepository.findByUserToken((String) params.get("user"));
+        List<Instrumental> ownerInstruments = owner.getInstrumentals();
+        ownerInstruments.add(newInstr);
+        owner.setInstrumentals(ownerInstruments);
+
+        newInstr.setUsers(new ArrayList<User>(){{add(owner);}});
+
+
+        List<Rule> rules = new ArrayList<Rule>();
+        rules.add(new MinStringsRule(newInstr, 4));
+        rules.add(new MaxBundDifRule(newInstr, Integer.parseInt((String)params.get("maxBundDif"))));
+        rules.add(new StringOrderIsConstantRule(newInstr,1));
+        rules.add(new NeighborStringDifSoundRule(newInstr));
+
+        newInstr.setRules(rules);
+        newInstr.setName((String) params.get("instrumentalName"));
+        newInstr.setBundNumber(14);
+
+
+
+
+        instrumentalRepository.save(newInstr);
+
+        int order = 0;
+        for(LinkedHashMap<String, String> mString : (List<LinkedHashMap<String, String>>)params.get("strings")){
+            try {
+                //TODO in future : octave specialize
+                MString newString = new MString(Sound.valueOf(mString.get("value")), -2, newInstr, order++);
+                mStringRepository.save(newString);
+            } catch(InaudibleVoiceException e){
+                e.printStackTrace();
+                return false;
+            }
+        }
+        //for(Map.Entry row : params.entrySet())
+        //    System.out.println("key: "+row.getKey()+", value: "+row.getValue());
+        return true;
+    }
+
+    @RequestMapping(path="/editinstrument/{instrumentToken}", method= RequestMethod.POST)
+    public boolean editInstrumentForUser(@RequestBody LinkedHashMap<String, Object> params, @PathVariable String instrumentToken){
+        Instrumental newInstr = instrumentalRepository.findByInstrumentToken(instrumentToken);
+
         User owner = userRepository.findByUserToken((String) params.get("user"));
         List<Instrumental> ownerInstruments = owner.getInstrumentals();
         ownerInstruments.add(newInstr);
@@ -307,6 +357,18 @@ public class ChordieController {
         //for(Map.Entry row : params.entrySet())
         //    System.out.println("key: "+row.getKey()+", value: "+row.getValue());
         return true;
+    }
+
+
+    @RequestMapping(path="/deleteinstrument/{instrumentToken}", method= RequestMethod.DELETE)
+    public String deleteInstrument(@PathVariable String instrumentToken){
+        Instrumental instrument = instrumentalRepository.findByInstrumentToken(instrumentToken);
+        if (instrument == null) return "Instrument doesnt exist.";
+        if (instrument.isPublc()) return "Public instrument cannot be deleted";
+
+        instrumentalRepository.delete(instrument);
+
+        return "Instrument deleted.";
     }
     @RequestMapping(path="/strings/{instrumentToken}")
     public List<String> getStrings(@PathVariable String instrumentToken){

@@ -11,12 +11,11 @@ class ChordView extends React.Component {
         return (
             <React.Fragment>
                 {(stringLoaded && catchLoaded) ? (
-                    catches.map(catcha => {
+                    catches.slice(0,10).map(catcha => {
                             return (
                                 <Catch catcha={catcha} strings={strings} bundDif={bundDif}></Catch>
                             );
-                    })
-                    //<h1>asd</h1>
+                    })  
                 ) : (
                     <h3>Loading...</h3>
                 )}
@@ -218,19 +217,19 @@ class ChordChooserList extends React.Component{
                         <Instruments chordChooserList={this}></Instruments>
                         <div>
                             <div className="d-flex bd-highlight">
-                                <input className="form-control centered" id="freeTextChord" type="text" placeholder="Type chord!"
+                                <input className="form-control centered bgPrim" id="freeTextChord" type="text" placeholder="Type chord!"
                                        onKeyUp={() => this.sendFreeTextChord()} autoFocus={true} ></input>
-                                <select className="form-control p-2 flex-fill bd-highlight" onChange={this.baseSoundChange} value={this.state.value} id="baseSoundSelect">
+                                <select className="form-control p-2 flex-fill bd-highlight bgPrim" onChange={this.baseSoundChange} value={this.state.value} id="baseSoundSelect">
                                     {baseSounds.map((bs) =>
                                         <option  value={bs.name}>{bs.label}</option>
                                     )}
                                 </select>
-                                <select className="form-control p-2 flex-fill bd-highlight" onChange={this.baseTypeChange} value={this.state.value} id="baseTypeSelect">
+                                <select className="form-control p-2 flex-fill bd-highlight bgPrim" onChange={this.baseTypeChange} value={this.state.value} id="baseTypeSelect">
                                     {baseTypes.map((bt) =>
                                         <option  value={bt.name}>{bt.label}</option>
                                     )}
                                 </select>
-                                <select className="form-control p-2 flex-fill bd-highlight" onChange={this.chordTypeChange} value={this.state.value} id="chordTypeSelect">
+                                <select className="form-control p-2 flex-fill bd-highlight bgPrim" onChange={this.chordTypeChange} value={this.state.value} id="chordTypeSelect">
                                     {chordTypes.map((ct) =>
                                         <option  value={ct.name}>{ct.label}</option>
                                     )}

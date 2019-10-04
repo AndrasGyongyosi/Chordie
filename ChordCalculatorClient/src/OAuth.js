@@ -52,6 +52,7 @@ export default class OAuth extends Component {
                     onSuccess={responseGoogle}
                     onFailure={responseGoogleFailure}
                     cookiePolicy={'single_host_origin'}
+                    className="bgSec"
                     />)
             :
                     (   <GoogleLogout

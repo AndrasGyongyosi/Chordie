@@ -104,15 +104,6 @@ public class Instrumental {
         this.id = id;
     }
 
-    public List<MString> getmStrings() {
-
-        return mStrings;
-    }
-
-    public void setmStrings(List<MString> mStrings) {
-        this.mStrings = mStrings;
-    }
-
     public List<User> getUsers() {
         return users;
     }

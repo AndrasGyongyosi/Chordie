@@ -16,6 +16,23 @@ body {
   background: var(--backgroundPrimary);
   color: var(--foreground);
 }
+.minibutton{
+  padding: 0.25rem;
+}
+
+.btn-outline-success{
+  border-color: var(--foreground);
+  color: var(--buttons);
+}
+.bgPrim{
+  background-color: var(--backgroundPrimary);
+  color: var(--foreground);
+}
+.bgSec{
+  background-color: var(--backgroundSecondary);
+  color: var(--foreground);
+}
+
 nav{
   background-color: var(--backgroundSecondary);
 }
