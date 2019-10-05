@@ -38,7 +38,7 @@ class Instruments extends React.Component {
     editInstrument(instrumental){
         console.log("edit "+instrumental.name);
         this.setState({editableInstrument: Object.assign({},instrumental),
-                            newInstrumentalStrings: Object.assign([],instrumental.strings)});
+                            newInstrumentalStrings: Object.assign([],instrumental.strings).reverse()})
     }
     removeInstrument(instrumental){
         let deleteInstrumentURL = myURLs.getURL()+"deleteinstrument/"+instrumental.token;
@@ -182,11 +182,11 @@ class Instruments extends React.Component {
                             </div>
                             <div className="col-lg-3">
                             <label htmlFor="maxBundDif">Maximum bund difference</label>
-                            <input type="number" className="form-control" id="maxBundDif" placeholder="Maximum bund different" defaultValue={this.state.editableInstrument ? this.state.editableInstrument.maxBundDif: " "}/>
+                            <input type="number" className="form-control" id="maxBundDif" placeholder="Maximum bund different" defaultValue={this.state.editableInstrument ? this.state.editableInstrument.maxBundDif: ""}/>
                             </div>
                             <div className="col-lg-3">
                             <label htmlFor="bundNumber">Bund number</label>
-                            <input type="number" className="form-control" id="bundNumber" placeholder="Bund number" defaultValue={this.state.editableInstrument ? this.state.editableInstrument.bundNumber: " "}/>
+                            <input type="number" className="form-control" id="bundNumber" placeholder="Bund number" defaultValue={this.state.editableInstrument ? this.state.editableInstrument.bundNumber: ""}/>
                             </div>
                             </div>
                             <div>

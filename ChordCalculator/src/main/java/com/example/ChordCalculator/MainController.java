@@ -3,7 +3,7 @@ package com.example.ChordCalculator;
 import com.example.ChordCalculator.Exceptions.InaudibleVoiceException;
 import com.example.ChordCalculator.Model.Instrumental;
 import com.example.ChordCalculator.Model.MString;
-import com.example.ChordCalculator.Model.Repositories.InstrumentalRepository;
+import com.example.ChordCalculator.Model.Repositories.InstrumentRepository;
 import com.example.ChordCalculator.Model.Repositories.MStringRepository;
 import com.example.ChordCalculator.Model.Repositories.RuleRepository;
 import com.example.ChordCalculator.Model.Repositories.UserRepository;
@@ -19,7 +19,7 @@ import java.util.List;
 @Controller
 public class MainController {
     @Autowired
-    private  InstrumentalRepository instrumentalRepository;
+    private InstrumentRepository instrumentRepository;
 
     @Autowired
     private MStringRepository mStringRepository;
@@ -57,7 +57,7 @@ public class MainController {
     public String test() {
         mStringRepository.deleteAll();
         ruleRepository.deleteAll();
-        instrumentalRepository.deleteAll();
+        instrumentRepository.deleteAll();
         userRepository.deleteAll();
         Instrumental guitar = new Instrumental();
         Instrumental ukulele = new Instrumental();
@@ -85,8 +85,8 @@ public class MainController {
         //guitar.setUsers(new ArrayList(){{add(newUser);}});
         //ukulele.setUsers(new ArrayList(){{add(newUser);}});
 
-        instrumentalRepository.save(ukulele);
-        instrumentalRepository.save(guitar);
+        instrumentRepository.save(ukulele);
+        instrumentRepository.save(guitar);
 
         try {
             //guitar

@@ -7,5 +7,4 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface MStringRepository extends CrudRepository<MString, Integer> {
-    public void deleteAllByInstrument(Instrumental instrumental);
 }

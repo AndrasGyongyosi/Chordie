@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface InstrumentalRepository extends CrudRepository<Instrumental, Integer> {
+public interface InstrumentRepository extends CrudRepository<Instrumental, Integer> {
     Instrumental findByUsers_email(String email);
     Instrumental findByInstrumentToken(String instrumentToken);
     Instrumental findByName(String name);

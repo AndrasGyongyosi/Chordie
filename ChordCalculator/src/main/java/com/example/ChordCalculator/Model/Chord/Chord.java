@@ -3,16 +3,9 @@ package com.example.ChordCalculator.Model.Chord;
 import com.example.ChordCalculator.Model.*;
 import com.example.ChordCalculator.Model.CatchPerfection;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import java.util.*;
 
-@Entity
 public class Chord {
-    @Id
-    @GeneratedValue
-    private int id;
 
     private ArrayList<Sound> sounds;
     private ChordType chordType;
@@ -181,14 +174,6 @@ public class Chord {
 
     public String getFullName(){
         return baseSound.getSoundName()+" "+baseType.getName()+" "+chordType.getAliases().get(0);
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public ArrayList<Sound> getSounds() {
