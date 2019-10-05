@@ -25,8 +25,8 @@ class Instruments extends React.Component {
             }).catch(error => this.setState({error, loaded: false}));
     }
     addNewInstrumentString(){
-        var sel = document.getElementById("baseSoundSelect");
-        var refreshedStrings = this.state.newInstrumentalStrings;
+        let sel = document.getElementById("baseSoundSelect");
+        let refreshedStrings = this.state.newInstrumentalStrings;
         refreshedStrings.push({'name' : sel.options[sel.selectedIndex].text,
                                 'value' : sel.options[sel.selectedIndex].value,
         });
@@ -37,15 +37,15 @@ class Instruments extends React.Component {
     }
     editInstrument(instrumental){
         console.log("edit "+instrumental.name);
-        this.setState({editableInstrument: instrumental,
-                            newInstrumentalStrings: instrumental.strings});
+        this.setState({editableInstrument: Object.assign({},instrumental),
+                            newInstrumentalStrings: Object.assign([],instrumental.strings)});
     }
     removeInstrument(instrumental){
         let deleteInstrumentURL = myURLs.getURL()+"deleteinstrument/"+instrumental.token;
         axios.delete(deleteInstrumentURL).then(res=>{
+            window.location.reload();
             alert(res.data);
-        })
-        
+        });  
     }
     newInstrument(){
 
@@ -55,6 +55,7 @@ class Instruments extends React.Component {
             "instrumentalName": document.getElementById("instrumentName").value,
             "maxBundDif": document.getElementById("maxBundDif").value,
             "strings": this.ancestor.state.newInstrumentalStrings,
+            "bundNumber": document.getElementById("bundNumber").value
         };
         this.ancestor.setState({newInstrumentalStrings : [] });
         axios.post(newInstrumentURL, passedParameters)
@@ -62,12 +63,14 @@ class Instruments extends React.Component {
                 if (res){
                     console.log("New instrumental added.");
                     var newInstruments = this.ancestor.state.instruments;
-                    newInstruments.push({"name":passedParameters.instrumentalName})
-                    this.ancestor.setState({instruments:newInstruments})
+                    newInstruments.push({"name":passedParameters.instrumentalName});
+                    this.ancestor.setState({instruments:newInstruments});
+                    window.location.reload();
                 }
                 else {
                     console.log("Instrumental adding failed.");
                 }
+                
         })
     }
     canceledModal(){
@@ -77,15 +80,20 @@ class Instruments extends React.Component {
     handleReject = () => {
         this.setState({newInstrumentalStrings : [], editableInstrument: undefined});
         console.log("Modal cancelled.");
+        console.log(this);
     };
     handleAccept = () => {
         let editInstrumentURL = myURLs.getURL()+"editinstrument/"+this.state.editableInstrument.token;
         let passedParameters = {
-            //TODO
+            "instrumentalName": document.getElementById("instrumentName").value,
+            "maxBundDif": document.getElementById("maxBundDif").value,
+            "bundNumber": document.getElementById("bundNumber").value,
+            "strings": this.state.newInstrumentalStrings
         };
         axios.post(editInstrumentURL, passedParameters)
             .then(res=>{
                 console.log(res);
+                window.location.reload();
         });
 
 
@@ -97,7 +105,6 @@ class Instruments extends React.Component {
         if(index>-1){
             strings.splice(index,1);
         }
-        //console.log(strings);
         this.setState({newInstrumentalStrings: strings});
     }
     render(){
@@ -116,9 +123,9 @@ class Instruments extends React.Component {
                                         instrumental =>{
                                         return (
                                                 <span>
-                                                    <button type="button" class="btn btn-warning btn-sm minibutton" onClick={()=>this.editInstrument(instrumental)}><i class="fa fa-edit"></i></button>
+                                                    <button type="button" class="btn btn-warning btn-sm minibutton" onClick={()=>this.editInstrument(instrumental)} hidden={instrumental.public}><i class="fa fa-edit"></i></button>
                                                     <button className="btn btn-outline-success nav-item" onClick={() =>this.setInstrument(instrumental)} type="button">{instrumental.name}</button>                                                    
-                                                    <button type="button" class="btn btn-danger btn-sm minibutton" onClick={()=>this.removeInstrument(instrumental)}><i class="fa fa-close"></i></button>
+                                                    <button type="button" class="btn btn-danger btn-sm minibutton" onClick={()=>this.removeInstrument(instrumental)} hidden={instrumental.public}><i class="fa fa-close"></i></button>
                                                 </span>
                                         );
                                         })}
@@ -131,13 +138,17 @@ class Instruments extends React.Component {
                         <Dashboard title="New" onAccept={this.newInstrument} onReject={this.canceledModal} ancestor={this}>
                             <div className="container">
                             <div className="row">
-                            <div className="col-lg-5">
+                            <div className="col-lg-6">
                                 <label htmlFor="instumentName">Instrument name</label>
                                 <input type="text" className="form-control" id="instrumentName" placeholder="Instrument name" autofocus="true"/>
                             </div>
-                            <div className="col-lg-5">
+                            <div className="col-lg-3">
                             <label htmlFor="maxBundDif">Maximum bund difference</label>
                             <input type="number" className="form-control" id="maxBundDif" placeholder="Maximum bund different" defaultValue="4"/>
+                            </div>
+                            <div className="col-lg-3">
+                            <label htmlFor="bundNumber">Bund number</label>
+                            <input type="number" className="form-control" id="bundNumber" placeholder="Bund number" defaultValue="14"/>
                             </div>
                             </div>
                             <div>
@@ -165,13 +176,17 @@ class Instruments extends React.Component {
                         <ModalDialog title="Edit" show={this.state.editableInstrument!=undefined} handleAccept={this.handleAccept} handleReject={this.handleReject} >
                             <div className="container">
                             <div className="row">
-                            <div className="col-lg-5">
+                            <div className="col-lg-6">
                                 <label htmlFor="instumentName">Instrument name</label>
-                                <input type="text" className="form-control" id="instrumentName" placeholder="Instrument name" autofocus="true" value={this.state.editableInstrument ? this.state.editableInstrument.name: " "}/>
+                                <input type="text" className="form-control" id="instrumentName" placeholder="Instrument name" autofocus="true" defaultValue={this.state.editableInstrument ? this.state.editableInstrument.name: " "}/>
                             </div>
-                            <div className="col-lg-5">
+                            <div className="col-lg-3">
                             <label htmlFor="maxBundDif">Maximum bund difference</label>
-                            <input type="number" className="form-control" id="maxBundDif" placeholder="Maximum bund different" defaultValue="4"/>
+                            <input type="number" className="form-control" id="maxBundDif" placeholder="Maximum bund different" defaultValue={this.state.editableInstrument ? this.state.editableInstrument.maxBundDif: " "}/>
+                            </div>
+                            <div className="col-lg-3">
+                            <label htmlFor="bundNumber">Bund number</label>
+                            <input type="number" className="form-control" id="bundNumber" placeholder="Bund number" defaultValue={this.state.editableInstrument ? this.state.editableInstrument.bundNumber: " "}/>
                             </div>
                             </div>
                             <div>
@@ -187,7 +202,7 @@ class Instruments extends React.Component {
                             {newInstrumentalStrings.map(
                                 string =>{
                                     return(
-                                        <div className="col-lg-2">
+                                        <div className="col-lg-2 col-md-2">
                                             <p>{string.name}</p>
                                             <button onClick={()=>this.deleteString(string)}>Delete</button>
                                         </div>)

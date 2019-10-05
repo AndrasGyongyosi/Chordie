@@ -4,10 +4,7 @@ import com.example.ChordCalculator.Model.Catch;
 import com.example.ChordCalculator.Model.Instrumental;
 import com.example.ChordCalculator.Model.StringCatch;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
@@ -39,5 +36,10 @@ public abstract class Rule {
 
     public void setValue(int value) {
         this.value = value;
+    }
+
+    @PreRemove
+    private void beforeRemove(){
+        instrument = null;
     }
 }

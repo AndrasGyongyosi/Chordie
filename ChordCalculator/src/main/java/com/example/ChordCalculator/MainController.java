@@ -5,6 +5,7 @@ import com.example.ChordCalculator.Model.Instrumental;
 import com.example.ChordCalculator.Model.MString;
 import com.example.ChordCalculator.Model.Repositories.InstrumentalRepository;
 import com.example.ChordCalculator.Model.Repositories.MStringRepository;
+import com.example.ChordCalculator.Model.Repositories.RuleRepository;
 import com.example.ChordCalculator.Model.Repositories.UserRepository;
 import com.example.ChordCalculator.Model.Rule.*;
 import com.example.ChordCalculator.Model.Sound;
@@ -25,6 +26,9 @@ public class MainController {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    RuleRepository ruleRepository;
 
     @RequestMapping(value = "/")
     public String signPage() {
@@ -52,23 +56,17 @@ public class MainController {
     @RequestMapping(value = "/init")
     public String test() {
         mStringRepository.deleteAll();
+        ruleRepository.deleteAll();
         instrumentalRepository.deleteAll();
         userRepository.deleteAll();
         Instrumental guitar = new Instrumental();
         Instrumental ukulele = new Instrumental();
-
-        //User newUser = new User("gyongy96@gmail.com");
-        //newUser.setInstrumentals(new ArrayList(){{add(guitar);add(ukulele);}});
-        //userRepository.save(newUser);
-
-
 
         List<Rule> guitarRules = new ArrayList<Rule>();
         guitarRules.add(new MinStringsRule(guitar, 4));
         guitarRules.add(new MaxBundDifRule(guitar, 4));
         guitarRules.add(new StringOrderIsConstantRule(guitar,1));
         guitarRules.add(new NeighborStringDifSoundRule(guitar));
-        guitarRules.add(new FirstSoundIsRootRule(guitar));
 
         List<Rule> ukuleleRules = new ArrayList<Rule>();
         ukuleleRules.add(new MinStringsRule(ukulele, 4));
@@ -83,7 +81,7 @@ public class MainController {
         guitar.setRules(guitarRules);
         ukulele.setRules(ukuleleRules);
         guitar.setBundNumber(14);
-        ukulele.setBundNumber(14);
+        ukulele.setBundNumber(12    );
         //guitar.setUsers(new ArrayList(){{add(newUser);}});
         //ukulele.setUsers(new ArrayList(){{add(newUser);}});
 
