@@ -23,6 +23,7 @@ export default class OAuth extends Component {
                     if (res){
                         console.log("New User added.");
                         this.props.ancestor.setToken(response.tokenId, response.profileObj.email);
+                        window.location.reload();
                     }
                     else {
                         console.log("User adding failed.");
@@ -39,6 +40,7 @@ export default class OAuth extends Component {
         const logout = () => {
             console.log("Logout");
             this.props.ancestor.setToken(null, "nobody");
+            window.location.reload();
         }
         const logoutfail = () => {
             console.log("Logout Fail");

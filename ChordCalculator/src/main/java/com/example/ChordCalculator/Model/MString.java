@@ -2,10 +2,7 @@ package com.example.ChordCalculator.Model;
 
 import com.example.ChordCalculator.Exceptions.InaudibleVoiceException;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.util.ArrayList;
 
 @Entity
@@ -101,5 +98,10 @@ public class MString {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    @PreRemove
+    private void beforeRemove(){
+        instrument = null;
     }
 }

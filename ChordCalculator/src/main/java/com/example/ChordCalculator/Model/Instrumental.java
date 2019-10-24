@@ -22,7 +22,7 @@ public class Instrumental {
         users = new ArrayList();
         publc = false;
     }
-    @OneToMany(mappedBy = "instrument", cascade = CascadeType.ALL,fetch=FetchType.EAGER)
+    @OneToMany(mappedBy = "instrument", cascade = CascadeType.ALL,fetch=FetchType.EAGER, orphanRemoval=true)
     private List<MString> mStrings;
 
     @ManyToMany(mappedBy = "instrumentals")
@@ -31,7 +31,7 @@ public class Instrumental {
 
     private java.lang.String name;
 
-    @OneToMany(mappedBy="instrument", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy="instrument", cascade = CascadeType.ALL, orphanRemoval=true)
     private List<Rule> rules;
     private int bundNumber;
 
@@ -50,7 +50,7 @@ public class Instrumental {
     }
 
     public void setMStrings(List<MString> strings) {
-        this.mStrings = strings;
+        this.mStrings = new ArrayList(strings);
     }
     public boolean isValid(List<StringCatch> stringCatches) throws Exception{
         //System.out.println("strings ok?");
@@ -85,7 +85,7 @@ public class Instrumental {
     }
 
     public void setRules(List<Rule> rules) {
-        this.rules = rules;
+        this.rules = new ArrayList(rules);
     }
 
     public int getBundNumber() {
