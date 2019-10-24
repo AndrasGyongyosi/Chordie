@@ -48,9 +48,16 @@ public class MainController {
 
         return "oauth_login";
     }*/
-
+    @RequestMapping(value = "/reinit")
+    public String reInit(){
+        mStringRepository.deleteAll();
+        instrumentalRepository.deleteAll();
+        userRepository.deleteAll();
+        init();
+        return "index";
+    }
     @RequestMapping(value = "/init")
-    public String test() {
+    public String init() {
         mStringRepository.deleteAll();
         instrumentalRepository.deleteAll();
         userRepository.deleteAll();
