@@ -3,7 +3,7 @@ import './App.css';
 import axios from 'axios';
 import Instruments from "./Instruments";
 import myURLs from './myURLs.js';
-
+import ButtonDropDown from './ButtonDropDown';
 
 class ChordView extends React.Component {
     render() {
@@ -84,12 +84,11 @@ class Catch extends React.Component{
         var max = this.getMaxBund(min);
         return(
             <React.Fragment>
-                <div className="col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                <div className="col-sm-10 col-md-10 col-lg-5 col-xl-5">
                 <table cellSpacing="0" cellPadding="0">
                     <thead>
                     <tr>
                         <td>
-
                         </td>
                         <td>
 
@@ -104,7 +103,6 @@ class Catch extends React.Component{
                         return(
                             <tr>
                                 <td>
-
                                 </td>
                                 <td>
                                 {
@@ -134,6 +132,9 @@ class Catch extends React.Component{
                     </tbody>
                 </table>
                 <hr/>
+                </div>
+                <div className="col-sm-2 col-md-2 col-lg-1 col-xl-1 left">
+                <ButtonDropDown></ButtonDropDown>
                 </div>
             </React.Fragment>
         )

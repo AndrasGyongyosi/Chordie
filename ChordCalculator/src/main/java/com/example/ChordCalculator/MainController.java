@@ -55,7 +55,7 @@ public class MainController {
     @RequestMapping(value = "/reinit")
     public String reInit(){
         mStringRepository.deleteAll();
-        instrumentalRepository.deleteAll();
+        instrumentRepository.deleteAll();
         userRepository.deleteAll();
         init();
         return "index";

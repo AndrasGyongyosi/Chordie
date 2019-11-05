@@ -18,8 +18,14 @@ body {
 }
 .minibutton{
   padding: 0.25rem;
+  font-size: 10px;
 }
-
+.left{
+  text-align: left;
+}
+.right{
+  text-align: right;
+}
 .btn-outline-success{
   border-color: var(--foreground);
   color: var(--buttons);
