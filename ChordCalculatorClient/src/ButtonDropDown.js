@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import CatchList from './CatchList';
+import myURLs from './myURLs.js';
+import axios from "axios";
+
 
 class ButtonDropDown extends Component {
     constructor() {
@@ -7,13 +10,17 @@ class ButtonDropDown extends Component {
         
         this.state = {
           showMenu: false,
-          lists: ["MyList1", "MyList2"]
+          favoritLists : []
         };
         
         this.showMenu = this.showMenu.bind(this);
         this.closeMenu = this.closeMenu.bind(this);
       }
       
+      componentDidMount(){
+        this.getLists();
+      }
+
       showMenu(event) {
         event.preventDefault();
         
@@ -32,7 +39,34 @@ class ButtonDropDown extends Component {
           
         }
       }
-    
+      getLists(){
+        if (this.props.token!=null){
+        let listURL = myURLs.getURL() + "favorit/lists/"+this.props.token;
+                axios.get(encodeURI(listURL))
+                    .then(res => {
+                        console.log(res.data);
+                        this.setState(
+                            {
+                                favoritLists: res.data
+                            });
+
+                    }).catch(error => this.setState({error, catchLoaded: false}));
+            }
+          }
+      newList(){
+        let newListURL = myURLs.getURL() + "favorit/newlist"; 
+        let passedParameters = {
+          "name": "example",
+          "userToken": this.props.token,
+      };
+      console.log(passedParameters);
+      axios.post(newListURL, passedParameters)
+          .then(res=>{
+              console.log(res);
+              window.location.reload();
+      });
+      }
+
       render() {
         return (
           <div>
@@ -49,10 +83,10 @@ class ButtonDropDown extends Component {
                       this.dropdownMenu = element;
                     }}
                   >
-                      {this.state.lists.map(list =>
-                      <CatchList listName={list}></CatchList>
+                      {this.state.favoritLists.map(list => 
+                      <CatchList listName={list.name}></CatchList>
                       )}
-                    <button className="minibutton"> NewList </button>
+                    <button className="minibutton" onClick={()=>this.newList()}> New List... </button>
                   </div>
                 )
                 : (

@@ -7,13 +7,13 @@ import ButtonDropDown from './ButtonDropDown';
 
 class ChordView extends React.Component {
     render() {
-        const {stringLoaded, catchLoaded, catches, strings, bundDif, favoritLists} = this.props;
+        const {stringLoaded, catchLoaded, catches, strings, bundDif, favoritLists, token} = this.props;
         return (
             <React.Fragment>
                 {(stringLoaded && catchLoaded) ? (
                     catches.slice(0,10).map(catcha => {
                             return (
-                                <Catch catcha={catcha} strings={strings} bundDif={bundDif} favoritLists={favoritLists}></Catch>
+                                <Catch catcha={catcha} strings={strings} bundDif={bundDif} favoritLists={favoritLists} token={token}></Catch>
                             );
                     })  
                 ) : (
@@ -79,7 +79,7 @@ class Catch extends React.Component{
     }
 
     render(){
-        const{catcha, strings} = this.props;
+        const{catcha, strings, favoritLists, token} = this.props;
         var min = this.getMinBund(catcha.fingerPoints);
         var max = this.getMaxBund(min);
         return(
@@ -133,8 +133,8 @@ class Catch extends React.Component{
                 </table>
                 <hr/>
                 </div>
-                <div className="col-sm-2 col-md-2 col-lg-1 col-xl-1 left">
-                <ButtonDropDown favoritLists = {this.props.favoritLists}></ButtonDropDown>
+                <div className="col-sm-2 col-md-2 col-lg-1 col-xl-1 left" hidden={token==undefined}>
+                <ButtonDropDown favoritLists = {favoritLists} token = {token}></ButtonDropDown>
                 </div>
             </React.Fragment>
         )
@@ -158,8 +158,8 @@ class ChordChooserList extends React.Component{
     constructor(props) {
         super(props);
         this.ancestor = props.ancestor;
-        this.chordComponentURL = myURLs.getURL()+"chordComponents/";
-        this.freeTextChordURL = myURLs.getURL()+"chordText/";
+        this.chordComponentURL = myURLs.getURL()+"chord/components/";
+        this.freeTextChordURL = myURLs.getURL()+"chord/text/";
         this.baseSoundChange = this.baseSoundChange.bind(this);
         this.baseTypeChange = this.baseTypeChange.bind(this);
         this.chordTypeChange = this.chordTypeChange.bind(this);
@@ -286,7 +286,7 @@ class ChordChooserPage extends React.Component {
 
     catchQuery(){
             if (this.isValid()) {
-            let catchURL = myURLs.getURL() + "catch/" + this.state.instrumental.token + "/" + this.state.baseSound + "/" + this.state.baseType + "/" + this.state.chordType;
+            let catchURL = myURLs.getURL() + "chord/catch/" + this.state.instrumental.token + "/" + this.state.baseSound + "/" + this.state.baseType + "/" + this.state.chordType;
                 axios.get(catchURL)
                     .then(res => {
                         console.log(res.data);
@@ -302,7 +302,7 @@ class ChordChooserPage extends React.Component {
     }
     stringQuery(){
         if (this.state.instrumental) {
-            let stringURL = myURLs.getURL() + "strings/" + this.state.instrumental.token;
+            let stringURL = myURLs.getURL() + "instrument/strings/" + this.state.instrumental.token;
             axios.get(stringURL)
                 .then(res => {
                     this.setState(
@@ -321,7 +321,7 @@ class ChordChooserPage extends React.Component {
                 <div className="container">
                     <div className="row">
                         {( this.isValid()) ?
-                            <ChordView catches={catches} strings={strings} catchLoaded={catchLoaded} stringLoaded={stringLoaded} bundDif = {bundDif} favoritLists = {favoritLists}></ChordView>
+                            <ChordView catches={catches} strings={strings} catchLoaded={catchLoaded} stringLoaded={stringLoaded} bundDif = {bundDif} favoritLists = {favoritLists} token={this.props.token}></ChordView>
                             : (<h3> </h3>)}
                     </div>
                 </div>

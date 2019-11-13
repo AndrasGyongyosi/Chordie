@@ -8,14 +8,14 @@ export default class OAuth extends Component {
         const responseGoogle = (response) => {
             console.log("LoginSuccess");
 
-            let newUserURL = myURLs.getURL() + "newUser/";
+            let newUserURL = myURLs.getURL() + "user/new";
             console.log(response);
             let passedParameters = {
                 "email": response.profileObj.email,
                 "token": response.tokenId,
             };
             //this.setState({"img":response.profileObj.imageURL})
-            this.state.img=response.profileObj.imageURL;
+            //this.state.img=response.profileObj.imageURL;
             console.log(passedParameters);
             axios.post(newUserURL, passedParameters)
                 .then(res=>{

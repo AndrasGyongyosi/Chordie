@@ -15,7 +15,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin()
-@RequestMapping("favorit")
+@RequestMapping("/favorit")
 public class FavoritController {
     @Autowired
     UserRepository userRepository;
@@ -24,7 +24,7 @@ public class FavoritController {
     FavoritCatchListRepository favoritCatchListRepository;
 
 
-    @RequestMapping(path="/lists/{userToken.+}", method= RequestMethod.GET)
+    @RequestMapping(path="/lists/{userToken:.+}", method= RequestMethod.GET)
     public List<HashMap<String, Object>> getLists(@PathVariable String userToken) {
         List<HashMap<String, Object>> result = Lists.newArrayList();
 
@@ -42,7 +42,7 @@ public class FavoritController {
         return result;
     }
 
-    @RequestMapping(path="/newList", method= RequestMethod.POST)
+    @RequestMapping(path="/newlist", method= RequestMethod.POST)
     public boolean addNewList(@RequestBody LinkedHashMap<String, Object> params ) {
         User user = userRepository.findByUserToken((String) params.get("userToken"));
 

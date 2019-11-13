@@ -12,7 +12,7 @@ class Instruments extends React.Component {
             newInstrumentalStrings: [],
     };
     componentDidMount() {
-        let instrumentURL = myURLs.getURL() + "instrumental/" + this.props.chordChooserList.ancestor.props.token;
+        let instrumentURL = myURLs.getURL() + "instrument/" + this.props.chordChooserList.ancestor.props.token;
         axios.get(encodeURI(instrumentURL))
             .then(res => {
                 console.log(res.data);
@@ -41,7 +41,7 @@ class Instruments extends React.Component {
                             newInstrumentalStrings: Object.assign([],instrumental.strings).reverse()})
     }
     removeInstrument(instrumental){
-        let deleteInstrumentURL = myURLs.getURL()+"deleteinstrument/"+instrumental.token;
+        let deleteInstrumentURL = myURLs.getURL()+"instrument/delete/"+instrumental.token;
         axios.delete(deleteInstrumentURL).then(res=>{
             window.location.reload();
             alert(res.data);
@@ -49,7 +49,7 @@ class Instruments extends React.Component {
     }
     newInstrument(){
 
-        let newInstrumentURL = myURLs.getURL() + "newinstrument/";
+        let newInstrumentURL = myURLs.getURL() + "instrument/new/";
         let passedParameters = {
             "user": this.ancestor.props.chordChooserList.ancestor.props.token,
             "instrumentalName": document.getElementById("instrumentName").value,
@@ -83,7 +83,7 @@ class Instruments extends React.Component {
         console.log(this);
     };
     handleAccept = () => {
-        let editInstrumentURL = myURLs.getURL()+"editinstrument/"+this.state.editableInstrument.token;
+        let editInstrumentURL = myURLs.getURL()+"instrument/edit/"+this.state.editableInstrument.token;
         let passedParameters = {
             "instrumentalName": document.getElementById("instrumentName").value,
             "maxBundDif": document.getElementById("maxBundDif").value,

@@ -14,12 +14,36 @@ public class FavoritCatch extends Catch {
     private Integer id;
 
     @ManyToOne
-    FavoritCatchList catchList;
+    private FavoritCatchList catchList;
 
-    @OneToMany
-    List<FavoritStringCatch> stringCatches;
+    @OneToMany(mappedBy = "catcha", cascade = CascadeType.ALL,orphanRemoval=true)
+    private List<FavoritStringCatch> favStringCatches;
 
     public FavoritCatch(){
 
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public FavoritCatchList getCatchList() {
+        return catchList;
+    }
+
+    public void setCatchList(FavoritCatchList catchList) {
+        this.catchList = catchList;
+    }
+
+    public List<FavoritStringCatch> getFavStringCatches() {
+        return favStringCatches;
+    }
+
+    public void setFavStringCatches(List<FavoritStringCatch> favStringCatches) {
+        this.favStringCatches = favStringCatches;
     }
 }

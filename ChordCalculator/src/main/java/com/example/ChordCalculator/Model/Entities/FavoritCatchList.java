@@ -17,6 +17,7 @@ public class FavoritCatchList{
     @ManyToOne
     private User user;
 
+    @OneToMany(mappedBy = "catchList", cascade = CascadeType.ALL,orphanRemoval=true)
     private List<FavoritCatch> catches;
 
     @Column(length=2500)
