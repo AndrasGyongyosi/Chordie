@@ -1,7 +1,11 @@
-package com.example.ChordCalculator.Model;
+package com.example.ChordCalculator.Model.Entities;
 
 import com.example.ChordCalculator.Helper.RandomToken;
-import com.example.ChordCalculator.Model.Rule.Rule;
+import com.example.ChordCalculator.Model.Catch;
+import com.example.ChordCalculator.Model.Entities.MString;
+import com.example.ChordCalculator.Model.Entities.Rule.Rule;
+import com.example.ChordCalculator.Model.Entities.User;
+import com.example.ChordCalculator.Model.StringCatch;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;

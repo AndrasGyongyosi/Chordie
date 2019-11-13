@@ -1,6 +1,8 @@
 package com.example.ChordCalculator.Model;
 
 import com.example.ChordCalculator.Model.Chord.Chord;
+import com.example.ChordCalculator.Model.Entities.FavoritCatch;
+import com.example.ChordCalculator.Model.Entities.Instrumental;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,6 +16,9 @@ public class Catch {
     private int difficulty; //1-5
     private CatchPerfection perfection;
 
+    public Catch(){
+
+    }
     public Catch(Chord chord, Instrumental instrument, List<StringCatch> stringCatches, int difficulty) {
         this.chord = chord;
         this.instrument = instrument;

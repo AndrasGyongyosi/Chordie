@@ -7,13 +7,13 @@ import ButtonDropDown from './ButtonDropDown';
 
 class ChordView extends React.Component {
     render() {
-        const {stringLoaded, catchLoaded, catches, strings, bundDif} = this.props;
+        const {stringLoaded, catchLoaded, catches, strings, bundDif, favoritLists} = this.props;
         return (
             <React.Fragment>
                 {(stringLoaded && catchLoaded) ? (
                     catches.slice(0,10).map(catcha => {
                             return (
-                                <Catch catcha={catcha} strings={strings} bundDif={bundDif}></Catch>
+                                <Catch catcha={catcha} strings={strings} bundDif={bundDif} favoritLists={favoritLists}></Catch>
                             );
                     })  
                 ) : (
@@ -134,7 +134,7 @@ class Catch extends React.Component{
                 <hr/>
                 </div>
                 <div className="col-sm-2 col-md-2 col-lg-1 col-xl-1 left">
-                <ButtonDropDown></ButtonDropDown>
+                <ButtonDropDown favoritLists = {this.props.favoritLists}></ButtonDropDown>
                 </div>
             </React.Fragment>
         )
@@ -252,6 +252,7 @@ class ChordChooserPage extends React.Component {
         instrumental: {},
         bundDif : 5,
 
+        favoritLists : [],
         strings: [],
         catches: [],
         catchLoaded: false,
@@ -313,14 +314,14 @@ class ChordChooserPage extends React.Component {
         }
     }
     render() {
-        const {catches, strings, catchLoaded, stringLoaded, bundDif} = this.state;
+        const {catches, strings, catchLoaded, stringLoaded, bundDif, favoritLists} = this.state;
         return (
             <div>
                 <ChordChooserList ancestor={this}></ChordChooserList>
                 <div className="container">
                     <div className="row">
                         {( this.isValid()) ?
-                            <ChordView catches={catches} strings={strings} catchLoaded={catchLoaded} stringLoaded={stringLoaded} bundDif = {bundDif}></ChordView>
+                            <ChordView catches={catches} strings={strings} catchLoaded={catchLoaded} stringLoaded={stringLoaded} bundDif = {bundDif} favoritLists = {favoritLists}></ChordView>
                             : (<h3> </h3>)}
                     </div>
                 </div>

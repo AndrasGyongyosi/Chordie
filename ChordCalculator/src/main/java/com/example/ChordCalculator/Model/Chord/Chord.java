@@ -2,6 +2,8 @@ package com.example.ChordCalculator.Model.Chord;
 
 import com.example.ChordCalculator.Model.*;
 import com.example.ChordCalculator.Model.CatchPerfection;
+import com.example.ChordCalculator.Model.Entities.Instrumental;
+import com.example.ChordCalculator.Model.Entities.MString;
 
 import java.util.*;
 

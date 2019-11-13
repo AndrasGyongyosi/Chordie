@@ -1,7 +1,6 @@
 package com.example.ChordCalculator.Model.Repositories;
 
-import com.example.ChordCalculator.Model.Instrumental;
-import com.example.ChordCalculator.Model.MString;
+import com.example.ChordCalculator.Model.Entities.MString;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

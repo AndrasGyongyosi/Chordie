@@ -1,6 +1,6 @@
-package com.example.ChordCalculator.Model.Rule;
+package com.example.ChordCalculator.Model.Entities.Rule;
 
-import com.example.ChordCalculator.Model.Instrumental;
+import com.example.ChordCalculator.Model.Entities.Instrumental;
 import com.example.ChordCalculator.Model.Sound;
 import com.example.ChordCalculator.Model.StringCatch;
 

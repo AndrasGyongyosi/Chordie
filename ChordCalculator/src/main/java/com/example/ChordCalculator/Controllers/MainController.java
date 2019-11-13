@@ -1,13 +1,14 @@
-package com.example.ChordCalculator;
+package com.example.ChordCalculator.Controllers;
 
 import com.example.ChordCalculator.Exceptions.InaudibleVoiceException;
-import com.example.ChordCalculator.Model.Instrumental;
-import com.example.ChordCalculator.Model.MString;
+import com.example.ChordCalculator.Model.Entities.Rule.*;
+import com.example.ChordCalculator.Model.Entities.Instrumental;
+import com.example.ChordCalculator.Model.Entities.MString;
 import com.example.ChordCalculator.Model.Repositories.InstrumentRepository;
 import com.example.ChordCalculator.Model.Repositories.MStringRepository;
 import com.example.ChordCalculator.Model.Repositories.RuleRepository;
 import com.example.ChordCalculator.Model.Repositories.UserRepository;
-import com.example.ChordCalculator.Model.Rule.*;
+import com.example.ChordCalculator.Model.Entities.Rule.*;
 import com.example.ChordCalculator.Model.Sound;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -92,8 +93,9 @@ public class MainController {
         //guitar.setUsers(new ArrayList(){{add(newUser);}});
         //ukulele.setUsers(new ArrayList(){{add(newUser);}});
 
-        instrumentRepository.save(ukulele);
         instrumentRepository.save(guitar);
+        instrumentRepository.save(ukulele);
+
 
         try {
             //guitar

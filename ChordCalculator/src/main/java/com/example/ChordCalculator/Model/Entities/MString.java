@@ -1,6 +1,7 @@
-package com.example.ChordCalculator.Model;
+package com.example.ChordCalculator.Model.Entities;
 
 import com.example.ChordCalculator.Exceptions.InaudibleVoiceException;
+import com.example.ChordCalculator.Model.Sound;
 
 import javax.persistence.*;
 import java.util.ArrayList;

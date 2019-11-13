@@ -1,5 +1,7 @@
 package com.example.ChordCalculator.Model;
 
+import com.example.ChordCalculator.Model.Entities.MString;
+
 public class StringCatch {
     private MString string;
     private int bund;
@@ -11,6 +13,9 @@ public class StringCatch {
         4)  little finger
         5)  thumb
      */
+    public StringCatch(){
+
+    }
     public StringCatch(StringCatch stringCatch){
         this.string = stringCatch.string;
         this.bund = stringCatch.bund;

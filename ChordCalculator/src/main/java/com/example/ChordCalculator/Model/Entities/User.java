@@ -1,6 +1,7 @@
-package com.example.ChordCalculator.Model;
+package com.example.ChordCalculator.Model.Entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.google.api.client.util.Lists;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -28,14 +29,18 @@ public class User {
     @Column(length=2500)
     private String userToken;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL,orphanRemoval=true)
+    private List<FavoritCatchList> favoritCatchLists;
+
     public User(String email){
         this.email = email;
-        instrumentals = new ArrayList();
+        instrumentals = Lists.newArrayList();
     }
     private String email;
 
     public User() {
-        instrumentals = new ArrayList();
+        instrumentals = Lists.newArrayList();
+        favoritCatchLists = Lists.newArrayList();
     }
 
     public int getId() {
@@ -68,5 +73,13 @@ public class User {
 
     public void setUserToken(String userToken) {
         this.userToken = userToken;
+    }
+
+    public List<FavoritCatchList> getFavoritCatchLists() {
+        return favoritCatchLists;
+    }
+
+    public void setFavoritCatchLists(List<FavoritCatchList> favoritCatchLists) {
+        this.favoritCatchLists = favoritCatchLists;
     }
 }

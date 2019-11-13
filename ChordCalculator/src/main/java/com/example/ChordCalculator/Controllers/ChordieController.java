@@ -1,15 +1,19 @@
-package com.example.ChordCalculator;
+package com.example.ChordCalculator.Controllers;
 
 import com.example.ChordCalculator.Exceptions.InaudibleVoiceException;
 import com.example.ChordCalculator.Model.*;
 import com.example.ChordCalculator.Model.Chord.BaseType;
 import com.example.ChordCalculator.Model.Chord.Chord;
 import com.example.ChordCalculator.Model.Chord.ChordType;
+import com.example.ChordCalculator.Model.Entities.Instrumental;
+import com.example.ChordCalculator.Model.Entities.MString;
+import com.example.ChordCalculator.Model.Entities.Rule.*;
+import com.example.ChordCalculator.Model.Entities.User;
 import com.example.ChordCalculator.Model.Repositories.InstrumentRepository;
 import com.example.ChordCalculator.Model.Repositories.MStringRepository;
 import com.example.ChordCalculator.Model.Repositories.RuleRepository;
 import com.example.ChordCalculator.Model.Repositories.UserRepository;
-import com.example.ChordCalculator.Model.Rule.*;
+import com.example.ChordCalculator.Model.Entities.Rule.*;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken.Payload;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;

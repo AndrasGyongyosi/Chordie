@@ -4,7 +4,6 @@ import axios from "axios";
 import myURLs from './myURLs.js';
 
 export default class OAuth extends Component {
-    state={}
     render() {
         const responseGoogle = (response) => {
             console.log("LoginSuccess");

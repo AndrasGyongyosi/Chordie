@@ -1,7 +1,7 @@
-package com.example.ChordCalculator.Model.Rule;
+package com.example.ChordCalculator.Model.Entities.Rule;
 
-import com.example.ChordCalculator.Model.Instrumental;
-import com.example.ChordCalculator.Model.MString;
+import com.example.ChordCalculator.Model.Entities.Instrumental;
+import com.example.ChordCalculator.Model.Entities.MString;
 import com.example.ChordCalculator.Model.StringCatch;
 
 import javax.persistence.Entity;
