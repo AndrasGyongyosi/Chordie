@@ -4,16 +4,16 @@ import axios from 'axios';
 import Instruments from "./Instruments";
 import myURLs from './myURLs.js';
 import ButtonDropDown from './ButtonDropDown';
-
+import FavoritListView from './FavoritListView';
 class ChordView extends React.Component {
     render() {
-        const {stringLoaded, catchLoaded, catches, strings, bundDif, favoritLists, token} = this.props;
+        const {stringLoaded, catchLoaded, catches, strings, bundDif, favoritLists, token, instrument} = this.props;
         return (
             <React.Fragment>
                 {(stringLoaded && catchLoaded) ? (
                     catches.slice(0,10).map(catcha => {
                             return (
-                                <Catch catcha={catcha} strings={strings} bundDif={bundDif} favoritLists={favoritLists} token={token}></Catch>
+                                <Catch catcha={catcha} strings={strings} bundDif={bundDif} favoritLists={favoritLists} token={token} instrument={instrument}></Catch>
                             );
                     })  
                 ) : (
@@ -79,7 +79,7 @@ class Catch extends React.Component{
     }
 
     render(){
-        const{catcha, strings, favoritLists, token} = this.props;
+        const{catcha, favoritLists, token, instrument} = this.props;
         var min = this.getMinBund(catcha.fingerPoints);
         var max = this.getMaxBund(min);
         return(
@@ -134,7 +134,7 @@ class Catch extends React.Component{
                 <hr/>
                 </div>
                 <div className="col-sm-2 col-md-2 col-lg-1 col-xl-1 left" hidden={token==undefined}>
-                <ButtonDropDown favoritLists = {favoritLists} token = {token}></ButtonDropDown>
+                <ButtonDropDown catch={this} favoritLists = {favoritLists} token = {token} instrument={instrument}></ButtonDropDown>
                 </div>
             </React.Fragment>
         )
@@ -235,6 +235,10 @@ class ChordChooserList extends React.Component{
                                         <option  value={ct.name}>{ct.label}</option>
                                     )}
                                 </select>
+                                <div hidden={this.ancestor.props.token==undefined}>
+                                <FavoritListView favoritLists={this.ancestor.props.favoritLists}></FavoritListView>
+                                </div>
+                                
                             </div>
                         </div>
                     </React.Fragment>
@@ -252,7 +256,6 @@ class ChordChooserPage extends React.Component {
         instrumental: {},
         bundDif : 5,
 
-        favoritLists : [],
         strings: [],
         catches: [],
         catchLoaded: false,
@@ -314,14 +317,14 @@ class ChordChooserPage extends React.Component {
         }
     }
     render() {
-        const {catches, strings, catchLoaded, stringLoaded, bundDif, favoritLists} = this.state;
+        const {catches, strings, catchLoaded, stringLoaded, bundDif, instrumental} = this.state;
         return (
             <div>
                 <ChordChooserList ancestor={this}></ChordChooserList>
                 <div className="container">
                     <div className="row">
                         {( this.isValid()) ?
-                            <ChordView catches={catches} strings={strings} catchLoaded={catchLoaded} stringLoaded={stringLoaded} bundDif = {bundDif} favoritLists = {favoritLists} token={this.props.token}></ChordView>
+                            <ChordView catches={catches} strings={strings} catchLoaded={catchLoaded} stringLoaded={stringLoaded} bundDif = {bundDif} favoritLists = {this.props.favoritLists} token={this.props.token} instrument={instrumental}></ChordView>
                             : (<h3> </h3>)}
                     </div>
                 </div>

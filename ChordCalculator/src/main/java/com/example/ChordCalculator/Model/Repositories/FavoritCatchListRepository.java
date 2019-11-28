@@ -9,4 +9,5 @@ import java.util.List;
 
 @Repository
 public interface FavoritCatchListRepository extends CrudRepository<FavoritCatchList, Integer> {
+    FavoritCatchList findAllByListToken(String token);
 }

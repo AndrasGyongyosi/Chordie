@@ -51,6 +51,8 @@ public class FavoritCatchList{
         return catches;
     }
 
+    public void addCatch(FavoritCatch fc){ this.catches.add(fc);}
+
     public void setCatches(List<FavoritCatch> catches) {
         this.catches = catches;
     }

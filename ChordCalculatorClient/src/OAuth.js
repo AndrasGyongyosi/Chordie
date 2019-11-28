@@ -22,13 +22,12 @@ export default class OAuth extends Component {
                     if (res){
                         console.log("New User added.");
                         this.props.ancestor.setToken(response.tokenId, response.profileObj.email);
-                        window.location.reload();
                     }
                     else {
                         console.log("User adding failed.");
                     }
                 })
-
+            
             console.log(response);
         }
         const responseGoogleFailure = (response) => {
@@ -38,7 +37,7 @@ export default class OAuth extends Component {
         }
         const logout = () => {
             console.log("Logout");
-            this.props.ancestor.setToken(null, "nobody");
+            this.props.ancestor.setToken(null, undefined);
             window.location.reload();
         }
         const logoutfail = () => {
@@ -46,7 +45,7 @@ export default class OAuth extends Component {
         }
         return (
             <div>
-                {(this.props.ancestor.state.logged_user=="nobody") ?
+                {(this.props.ancestor.state.logged_user==undefined) ?
                     (<GoogleLogin
                     clientId="902904919760-8uea185c8i6meeap7gga8lhjivgtt33t.apps.googleusercontent.com"
                     buttonText="Login"

@@ -2,12 +2,13 @@ package com.example.ChordCalculator.Model.Entities;
 
 import com.example.ChordCalculator.Model.Catch;
 import com.example.ChordCalculator.Model.StringCatch;
+import com.google.api.client.util.Lists;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
-public class FavoritCatch extends Catch {
+public class FavoritCatch {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -19,8 +20,12 @@ public class FavoritCatch extends Catch {
     @OneToMany(mappedBy = "catcha", cascade = CascadeType.ALL,orphanRemoval=true)
     private List<FavoritStringCatch> favStringCatches;
 
-    public FavoritCatch(){
+    private String instrument;
 
+    private String chord;
+
+    public FavoritCatch(){
+        favStringCatches = Lists.newArrayList();
     }
 
     public Integer getId() {
@@ -42,8 +47,26 @@ public class FavoritCatch extends Catch {
     public List<FavoritStringCatch> getFavStringCatches() {
         return favStringCatches;
     }
-
+    public void addFavStringCatch(FavoritStringCatch fsc){
+        this.favStringCatches.add(fsc);
+    }
     public void setFavStringCatches(List<FavoritStringCatch> favStringCatches) {
         this.favStringCatches = favStringCatches;
+    }
+
+    public String getInstrument() {
+        return instrument;
+    }
+
+    public void setInstrument(String instrument) {
+        this.instrument = instrument;
+    }
+
+    public String getChord() {
+        return chord;
+    }
+
+    public void setChord(String chord) {
+        this.chord = chord;
     }
 }

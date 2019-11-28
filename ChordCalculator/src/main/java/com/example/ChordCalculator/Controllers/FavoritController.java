@@ -2,10 +2,12 @@ package com.example.ChordCalculator.Controllers;
 
 import com.example.ChordCalculator.Model.Entities.FavoritCatch;
 import com.example.ChordCalculator.Model.Entities.FavoritCatchList;
+import com.example.ChordCalculator.Model.Entities.FavoritStringCatch;
 import com.example.ChordCalculator.Model.Entities.User;
 import com.example.ChordCalculator.Model.Repositories.FavoritCatchListRepository;
 import com.example.ChordCalculator.Model.Repositories.UserRepository;
 import com.google.api.client.util.Lists;
+import com.google.common.collect.Maps;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,15 +29,15 @@ public class FavoritController {
     @RequestMapping(path="/lists/{userToken:.+}", method= RequestMethod.GET)
     public List<HashMap<String, Object>> getLists(@PathVariable String userToken) {
         List<HashMap<String, Object>> result = Lists.newArrayList();
-
         User user = userRepository.findByUserToken(userToken);
         List<FavoritCatchList> catchLists = user.getFavoritCatchLists();
-
         for (FavoritCatchList catchList : catchLists){
-            result.add(new HashMap<String, Object>(){{
-                put("name", catchList.getName());
-                put("user", catchList.getUser().getUserToken());
-                put("catches", getList(catchList.getListToken()));
+            result.add(
+                    new HashMap<String, Object>(){{
+                //put("name", catchList.getName());
+                //put("user", catchList.getUser().getUserToken());
+                //put("catches", getCatches(catchList);
+                //put("token", catchList.getListToken());
             }});
         }
 
@@ -43,7 +45,7 @@ public class FavoritController {
     }
 
     @RequestMapping(path="/newlist", method= RequestMethod.POST)
-    public boolean addNewList(@RequestBody LinkedHashMap<String, Object> params ) {
+    public FavoritCatchList addNewList(@RequestBody LinkedHashMap<String, Object> params ) {
         User user = userRepository.findByUserToken((String) params.get("userToken"));
 
         FavoritCatchList catchList = new FavoritCatchList();
@@ -51,11 +53,40 @@ public class FavoritController {
         catchList.setUser(user);
 
         favoritCatchListRepository.save(catchList);
-        return true;
+        return catchList;
     }
 
+    @RequestMapping(path="/addToList", method=RequestMethod.POST)
+    public boolean addToList(@RequestBody LinkedHashMap<String, Object> params ){
+        FavoritCatchList favoritCatchList = favoritCatchListRepository.findAllByListToken((String) params.get("listToken"));
+        FavoritCatch favCatch = new FavoritCatch();
+        for(HashMap<String, Object> stringCatch : (List<HashMap<String, Object>>) params.get("catch")){
+            FavoritStringCatch fsc = new FavoritStringCatch();
+            fsc.setFinger((int) stringCatch.get("finger"));
+            fsc.setBund((int) stringCatch.get("bund"));
+            fsc.setSound((String) stringCatch.get("sound"));
+            fsc.setCatcha(favCatch);
+            favCatch.addFavStringCatch(fsc);
+        }
+        favCatch.setInstrument((String) params.get("instrument"));
+        favCatch.setChord((String) params.get("chord"));
+        favCatch.setCatchList(favoritCatchList);
+        favoritCatchList.addCatch(favCatch);
+
+        favoritCatchListRepository.save(favoritCatchList);
+        return true;
+    }
     @RequestMapping(path="/list/{listToken}", method = RequestMethod.GET)
     public List<HashMap<String, Object>> getList(@PathVariable String listToken){
         return null;
+    }
+    private List<HashMap<String, Object>> getCatches(FavoritCatchList favoritCatchList){
+        List<HashMap<String, Object>> result = Lists.newArrayList();
+        for(FavoritCatch fc : favoritCatchList.getCatches()){
+            HashMap<String, Object> subResult = Maps.newHashMap();
+            subResult.put("chord",fc.getChord());
+            subResult.put("instrument", fc.getInstrument());
+        }
+        return result;
     }
 }

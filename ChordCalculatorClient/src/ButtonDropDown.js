@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import CatchList from './CatchList';
 import myURLs from './myURLs.js';
 import axios from "axios";
-
+import ModalDialog from "./Modal/ModalDialog"
 
 class ButtonDropDown extends Component {
     constructor() {
@@ -10,15 +10,11 @@ class ButtonDropDown extends Component {
         
         this.state = {
           showMenu: false,
-          favoritLists : []
+          newList: false,
         };
         
         this.showMenu = this.showMenu.bind(this);
         this.closeMenu = this.closeMenu.bind(this);
-      }
-      
-      componentDidMount(){
-        this.getLists();
       }
 
       showMenu(event) {
@@ -39,34 +35,31 @@ class ButtonDropDown extends Component {
           
         }
       }
-      getLists(){
-        if (this.props.token!=null){
-        let listURL = myURLs.getURL() + "favorit/lists/"+this.props.token;
-                axios.get(encodeURI(listURL))
-                    .then(res => {
-                        console.log(res.data);
-                        this.setState(
-                            {
-                                favoritLists: res.data
-                            });
+      addToList(list){
+        let catcha = this.props.catch.props.catcha;
+        let strings = this.props.catch.props.strings;
+        let parameters = {
+          "catch" : catcha.fingerPoints,
+          "listToken" : list.token,
+          "instrument": this.props.instrument.name,
+          "chord": "need_to_do",
+        };
+        console.log(parameters);
+        let addToListURL = myURLs.getURL() + "favorit/addToList"; 
+        
+      
+        axios.post(addToListURL, parameters)
+            .then(res=>{
+                console.log(res);
+                //window.location.reload();
+        });
 
-                    }).catch(error => this.setState({error, catchLoaded: false}));
-            }
-          }
-      newList(){
-        let newListURL = myURLs.getURL() + "favorit/newlist"; 
-        let passedParameters = {
-          "name": "example",
-          "userToken": this.props.token,
-      };
-      console.log(passedParameters);
-      axios.post(newListURL, passedParameters)
-          .then(res=>{
-              console.log(res);
-              window.location.reload();
-      });
       }
-
+      newList(){
+        this.setState({
+          newList: true,
+        });
+      }
       render() {
         return (
           <div>
@@ -83,11 +76,21 @@ class ButtonDropDown extends Component {
                       this.dropdownMenu = element;
                     }}
                   >
-                      {this.state.favoritLists.map(list => 
-                      <CatchList listName={list.name}></CatchList>
+                      {this.props.favoritLists.map(list => 
+                      <CatchList listName={list.name} addToList={()=>this.addToList(list)}></CatchList>
                       )}
                     <button className="minibutton" onClick={()=>this.newList()}> New List... </button>
-                  </div>
+                  <ModalDialog title="Edit" show={this.state.newList==true} handleAccept={this.handleAccept} handleReject={this.handleReject} >
+                    <div className="container">
+                      <div className="row">
+                        <div className="col-lg-6">
+                            <label htmlFor="listName">List name</label>
+                            <input type="text" className="form-control" id="listName" placeholder="List name" autofocus="true" defaultValue=""/>
+                        </div>
+                      </div>
+                    </div>
+                  </ModalDialog>
+              </div>              
                 )
                 : (
                   null
@@ -95,6 +98,25 @@ class ButtonDropDown extends Component {
             }
           </div>
         );
+      }
+
+      handleAccept = () => {
+
+        let newListURL = myURLs.getURL() + "favorit/newlist"; 
+        let passedParameters = {
+          "name": document.getElementById("listName").value,
+          "userToken": this.props.token,
+      };
+      console.log(passedParameters);
+      axios.post(newListURL, passedParameters)
+          .then(res=>{
+              console.log(res);
+              window.location.reload();
+      });
+        this.setState({newInstrument : false});
+      }
+      handleReject = () => {
+        this.setState({newInstrument : false});
       }
     }
 
