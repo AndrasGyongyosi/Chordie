@@ -207,7 +207,7 @@ public class ChordController {
                 fingerPoints.add(stringCatchInfo);
             }
 
-            catchInfo.put("fingerPoints",fingerPoints);
+            catchInfo.put("stringCatches",fingerPoints);
             catchInfo.put("perfection",catcha.getPerfection());
             catchList.add(catchInfo);
         }

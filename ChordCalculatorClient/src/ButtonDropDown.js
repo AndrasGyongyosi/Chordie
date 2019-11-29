@@ -63,7 +63,7 @@ class ButtonDropDown extends Component {
       render() {
         return (
           <div>
-            <button onClick={this.showMenu}>
+            <button className="btn btn-outline-info minibutton" onClick={this.showMenu}>
             <i class="fa fa-plus"></i>
             </button>
             
@@ -79,7 +79,7 @@ class ButtonDropDown extends Component {
                       {this.props.favoritLists.map(list => 
                       <CatchList listName={list.name} addToList={()=>this.addToList(list)}></CatchList>
                       )}
-                    <button className="minibutton" onClick={()=>this.newList()}> New List... </button>
+                    <button className="btn btn-outline-secondary minibutton" onClick={()=>this.newList()}> New List... </button>
                   <ModalDialog title="Edit" show={this.state.newList==true} handleAccept={this.handleAccept} handleReject={this.handleReject} >
                     <div className="container">
                       <div className="row">

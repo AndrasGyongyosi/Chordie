@@ -34,10 +34,10 @@ public class FavoritController {
         for (FavoritCatchList catchList : catchLists){
             result.add(
                     new HashMap<String, Object>(){{
-                //put("name", catchList.getName());
+                put("name", catchList.getName());
                 //put("user", catchList.getUser().getUserToken());
-                //put("catches", getCatches(catchList);
-                //put("token", catchList.getListToken());
+                put("catches", getCatches(catchList));
+                put("token", catchList.getListToken());
             }});
         }
 
@@ -86,6 +86,16 @@ public class FavoritController {
             HashMap<String, Object> subResult = Maps.newHashMap();
             subResult.put("chord",fc.getChord());
             subResult.put("instrument", fc.getInstrument());
+            List fscList = Lists.newArrayList();
+            for(FavoritStringCatch fsc : fc.getFavStringCatches()){
+                HashMap<String, Object> fscMap = Maps.newHashMap();
+                fscMap.put("bund",fsc.getBund());
+                fscMap.put("finger",fsc.getFinger());
+                fscMap.put("sound",fsc.getSound());
+                fscList.add(fscMap);
+            }
+            subResult.put("stringCatches", fscList);
+            result.add(subResult);
         }
         return result;
     }

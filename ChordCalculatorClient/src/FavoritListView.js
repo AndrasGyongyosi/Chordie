@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import axios from "axios";
-import myURLs from './myURLs.js';
 import ModalDialogWithoutFooter from './Modal/ModalDialogWithoutFooter';
+import FavoritCatchView from './FavoritCatchView.js';
+import CatchView from './CatchView';
 
 export default class FavoritListView extends Component {
     title = "Lists"
@@ -11,6 +11,7 @@ export default class FavoritListView extends Component {
         this.setState({show : this.props.show});
     }
     showModal = () => {
+        console.log(this.props);
         this.setState({show: true});
     };
 
@@ -23,7 +24,6 @@ export default class FavoritListView extends Component {
     };
 
     handleAccept = () => {
-        console.log(this.props);
         this.props.onAccept();
         this.hideModal();
     };
@@ -32,9 +32,21 @@ export default class FavoritListView extends Component {
             <div>
                 <ModalDialogWithoutFooter title={this.title} show={this.state.show} handleReject={this.handleReject}>
                                 {this.props.favoritLists != null ? 
-                                (this.props.favoritLists.map(list=>{
-                                    return(<h2>{list.name}</h2>)
-                                })) : <h2>There is no list for this user.</h2>
+                                (this.props.favoritLists.map(list=>
+                                    <div class="row">
+                                        <div class="col-lg-10">
+                                            <h3>{"List name: "+list.name}</h3>
+                                        </div>
+                                        <div class="col-lg-2">
+                                        {list.catches.map(catcha =>
+                                            //<FavoritCatchView catcha={catcha}></FavoritCatchView>
+                                            <CatchView catcha={catcha} view="list" bundDif={5}></CatchView>
+                                            )
+                                        }
+                                        <br/>
+                                        </div>
+                                    </div>
+                                )) : <h2>There is no list for this user.</h2>
                                 }
                 </ModalDialogWithoutFooter>
                 <button className="btn btn-outline-secondary" onClick={this.showModal}>{this.title}</button>
