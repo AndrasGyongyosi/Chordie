@@ -1,5 +1,6 @@
 package com.example.ChordCalculator.Model.Entities;
 
+import com.example.ChordCalculator.Helper.RandomToken;
 import com.example.ChordCalculator.Model.Catch;
 import com.example.ChordCalculator.Model.StringCatch;
 import com.google.api.client.util.Lists;
@@ -19,6 +20,9 @@ public class FavoritCatch {
 
     @OneToMany(mappedBy = "catcha", cascade = CascadeType.ALL,orphanRemoval=true)
     private List<FavoritStringCatch> favStringCatches;
+
+    @Column(length=2500)
+    private String catchToken = RandomToken.randomString(32);
 
     private String instrument;
 
@@ -68,5 +72,14 @@ public class FavoritCatch {
 
     public void setChord(String chord) {
         this.chord = chord;
+    }
+
+
+    public String getCatchToken() {
+        return catchToken;
+    }
+
+    public void setCatchToken(String catchToken) {
+        this.catchToken = catchToken;
     }
 }

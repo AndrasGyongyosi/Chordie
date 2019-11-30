@@ -21,7 +21,6 @@ class CatchView extends React.Component{
         var arrayLength = catcha.length;
         for (var i=0;i<arrayLength; i++){
             let bund=catcha[i].bund;
-            console.log(bund);
             if(bund>0){
                 if(min==null) min = bund;
                 else if(min>bund) min = bund;
@@ -35,8 +34,6 @@ class CatchView extends React.Component{
     }
     range(min, max) {
         var len = max - min + 1;
-        console.log(max);
-        console.log(min);
         var arr = new Array(len);
         for (var i=0; i<len; i++) {
             arr[i] = min + i;
@@ -59,12 +56,15 @@ class CatchView extends React.Component{
     }
 
     render(){
-        const{catcha, favoritLists, token, instrument} = this.props;
+        const{catcha, favoritLists, token, instrument, view} = this.props;
         var min = this.getMinBund(catcha.stringCatches);
         var max = this.getMaxBund(min);
         return(
             <React.Fragment>
-                <div className="col-sm-10 col-md-10 col-lg-5 col-xl-5">
+                <div className={view=="page" ? "col-sm-10 col-md-10 col-lg-5 col-xl-5" : "col-sm-2 col-md-2 col-lg-1 col-xl-1"}>
+                <div hidden={view=="page"}>
+                <p>{catcha.chord+" chord on "+catcha.instrument}</p>
+                </div>
                 <table cellSpacing="0" cellPadding="0">
                     <thead>
                     <tr>
@@ -114,7 +114,10 @@ class CatchView extends React.Component{
                 <hr/>
                 </div>
                 <div className="col-sm-2 col-md-2 col-lg-1 col-xl-1 left" hidden={token==undefined}>
-                <ButtonDropDown catch={this} favoritLists = {favoritLists} token = {token} instrument={instrument}></ButtonDropDown>
+                    <ButtonDropDown catch={this} favoritLists = {favoritLists} token = {token} instrument={instrument}></ButtonDropDown>
+                </div>
+                <div className="col-sm-2 col-md-2 col-lg-1 col-xl-1 left" hidden={view!="list"}>
+                    <button onClick={this.props.removeCatch}><i class="fa fa-close"></i></button>
                 </div>
             </React.Fragment>
         )

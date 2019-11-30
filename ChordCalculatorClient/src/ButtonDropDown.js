@@ -37,12 +37,12 @@ class ButtonDropDown extends Component {
       }
       addToList(list){
         let catcha = this.props.catch.props.catcha;
-        let strings = this.props.catch.props.strings;
+        //let strings = this.props.catch.props.strings;
         let parameters = {
-          "catch" : catcha.fingerPoints,
+          "catch" : catcha.stringCatches,
           "listToken" : list.token,
           "instrument": this.props.instrument.name,
-          "chord": "need_to_do",
+          "chord": this.props.catch.props.chord,
         };
         console.log(parameters);
         let addToListURL = myURLs.getURL() + "favorit/addToList"; 
@@ -80,7 +80,7 @@ class ButtonDropDown extends Component {
                       <CatchList listName={list.name} addToList={()=>this.addToList(list)}></CatchList>
                       )}
                     <button className="btn btn-outline-secondary minibutton" onClick={()=>this.newList()}> New List... </button>
-                  <ModalDialog title="Edit" show={this.state.newList==true} handleAccept={this.handleAccept} handleReject={this.handleReject} >
+                  <ModalDialog title="Add" show={this.state.newList==true} handleAccept={this.handleAccept} handleReject={this.handleReject} >
                     <div className="container">
                       <div className="row">
                         <div className="col-lg-6">
@@ -107,16 +107,16 @@ class ButtonDropDown extends Component {
           "name": document.getElementById("listName").value,
           "userToken": this.props.token,
       };
-      console.log(passedParameters);
       axios.post(newListURL, passedParameters)
           .then(res=>{
-              console.log(res);
+              //this.addToList(res.data);
+              this.setState({newList:false});
               window.location.reload();
       });
-        this.setState({newInstrument : false});
       }
       handleReject = () => {
-        this.setState({newInstrument : false});
+        console.log("new List Rejected");
+        this.setState({newList:false});
       }
     }
 

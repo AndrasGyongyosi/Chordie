@@ -5,12 +5,14 @@ import com.example.ChordCalculator.Model.Entities.FavoritCatchList;
 import com.example.ChordCalculator.Model.Entities.FavoritStringCatch;
 import com.example.ChordCalculator.Model.Entities.User;
 import com.example.ChordCalculator.Model.Repositories.FavoritCatchListRepository;
+import com.example.ChordCalculator.Model.Repositories.FavoritCatchRepository;
 import com.example.ChordCalculator.Model.Repositories.UserRepository;
 import com.google.api.client.util.Lists;
 import com.google.common.collect.Maps;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -25,6 +27,8 @@ public class FavoritController {
     @Autowired
     FavoritCatchListRepository favoritCatchListRepository;
 
+    @Autowired
+    FavoritCatchRepository favoritCatchRepository;
 
     @RequestMapping(path="/lists/{userToken:.+}", method= RequestMethod.GET)
     public List<HashMap<String, Object>> getLists(@PathVariable String userToken) {
@@ -76,9 +80,15 @@ public class FavoritController {
         favoritCatchListRepository.save(favoritCatchList);
         return true;
     }
-    @RequestMapping(path="/list/{listToken}", method = RequestMethod.GET)
-    public List<HashMap<String, Object>> getList(@PathVariable String listToken){
-        return null;
+    @Transactional
+    @RequestMapping(path="/list/{listToken}", method = RequestMethod.DELETE)
+    public void deleteList(@PathVariable String listToken){
+        favoritCatchListRepository.deleteAllByListToken(listToken);
+    }
+    @Transactional
+    @RequestMapping(path="/catch/{catchToken}", method = RequestMethod.DELETE)
+    public void deleteCatch(@PathVariable String catchToken){
+        favoritCatchRepository.deleteAllByCatchToken(catchToken);
     }
     private List<HashMap<String, Object>> getCatches(FavoritCatchList favoritCatchList){
         List<HashMap<String, Object>> result = Lists.newArrayList();
@@ -95,6 +105,7 @@ public class FavoritController {
                 fscList.add(fscMap);
             }
             subResult.put("stringCatches", fscList);
+            subResult.put("token", fc.getCatchToken());
             result.add(subResult);
         }
         return result;

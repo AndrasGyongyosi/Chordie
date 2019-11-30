@@ -27,13 +27,10 @@ export default class OAuth extends Component {
                         console.log("User adding failed.");
                     }
                 })
-            
-            console.log(response);
         }
         const responseGoogleFailure = (response) => {
             console.log("LoginFail");
             this.props.ancestor.setToken(response.tokenId, response.profileObj.email);
-            console.log(response);
         }
         const logout = () => {
             console.log("Logout");

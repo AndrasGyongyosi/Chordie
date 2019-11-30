@@ -222,6 +222,7 @@ public class ChordController {
 
         result.put("catches", catchList);
         result.put("bundDif", bundDif);
+        result.put("chord", chord.getFullName());
         return result;
     }
 }

@@ -7,13 +7,13 @@ import FavoritListView from './FavoritListView';
 import CatchView from './CatchView.js';
 class ChordView extends React.Component {
     render() {
-        const {catchLoaded, catches, bundDif, favoritLists, token, instrument} = this.props;
+        const {catchLoaded, catches, bundDif, favoritLists, token, instrument, chord} = this.props;
         return (
             <React.Fragment>
                 {(catchLoaded) ? (
                     catches.slice(0,10).map(catcha => {
                             return (
-                                <CatchView view="page" catcha={catcha} bundDif={bundDif} favoritLists={favoritLists} token={token} instrument={instrument}></CatchView>
+                                <CatchView view="page" chord={chord} catcha={catcha} bundDif={bundDif} favoritLists={favoritLists} token={token} instrument={instrument}></CatchView>
                             );
                     })  
                 ) : (
@@ -179,6 +179,7 @@ class ChordChooserPage extends React.Component {
                         this.setState(
                             {
                                 catches: res.data.catches,
+                                chord: res.data.chord,
                                 bundDif: res.data.bundDif,
                                 catchLoaded: true
                             });
@@ -200,14 +201,14 @@ class ChordChooserPage extends React.Component {
         }
     }*/
     render() {
-        const {catches , catchLoaded, bundDif, instrumental} = this.state;
+        const {catches , catchLoaded, bundDif, instrumental, chord} = this.state;
         return (
             <div>
                 <ChordChooserList ancestor={this}></ChordChooserList>
                 <div className="container">
                     <div className="row">
                         {( this.isValid()) ?
-                            <ChordView catches={catches} catchLoaded={catchLoaded} bundDif = {bundDif} favoritLists = {this.props.favoritLists} token={this.props.token} instrument={instrumental}></ChordView>
+                            <ChordView catches={catches} chord={chord} catchLoaded={catchLoaded} bundDif = {bundDif} favoritLists = {this.props.favoritLists} token={this.props.token} instrument={instrumental}></ChordView>
                             : (<h3> </h3>)}
                     </div>
                 </div>

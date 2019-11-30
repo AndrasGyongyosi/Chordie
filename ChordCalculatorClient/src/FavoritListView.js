@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import ModalDialogWithoutFooter from './Modal/ModalDialogWithoutFooter';
-import FavoritCatchView from './FavoritCatchView.js';
 import CatchView from './CatchView';
+import axios from 'axios';
+import myURLs from './myURLs.js';
 
 export default class FavoritListView extends Component {
     title = "Lists"
@@ -27,20 +28,38 @@ export default class FavoritListView extends Component {
         this.props.onAccept();
         this.hideModal();
     };
+    removeList(list){
+        let removeListURL = myURLs.getURL() + "favorit/list/"+list.token;
+        console.log(removeListURL);
+        axios.delete(removeListURL).then(
+            res=>{
+                window.location.reload();
+        });
+    };
+    removeCatch(catcha){
+        let removeCatchURL = myURLs.getURL() + "favorit/catch/"+catcha.token;
+        console.log(removeCatchURL);
+        axios.delete(removeCatchURL).then(
+            res=>{
+                window.location.reload();
+        });
+    }
     render() {
         return (
             <div>
                 <ModalDialogWithoutFooter title={this.title} show={this.state.show} handleReject={this.handleReject}>
-                                {this.props.favoritLists != null ? 
-                                (this.props.favoritLists.map(list=>
+                              {this.props.favoritLists != null ? 
+                           (this.props.favoritLists.map(list=>
                                     <div class="row">
-                                        <div class="col-lg-10">
-                                            <h3>{"List name: "+list.name}</h3>
+                                        <div>
+                                            <p>{"List name: "+list.name}</p>
                                         </div>
-                                        <div class="col-lg-2">
+                                        <div>
+                                            <button onClick={()=>this.removeList(list)}><i class="fa fa-close"></i></button>
+                                        </div>
+                                        <div class="col-lg-4">
                                         {list.catches.map(catcha =>
-                                            //<FavoritCatchView catcha={catcha}></FavoritCatchView>
-                                            <CatchView catcha={catcha} view="list" bundDif={5}></CatchView>
+                                            <CatchView catcha={catcha} view="list" bundDif={5} removeCatch={()=>this.removeCatch(catcha)}></CatchView>
                                             )
                                         }
                                         <br/>

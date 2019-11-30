@@ -21,7 +21,7 @@ public class FavoritCatchList{
     private List<FavoritCatch> catches;
 
     @Column(length=2500)
-    private String listToken = RandomToken.randomString(32);;
+    private String listToken = RandomToken.randomString(32);
 
     public Integer getId() {
         return id;
