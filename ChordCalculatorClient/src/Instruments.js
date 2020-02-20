@@ -27,8 +27,8 @@ class Instruments extends React.Component {
     addNewInstrumentString(){
         let sel = document.getElementById("baseSoundSelect");
         let refreshedStrings = this.state.newInstrumentalStrings;
-        refreshedStrings.push({'name' : sel.options[sel.selectedIndex].text,
-                                'value' : sel.options[sel.selectedIndex].value,
+        refreshedStrings.push({'label' : sel.options[sel.selectedIndex].text,
+                                'name' : sel.options[sel.selectedIndex].value,
         });
         this.setState({newInstrumentalStrings : refreshedStrings})
     }
@@ -203,7 +203,7 @@ class Instruments extends React.Component {
                                 string =>{
                                     return(
                                         <div className="col-lg-2 col-md-2">
-                                            <p>{string.name}</p>
+                                            <p>{string.label}</p>
                                             <button onClick={()=>this.deleteString(string)}>Delete</button>
                                         </div>)
                             })}

@@ -2,7 +2,7 @@ package com.example.ChordCalculator.Controllers;
 
 import com.example.ChordCalculator.Exceptions.InaudibleVoiceException;
 import com.example.ChordCalculator.Model.Entities.Rule.*;
-import com.example.ChordCalculator.Model.Entities.Instrumental;
+import com.example.ChordCalculator.Model.Entities.Instrument;
 import com.example.ChordCalculator.Model.Entities.MString;
 import com.example.ChordCalculator.Model.Repositories.InstrumentRepository;
 import com.example.ChordCalculator.Model.Repositories.MStringRepository;
@@ -67,8 +67,8 @@ public class MainController {
         ruleRepository.deleteAll();
         instrumentRepository.deleteAll();
         userRepository.deleteAll();
-        Instrumental guitar = new Instrumental();
-        Instrumental ukulele = new Instrumental();
+        Instrument guitar = new Instrument();
+        Instrument ukulele = new Instrument();
 
         List<Rule> guitarRules = new ArrayList<Rule>();
         guitarRules.add(new MinStringsRule(guitar, 4));

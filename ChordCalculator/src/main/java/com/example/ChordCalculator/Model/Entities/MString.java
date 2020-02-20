@@ -26,16 +26,16 @@ public class MString {
     private int id;
 
     @ManyToOne
-    private Instrumental instrument;
+    private Instrument instrument;
 
     public MString(){
         super();
     }
-    public MString(Sound s, int o, Instrumental instrument, int order) throws InaudibleVoiceException{
+    public MString(Sound s, int o, Instrument instrument, int order) throws InaudibleVoiceException{
         this(s,o, instrument);
         this.orderNum=order;
     }
-    public MString(Sound s, int o, Instrumental instrument)throws InaudibleVoiceException{
+    public MString(Sound s, int o, Instrument instrument)throws InaudibleVoiceException{
         this.instrument = instrument;
         if (Math.abs(o)<4){
             octave = o;
@@ -85,11 +85,11 @@ public class MString {
         this.octave = octave;
     }
 
-    public Instrumental getInstrument() {
+    public Instrument getInstrument() {
         return instrument;
     }
 
-    public void setInstrument(Instrumental instrument) {
+    public void setInstrument(Instrument instrument) {
         this.instrument = instrument;
     }
 

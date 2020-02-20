@@ -39,7 +39,7 @@ class ButtonDropDown extends Component {
         let catcha = this.props.catch.props.catcha;
         //let strings = this.props.catch.props.strings;
         let parameters = {
-          "catch" : catcha.stringCatches,
+          "catch" : catcha.stringCatches.reverse(),
           "listToken" : list.token,
           "instrument": this.props.instrument.name,
           "chord": this.props.catch.props.chord,

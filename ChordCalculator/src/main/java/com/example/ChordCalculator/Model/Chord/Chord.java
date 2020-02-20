@@ -2,7 +2,7 @@ package com.example.ChordCalculator.Model.Chord;
 
 import com.example.ChordCalculator.Model.*;
 import com.example.ChordCalculator.Model.CatchPerfection;
-import com.example.ChordCalculator.Model.Entities.Instrumental;
+import com.example.ChordCalculator.Model.Entities.Instrument;
 import com.example.ChordCalculator.Model.Entities.MString;
 
 import java.util.*;
@@ -42,7 +42,7 @@ public class Chord {
             sounds.add(Sound.values()[(rootNoteNumber + note)%12]);
         }
     }
-    public LinkedHashMap<MString,HashMap<Integer, Sound>> getPossibleFingerPoints(Instrumental instrument){
+    public LinkedHashMap<MString,HashMap<Integer, Sound>> getPossibleFingerPoints(Instrument instrument){
         LinkedHashMap<MString, HashMap<Integer, Sound>> possibleFingerPoints = new LinkedHashMap<>();
         List<MString> strings = instrument.getMStrings();
         Collections.sort(strings, new Comparator<MString>() {
@@ -66,7 +66,7 @@ public class Chord {
         return possibleFingerPoints;
     }
     //recursive!
-    public void getAllCatches (List<MString> strings, LinkedHashMap<MString, HashMap<Integer, Sound>> options, Instrumental instrument, List<StringCatch> stringCatches, List<List<StringCatch>> futureResult){
+    public void getAllCatches (List<MString> strings, LinkedHashMap<MString, HashMap<Integer, Sound>> options, Instrument instrument, List<StringCatch> stringCatches, List<List<StringCatch>> futureResult){
         MString actualString = strings.get(0);
 
         for (Map.Entry<Integer, Sound> entry : options.get(actualString).entrySet()) {
@@ -96,7 +96,7 @@ public class Chord {
         }
     }
 
-    public List<Catch> getCatches(Instrumental instrument) {
+    public List<Catch> getCatches(Instrument instrument) {
         LinkedHashMap<MString, HashMap<Integer, Sound>> options = getPossibleFingerPoints(instrument);
 
         List<MString> strings = new ArrayList<MString>(options.keySet());
@@ -145,7 +145,7 @@ public class Chord {
         return result;
     }
 
-    private List<Catch> validateCatches(List<Catch> catches, Instrumental instrument){
+    private List<Catch> validateCatches(List<Catch> catches, Instrument instrument){
         List<Catch> result = new ArrayList();
         for(Catch catcha : catches){
             List<Sound> usedSounds = new ArrayList(sounds);

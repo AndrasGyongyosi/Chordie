@@ -3,6 +3,8 @@ import ModalDialogWithoutFooter from './Modal/ModalDialogWithoutFooter';
 import CatchView from './CatchView';
 import axios from 'axios';
 import myURLs from './myURLs.js';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 
 export default class FavoritListView extends Component {
     title = "Lists"
@@ -36,6 +38,14 @@ export default class FavoritListView extends Component {
                 window.location.reload();
         });
     };
+    generatePDF(list){
+        html2canvas(document.getElementById(list.token+"_view")).then(canvas =>
+            {
+                let pdf = new jsPDF('p', 'mm', 'a4');
+                pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, 0, 211, 298);
+                pdf.save(list.name+".pdf");
+            });
+    };
     removeCatch(catcha){
         let removeCatchURL = myURLs.getURL() + "favorit/catch/"+catcha.token;
         console.log(removeCatchURL);
@@ -50,11 +60,10 @@ export default class FavoritListView extends Component {
                 <ModalDialogWithoutFooter title={this.title} show={this.state.show} handleReject={this.handleReject}>
                               {this.props.favoritLists != null ? 
                            (this.props.favoritLists.map(list=>
-                                    <div class="row">
+                                    <div class="row" id={list.token+"_view"}>
                                         <div>
                                             <p>{"List name: "+list.name}</p>
-                                        </div>
-                                        <div>
+                                            <button onClick={()=>this.generatePDF(list)}><i class="fa fa-file-pdf-o"></i></button>
                                             <button onClick={()=>this.removeList(list)}><i class="fa fa-close"></i></button>
                                         </div>
                                         <div class="col-lg-4">

@@ -1,6 +1,6 @@
 package com.example.ChordCalculator.Model.Entities.Rule;
 
-import com.example.ChordCalculator.Model.Entities.Instrumental;
+import com.example.ChordCalculator.Model.Entities.Instrument;
 import com.example.ChordCalculator.Model.StringCatch;
 
 import javax.persistence.Entity;
@@ -10,7 +10,7 @@ import java.util.List;
 public class MinStringsRule extends Rule {
 
 
-    public MinStringsRule(Instrumental inst, int value) {
+    public MinStringsRule(Instrument inst, int value) {
         instrument = inst;
         this.value = value;
     }

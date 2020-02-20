@@ -1,7 +1,7 @@
 package com.example.ChordCalculator.Model.Entities.Rule;
 
 import com.example.ChordCalculator.Model.Catch;
-import com.example.ChordCalculator.Model.Entities.Instrumental;
+import com.example.ChordCalculator.Model.Entities.Instrument;
 import com.example.ChordCalculator.Model.StringCatch;
 
 import javax.persistence.*;
@@ -14,7 +14,7 @@ public abstract class Rule {
     private int id;
 
     @ManyToOne
-    protected Instrumental instrument;
+    protected Instrument instrument;
 
     protected int value;
     public boolean isValid(Catch c){

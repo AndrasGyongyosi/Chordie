@@ -1,5 +1,8 @@
 package com.example.ChordCalculator.Controllers;
 
+import com.example.ChordCalculator.DTOs.CatchDTO;
+import com.example.ChordCalculator.DTOs.CatchResultDTO;
+import com.example.ChordCalculator.DTOs.StringCatchDTO;
 import com.example.ChordCalculator.Model.Entities.FavoritCatch;
 import com.example.ChordCalculator.Model.Entities.FavoritCatchList;
 import com.example.ChordCalculator.Model.Entities.FavoritStringCatch;
@@ -31,21 +34,10 @@ public class FavoritController {
     FavoritCatchRepository favoritCatchRepository;
 
     @RequestMapping(path="/lists/{userToken:.+}", method= RequestMethod.GET)
-    public List<HashMap<String, Object>> getLists(@PathVariable String userToken) {
-        List<HashMap<String, Object>> result = Lists.newArrayList();
+    public List<FavoritCatchList> getLists(@PathVariable String userToken) {
         User user = userRepository.findByUserToken(userToken);
         List<FavoritCatchList> catchLists = user.getFavoritCatchLists();
-        for (FavoritCatchList catchList : catchLists){
-            result.add(
-                    new HashMap<String, Object>(){{
-                put("name", catchList.getName());
-                //put("user", catchList.getUser().getUserToken());
-                put("catches", getCatches(catchList));
-                put("token", catchList.getListToken());
-            }});
-        }
-
-        return result;
+        return catchLists;
     }
 
     @RequestMapping(path="/newlist", method= RequestMethod.POST)
@@ -90,23 +82,23 @@ public class FavoritController {
     public void deleteCatch(@PathVariable String catchToken){
         favoritCatchRepository.deleteAllByCatchToken(catchToken);
     }
-    private List<HashMap<String, Object>> getCatches(FavoritCatchList favoritCatchList){
-        List<HashMap<String, Object>> result = Lists.newArrayList();
+    private List<CatchDTO> getCatches(FavoritCatchList favoritCatchList){
+    	List<CatchDTO> result = Lists.newArrayList();
         for(FavoritCatch fc : favoritCatchList.getCatches()){
-            HashMap<String, Object> subResult = Maps.newHashMap();
-            subResult.put("chord",fc.getChord());
-            subResult.put("instrument", fc.getInstrument());
-            List fscList = Lists.newArrayList();
+            CatchDTO catcha = new CatchDTO();
+            catcha.setChord(fc.getChord());
+            catcha.setInstrument(fc.getInstrument());
+            List<StringCatchDTO> fscList = Lists.newArrayList();
             for(FavoritStringCatch fsc : fc.getFavStringCatches()){
-                HashMap<String, Object> fscMap = Maps.newHashMap();
-                fscMap.put("bund",fsc.getBund());
-                fscMap.put("finger",fsc.getFinger());
-                fscMap.put("sound",fsc.getSound());
-                fscList.add(fscMap);
+            	StringCatchDTO stringCatch = new StringCatchDTO();
+                stringCatch.setBund(fsc.getBund());
+                stringCatch.setFinger(fsc.getFinger());
+                stringCatch.setSound(fsc.getSound());
+                fscList.add(stringCatch);
             }
-            subResult.put("stringCatches", fscList);
-            subResult.put("token", fc.getCatchToken());
-            result.add(subResult);
+            catcha.setStringCatches(fscList);
+            catcha.setToken(fc.getCatchToken());
+            result.add(catcha);
         }
         return result;
     }

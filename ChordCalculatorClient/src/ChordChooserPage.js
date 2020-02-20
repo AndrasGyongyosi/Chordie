@@ -51,6 +51,8 @@ class ChordChooserList extends React.Component{
     componentDidMount() {
         axios.get(this.chordComponentURL)
             .then(res => {
+                console.log(this.chordComponentURL);
+                console.log(res);
                 this.setState(
                     {
                         baseSounds: res.data["baseSounds"],
@@ -77,20 +79,19 @@ class ChordChooserList extends React.Component{
         if (!freeText) return;
         axios.get(this.freeTextChordURL+encodeURIComponent(freeText))
             .then(res => {
-                if (res.data.error!=null){
-                    alert(res.data.error);
-                }
-                else {
-                    document.getElementById('baseSoundSelect').value=res.data.bs;
-                    document.getElementById('baseTypeSelect').value=res.data.bt;
-                    document.getElementById('chordTypeSelect').value=res.data.ct;
-                    this.ancestor.setState({baseSound: res.data.bs,
-                                            baseType: res.data.bt,
-                                            chordType: res.data.ct});
-                    this.ancestor.catchQuery();
-                }
-
-            }).catch(error => this.setState({error, isLoaded: false}));
+                console.log(this.freeTextChordURL);
+                console.log(res);
+                document.getElementById('baseSoundSelect').value=res.data.baseSound;
+                document.getElementById('baseTypeSelect').value=res.data.baseType;
+                document.getElementById('chordTypeSelect').value=res.data.chordType;
+                this.ancestor.setState({baseSound: res.data.baseSound,
+                                        baseType: res.data.baseType,
+                                        chordType: res.data.chordType});
+                this.ancestor.catchQuery();
+            }).catch(error => {
+                //this.setState({error, isLoaded: false});
+                alert("Bad Expression");
+            });
     }
     render(){
         const {baseSounds, baseTypes, chordTypes, isLoaded, perfectExpression} = this.state;
@@ -104,18 +105,18 @@ class ChordChooserList extends React.Component{
                                 <input className="form-control centered bgPrim" id="freeTextChord" type="text" placeholder="Type chord!"
                                        onKeyUp={() => this.sendFreeTextChord()} autoFocus={true} ></input>
                                 <select className="form-control p-2 flex-fill bd-highlight bgPrim" onChange={this.baseSoundChange} value={this.state.value} id="baseSoundSelect">
-                                    {baseSounds.map((bs) =>
-                                        <option  value={bs.name}>{bs.label}</option>
+                                    {baseSounds.map((baseSound) =>
+                                        <option  value={baseSound.name}>{baseSound.label}</option>
                                     )}
                                 </select>
                                 <select className="form-control p-2 flex-fill bd-highlight bgPrim" onChange={this.baseTypeChange} value={this.state.value} id="baseTypeSelect">
-                                    {baseTypes.map((bt) =>
-                                        <option  value={bt.name}>{bt.label}</option>
+                                    {baseTypes.map((baseType) =>
+                                        <option  value={baseType.name}>{baseType.label}</option>
                                     )}
                                 </select>
                                 <select className="form-control p-2 flex-fill bd-highlight bgPrim" onChange={this.chordTypeChange} value={this.state.value} id="chordTypeSelect">
-                                    {chordTypes.map((ct) =>
-                                        <option  value={ct.name}>{ct.label}</option>
+                                    {chordTypes.map((chordType) =>
+                                        <option  value={chordType.name}>{chordType.label}</option>
                                     )}
                                 </select>
                                 <div hidden={this.ancestor.props.token==undefined}>
@@ -145,19 +146,19 @@ class ChordChooserPage extends React.Component {
         stringLoaded: false,
     }
 
-    setBaseSound(bs){
-        this.state.baseSound =  bs;
-        //this.setState({baseSound :bs});
+    setBaseSound(baseSound){
+        this.state.baseSound =  baseSound;
+        //this.setState({baseSound :baseSound});
         this.catchQuery();
     }
-    setBaseType(bt){
-        this.state.baseType = bt;
-        //this.setState({baseType :bt});
+    setBaseType(baseType){
+        this.state.baseType = baseType;
+        //this.setState({baseType :baseType});
         this.catchQuery();
     }
-    setChordType(ct){
-        this.state.chordType = ct;
-        //this.setState({chordType :ct});
+    setChordType(chordType){
+        this.state.chordType = chordType;
+        //this.setState({chordType :chordType});
         this.catchQuery();
     }
     setInstrument(inst){

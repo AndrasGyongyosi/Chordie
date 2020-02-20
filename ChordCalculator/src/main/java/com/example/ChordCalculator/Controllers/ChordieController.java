@@ -5,7 +5,7 @@ import com.example.ChordCalculator.Model.*;
 import com.example.ChordCalculator.Model.Chord.BaseType;
 import com.example.ChordCalculator.Model.Chord.Chord;
 import com.example.ChordCalculator.Model.Chord.ChordType;
-import com.example.ChordCalculator.Model.Entities.Instrumental;
+import com.example.ChordCalculator.Model.Entities.Instrument;
 import com.example.ChordCalculator.Model.Entities.MString;
 import com.example.ChordCalculator.Model.Entities.Rule.*;
 import com.example.ChordCalculator.Model.Entities.User;

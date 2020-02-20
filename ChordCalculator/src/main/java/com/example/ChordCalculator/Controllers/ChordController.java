@@ -1,12 +1,20 @@
 package com.example.ChordCalculator.Controllers;
 
+import com.example.ChordCalculator.DTOs.CatchDTO;
+import com.example.ChordCalculator.DTOs.CatchResultDTO;
+import com.example.ChordCalculator.DTOs.ChordComponentsDTO;
+import com.example.ChordCalculator.DTOs.ChordDTO;
+import com.example.ChordCalculator.DTOs.LabeledStringDTO;
+import com.example.ChordCalculator.DTOs.StringCatchDTO;
+import com.example.ChordCalculator.Exceptions.BadExpressionException;
 import com.example.ChordCalculator.Model.Catch;
 import com.example.ChordCalculator.Model.CatchPerfection;
 import com.example.ChordCalculator.Model.Chord.BaseType;
 import com.example.ChordCalculator.Model.Chord.Chord;
 import com.example.ChordCalculator.Model.Chord.ChordType;
-import com.example.ChordCalculator.Model.Entities.Instrumental;
+import com.example.ChordCalculator.Model.Entities.Instrument;
 import com.example.ChordCalculator.Model.Repositories.InstrumentRepository;
+import com.google.common.collect.Lists;
 import com.example.ChordCalculator.Model.Sound;
 import com.example.ChordCalculator.Model.StringCatch;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,38 +34,141 @@ public class ChordController {
     InstrumentRepository instrumentRepository;
 
     @RequestMapping(path = "/components/")
-    public Map<String, List> getChordComponents(){
-        Map<String, List> result = new HashMap();
-
-        List<Map<String,String>> sounds = new ArrayList();
+    public ChordComponentsDTO getChordComponents(){
+    	ChordComponentsDTO result = new ChordComponentsDTO();
+    	
+        List<LabeledStringDTO> sounds = Lists.newArrayList();
         for(Sound sound: Sound.values()){
-            HashMap hashMap = new HashMap();
-            hashMap.put("label",sound.getSoundName());
-            hashMap.put("name",sound.name());
-            sounds.add(hashMap);
+        	LabeledStringDTO soundDTO = new LabeledStringDTO();
+        	soundDTO.setLabel(sound.getSoundName());
+        	soundDTO.setName(sound.name());
+            sounds.add(soundDTO);
         }
-        result.put("baseSounds",sounds);
+        result.setBaseSounds(sounds);
 
-        List<Map> baseTypes = new ArrayList();
+        List<LabeledStringDTO> baseTypes = Lists.newArrayList();
         for(BaseType baseType : BaseType.values()){
-            HashMap hashMap = new HashMap();
-            hashMap.put("label",baseType.getName());
-            hashMap.put("name",baseType.name());
-            baseTypes.add(hashMap);
+        	LabeledStringDTO baseTypeDTO = new LabeledStringDTO();
+        	baseTypeDTO.setLabel(baseType.getName());
+        	baseTypeDTO.setName(baseType.name());
+            baseTypes.add(baseTypeDTO);
         }
-        result.put("baseTypes",baseTypes);
-
-        List<Map<String,String>> chordTypes = new ArrayList();
+        result.setBaseTypes(baseTypes);
+        
+        List<LabeledStringDTO> chordTypes = Lists.newArrayList();
         for(ChordType chordType : ChordType.values()){
-            HashMap hashMap = new HashMap();
-            hashMap.put("label",chordType.getAliases().get(0));
-            hashMap.put("name",chordType.name());
-            chordTypes.add(hashMap);
+        	LabeledStringDTO chordTypeDTO = new LabeledStringDTO();
+        	chordTypeDTO.setLabel(chordType.getAliases().get(0));
+        	chordTypeDTO.setName(chordType.name());
+            chordTypes.add(chordTypeDTO);
         }
-        result.put("chordTypes",chordTypes);
-
+        result.setChordTypes(chordTypes);
         return result;
     }
+    @RequestMapping(path="/text/{text}")
+    public ChordDTO chordTextAnalyze(@PathVariable String text) throws BadExpressionException{
+        text = text.trim().toLowerCase();
+        ChordDTO result = new ChordDTO();
+        
+        String[] parts = text.split("//");
+        String chordPart = parts[0];
+        if (parts.length>1) {
+            String rootNotePart = parts[1];
+        }
+        Sound baseSound = getBaseSoundFromChordText(chordPart);
+        	
+        result.setBaseSound(baseSound.name());
+
+        String chordPartWithoutBS = chordPart.substring(baseSound.name().length());
+
+        int chordTypeLength = 0;
+        ChordType chordType = null;
+        for(ChordType ct : ChordType.values()){
+            for (String alias : ct.getAliases()){
+                if (chordPartWithoutBS.endsWith(alias.toLowerCase()) && chordTypeLength<=alias.length()){
+                    chordType = ct;
+                    chordTypeLength = alias.length();
+                }
+            }
+        }
+        result.setChordType(chordType.name());
+
+        String chordPartWithoutBSandCT = chordPartWithoutBS.substring(0,chordPartWithoutBS.length()-chordTypeLength);
+
+        int baseTypeLength = 0;
+        BaseType baseType = null;
+        for(BaseType bt : BaseType.values()){
+            for (String alias: bt.getAliases()){
+                if(chordPartWithoutBSandCT.contains(alias.toLowerCase()) && baseTypeLength<=alias.length()){
+                    baseType = bt;
+                    baseTypeLength = alias.length();
+                }
+            }
+        }
+        if (baseSound==null || chordType==null || baseType==null) {
+        	throw new BadExpressionException("Wrong free text chord: "+text);
+        }
+        result.setBaseType(baseType.name());
+
+        return result;
+
+    }
+
+    @RequestMapping(path = "type/{baseSoundString}/{baseTypeString}/{chordTypeString}")
+    public List<String> getChordSoundsInString(@PathVariable String baseSoundString, @PathVariable String baseTypeString, @PathVariable String chordTypeString) throws BadExpressionException{
+        ArrayList<String> result = Lists.newArrayList();
+        for (Sound s : getChord(baseSoundString,baseTypeString,chordTypeString).getSounds()) {
+            result.add(s.getSoundName());
+        }
+        return result;
+    }
+
+    @RequestMapping(path="/catch/{instrumentToken}/{baseSoundString}/{baseTypeString}/{chordTypeString}")
+    public CatchResultDTO getChordCatches(@PathVariable String instrumentToken, @PathVariable String baseSoundString, @PathVariable String baseTypeString, @PathVariable String chordTypeString) throws BadExpressionException{
+    	CatchResultDTO result = new CatchResultDTO();
+    	
+        Instrument instrument = instrumentRepository.findByInstrumentToken(instrumentToken);
+        Chord chord = getChord(baseSoundString,baseTypeString,chordTypeString);
+        List<Catch> catches = chord.getCatches(instrument);
+
+        List<CatchDTO> catchList = Lists.newArrayList();
+        
+        int bundDif = 0;
+        for(Catch catcha: catches) {
+            CatchDTO catchInfo = new CatchDTO();
+            
+            List<StringCatchDTO> fingerPoints = Lists.newArrayList();
+            int actualBundDif = catcha.getBundDif();
+            
+            if ( bundDif<actualBundDif) bundDif = actualBundDif;
+            
+            for (StringCatch stringCatch : catcha.getStringCatches()) {
+            	StringCatchDTO stringCatchDTO = new StringCatchDTO();
+                stringCatchDTO.setBund(stringCatch.getBund());
+                stringCatchDTO.setSound(stringCatch.getSound()==null ? null : stringCatch.getSound().getSoundName());
+                stringCatchDTO.setFinger(stringCatch.getFinger());
+                fingerPoints.add(stringCatchDTO);
+            }
+
+            catchInfo.setStringCatches(fingerPoints);
+            catchInfo.setPerfection(catcha.getPerfection());
+            catchList.add(catchInfo);
+        }
+        //sort catches by best to worst.
+        catchList.sort(new Comparator<CatchDTO>() {
+
+            @Override
+            public int compare(CatchDTO c1, CatchDTO c2) {
+                return -((CatchPerfection)c1.getPerfection()).getWeight().compareTo(((CatchPerfection)c2.getPerfection()).getWeight());
+            }
+        });
+
+        result.setCatches(catchList);
+        result.setBundDif(bundDif);
+        result.setChord(chord.getFullName());
+        return result;
+    }
+    
     private Sound getBaseSoundFromChordText(String text){
         int resultLength = 0;
         Sound result = null;
@@ -69,160 +180,40 @@ public class ChordController {
         }
         return result;
     }
-
-    @RequestMapping(path="/text/{text}")
-    public HashMap<String,String> chordTextAnalyze(@PathVariable String text){
-        text = text.trim().toLowerCase();
-        //System.out.println("Full text: "+text);
-        HashMap resultHash = new HashMap();
-        HashMap<String,String> errorResult = new HashMap(){{put("error","Bad Expression");}};
-
-        String[] parts = text.split("//");
-        String chordPart = parts[0];
-        //System.out.println("Chord Part: "+chordPart);
-        if (parts.length>1) {
-            String rootNotePart = parts[1];
-        }
-        Sound baseSound = getBaseSoundFromChordText(chordPart);
-
-        if (baseSound==null) return errorResult;
-        resultHash.put("bs",baseSound.name());
-
-        String chordPartWithoutBS = chordPart.substring(baseSound.name().length());
-
-        //System.out.println("Chord Part without BS: "+chordPartWithoutBS + " ( "+baseSound.getSoundName()+" )");
-
-        int chordTypeLength = 0;
-        ChordType passingChordType = null;
-        for(ChordType ct : ChordType.values()){
-            for (String alias : ct.getAliases()){
-                if (chordPartWithoutBS.endsWith(alias.toLowerCase()) && chordTypeLength<=alias.length()){
-                    passingChordType = ct;
-                    chordTypeLength = alias.length();
-                }
-            }
-        }
-        if (passingChordType==null) return errorResult;
-        resultHash.put("ct",passingChordType.name());
-
-        String chordPartWithoutBSandCT = chordPartWithoutBS.substring(0,chordPartWithoutBS.length()-chordTypeLength);
-
-        //System.out.println("Chord Part without BS and CT: "+chordPartWithoutBSandCT + " ( "+passingChordType.getAliases().get(0)+" )");
-
-        int baseTypeLength = 0;
-        BaseType passingBaseType = null;
-        for(BaseType bt : BaseType.values()){
-            for (String alias: bt.getAliases()){
-                if(chordPartWithoutBSandCT.contains(alias.toLowerCase()) && baseTypeLength<=alias.length()){
-                    passingBaseType = bt;
-                    baseTypeLength = alias.length();
-                }
-            }
-        }
-        if (passingBaseType==null){
-            return errorResult;
-        }
-        resultHash.put("bt",passingBaseType.name());
-        //Chord resultChord = new Chord(baseSound,passingBaseType,passingChordType);
-
-
-        return resultHash;
-
-    }
-
-    @RequestMapping(path = "type/{baseSoundString}/{baseTypeString}/{chordTypeString}")
-    public ArrayList<String> getChordSoundsInString(@PathVariable String baseSoundString, @PathVariable String baseTypeString, @PathVariable String chordTypeString) {
-        ArrayList<String> result = new ArrayList<String>();
-        for (Sound s : getChord(baseSoundString,baseTypeString,chordTypeString).getSounds()) {
-            result.add(s.getSoundName());
-        }
-        return result;
-    }
-
-    public Chord getChord(String baseSoundString, String baseTypeString, String chordTypeString){
+    private Chord getChord(String baseSoundString, String baseTypeString, String chordTypeString) throws BadExpressionException{
         Sound baseSound = null;
         BaseType baseType = null;
         ChordType chordType = null;
-        try {
-            for (Sound sound : Sound.values()) {
-                if (sound.name().equals(baseSoundString) || sound.getSoundName().equals(baseSoundString)) {
-                    baseSound = sound;
-                    break;
-                }
+        for (Sound sound : Sound.values()) {
+            if (sound.name().equals(baseSoundString) || sound.getSoundName().equals(baseSoundString)) {
+                baseSound = sound;
+                break;
             }
-            if (baseSound == null) throw new Exception("BaseSound is not exist.");
+        }
+        if (baseSound == null) throw new BadExpressionException("BaseSound is not exist: "+baseSoundString);
 
-            for (BaseType bType : BaseType.values()) {
-                if (bType.name().equals(baseTypeString)) {
-                    baseType = bType;
-                    break;
-                }
+        for (BaseType bType : BaseType.values()) {
+            if (bType.name().equals(baseTypeString)) {
+                baseType = bType;
+                break;
             }
-            if (baseType == null) throw new Exception("BaseType is not exist.");
+        }
+        if (baseType == null) throw new BadExpressionException("BaseType is not exist: "+baseTypeString);
 
-            for (ChordType cType : ChordType.values()) {
-                if (cType.name().equals(chordTypeString)){
+        for (ChordType cType : ChordType.values()) {
+            if (cType.name().equals(chordTypeString)){
+                chordType = cType;
+                break;
+            }
+            for (String names : cType.getAliases()) {
+                if (names.equals(chordTypeString)) {
                     chordType = cType;
                     break;
                 }
-                for (String names : cType.getAliases()) {
-                    //System.out.println(names);
-                    if (names.equals(chordTypeString)) {
-                        chordType = cType;
-                        break;
-                    }
-                }
             }
-            //System.out.println(baseSound);
-            //System.out.println(baseType);
-            //System.out.println(chordType);
-            if (chordType == null) throw new Exception("ChordType is not exist.");
-            return new Chord(baseSound, baseType, chordType);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
         }
+        if (chordType == null) throw new BadExpressionException("ChordType is not exist: "+chordTypeString);
+        return new Chord(baseSound, baseType, chordType);
     }
-    @RequestMapping(path="/catch/{instrumentToken}/{baseSoundString}/{baseTypeString}/{chordTypeString}")
-    public HashMap<String, Object> getChordCatches(@PathVariable String instrumentToken, @PathVariable String baseSoundString, @PathVariable String baseTypeString, @PathVariable String chordTypeString) {
-        HashMap<String, Object> result = new HashMap();
-        Instrumental instrument = instrumentRepository.findByInstrumentToken(instrumentToken);
-        Chord chord = getChord(baseSoundString,baseTypeString,chordTypeString);
-        List<Catch> catches = chord.getCatches(instrument);
-
-        List<HashMap> catchList = new ArrayList();
-        int bundDif = 0;
-        for(Catch catcha: catches) {
-
-            List<HashMap> fingerPoints = new ArrayList();
-            HashMap catchInfo = new HashMap<String, Object>();
-            int actualBundDif = catcha.getBundDif();
-            if ( bundDif<actualBundDif) bundDif = actualBundDif;
-            for (StringCatch sc : catcha.getStringCatches()) {
-                HashMap stringCatchInfo = new HashMap<String, Object>();
-                stringCatchInfo.put("bund",sc.getBund());
-                stringCatchInfo.put("sound",(sc.getSound()==null ? null : sc.getSound().getSoundName()));
-                stringCatchInfo.put("finger",sc.getFinger());
-                fingerPoints.add(stringCatchInfo);
-            }
-
-            catchInfo.put("stringCatches",fingerPoints);
-            catchInfo.put("perfection",catcha.getPerfection());
-            catchList.add(catchInfo);
-        }
-        //sort catches by best to worst.
-        catchList.sort(new Comparator<HashMap>() {
-
-            @Override
-            public int compare(HashMap o1, HashMap o2) {
-                return -((CatchPerfection)o1.get("perfection")).getWeight().compareTo(((CatchPerfection)o2.get("perfection")).getWeight());
-            }
-        });
-
-        result.put("catches", catchList);
-        result.put("bundDif", bundDif);
-        result.put("chord", chord.getFullName());
-        return result;
-    }
+    
 }

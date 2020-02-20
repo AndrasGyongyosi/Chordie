@@ -2,7 +2,7 @@ package com.example.ChordCalculator.Model;
 
 import com.example.ChordCalculator.Model.Chord.Chord;
 import com.example.ChordCalculator.Model.Entities.FavoritCatch;
-import com.example.ChordCalculator.Model.Entities.Instrumental;
+import com.example.ChordCalculator.Model.Entities.Instrument;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,7 +11,7 @@ import java.util.Map;
 
 public class Catch {
     private Chord chord;
-    private Instrumental instrument;
+    private Instrument instrument;
     private List<StringCatch> stringCatches;   //.size()=instumentals strings
     private int difficulty; //1-5
     private CatchPerfection perfection;
@@ -19,7 +19,7 @@ public class Catch {
     public Catch(){
 
     }
-    public Catch(Chord chord, Instrumental instrument, List<StringCatch> stringCatches, int difficulty) {
+    public Catch(Chord chord, Instrument instrument, List<StringCatch> stringCatches, int difficulty) {
         this.chord = chord;
         this.instrument = instrument;
         this.stringCatches = stringCatches;
@@ -49,11 +49,11 @@ public class Catch {
         this.chord = chord;
     }
 
-    public Instrumental getInstrument() {
+    public Instrument getInstrument() {
         return instrument;
     }
 
-    public void setInstrument(Instrumental instrument) {
+    public void setInstrument(Instrument instrument) {
         this.instrument = instrument;
     }
 

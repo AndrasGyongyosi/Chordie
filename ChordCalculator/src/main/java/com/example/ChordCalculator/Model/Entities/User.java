@@ -24,7 +24,7 @@ public class User {
 
     )
     @JsonIgnore
-    private List<Instrumental> instrumentals;
+    private List<Instrument> instrumentals;
 
     @Column(length=2500)
     private String userToken;
@@ -51,11 +51,11 @@ public class User {
         this.id = id;
     }
 
-    public List<Instrumental> getInstrumentals() {
+    public List<Instrument> getInstrumentals() {
         return instrumentals;
     }
 
-    public void setInstrumentals(List<Instrumental> instrumentals) {
+    public void setInstrumentals(List<Instrument> instrumentals) {
         this.instrumentals = instrumentals;
     }
 

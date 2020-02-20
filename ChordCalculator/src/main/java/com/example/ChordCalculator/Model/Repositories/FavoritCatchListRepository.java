@@ -1,7 +1,7 @@
 package com.example.ChordCalculator.Model.Repositories;
 
 import com.example.ChordCalculator.Model.Entities.FavoritCatchList;
-import com.example.ChordCalculator.Model.Entities.Instrumental;
+import com.example.ChordCalculator.Model.Entities.Instrument;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

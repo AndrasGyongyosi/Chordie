@@ -1,6 +1,6 @@
 package com.example.ChordCalculator.Model.Entities.Rule;
 
-import com.example.ChordCalculator.Model.Entities.Instrumental;
+import com.example.ChordCalculator.Model.Entities.Instrument;
 import com.example.ChordCalculator.Model.Entities.MString;
 import com.example.ChordCalculator.Model.StringCatch;
 
@@ -9,7 +9,7 @@ import java.util.List;
 
 @Entity
 public class StringOrderIsConstantRule extends Rule {
-    public StringOrderIsConstantRule(Instrumental inst, int value) {
+    public StringOrderIsConstantRule(Instrument inst, int value) {
         instrument = inst;
         this.value = value;
     }

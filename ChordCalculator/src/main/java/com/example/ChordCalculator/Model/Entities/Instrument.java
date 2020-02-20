@@ -13,14 +13,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Instrumental {
+public class Instrument {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
     private String instrumentToken = RandomToken.randomString(32);
 
-    public Instrumental(){
+    public Instrument(){
         super();
         mStrings = new ArrayList();
         users = new ArrayList();

@@ -1,6 +1,6 @@
 package com.example.ChordCalculator.Model.Entities.Rule;
 
-import com.example.ChordCalculator.Model.Entities.Instrumental;
+import com.example.ChordCalculator.Model.Entities.Instrument;
 import com.example.ChordCalculator.Model.StringCatch;
 
 import javax.persistence.Entity;
@@ -9,7 +9,7 @@ import java.util.List;
 @Entity
 public class MaxBundDifRule extends Rule {
 
-    public MaxBundDifRule(Instrumental inst, int value) {
+    public MaxBundDifRule(Instrument inst, int value) {
         instrument = inst;
         this.value = value;
     }
