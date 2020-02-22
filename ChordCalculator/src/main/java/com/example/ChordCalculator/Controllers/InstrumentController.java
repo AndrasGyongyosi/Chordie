@@ -70,30 +70,26 @@ public class InstrumentController {
         }
         return result;
     }
-    @RequestMapping(path="/new", method= RequestMethod.POST)
     public boolean addNewInstrumentForUser(@RequestBody LinkedHashMap<String, Object> params ){
         Instrument newInstr = new Instrument();
-        //System.out.println((String) params.get("user"));
         User owner = userRepository.findByUserToken((String) params.get("user"));
+        
         List<Instrument> ownerInstruments = owner.getInstrumentals();
         ownerInstruments.add(newInstr);
         owner.setInstrumentals(ownerInstruments);
 
-        newInstr.setUsers(new ArrayList<User>(){{add(owner);}});
+        newInstr.setUsers(Lists.newArrayList(owner));
 
 
         List<Rule> rules = new ArrayList<Rule>();
         rules.add(new MinStringsRule(newInstr, 4));
         rules.add(new MaxBundDifRule(newInstr, Integer.parseInt((String)params.get("maxBundDif"))));
-        rules.add(new StringOrderIsConstantRule(newInstr,1));
+//        rules.add(new StringOrderIsConstantRule(newInstr,1));
         rules.add(new NeighborStringDifSoundRule(newInstr));
 
         newInstr.setRules(rules);
         newInstr.setName((String) params.get("instrumentalName"));
         newInstr.setBundNumber(Integer.parseInt((String)params.get("bundNumber")));
-
-
-
 
         instrumentRepository.save(newInstr);
 
@@ -108,8 +104,6 @@ public class InstrumentController {
                 return false;
             }
         }
-        //for(Map.Entry row : params.entrySet())
-        //    System.out.println("key: "+row.getKey()+", value: "+row.getValue());
         return true;
     }
 

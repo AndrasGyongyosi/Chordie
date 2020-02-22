@@ -17,7 +17,7 @@ public class FavoritCatch {
 
     @ManyToOne
     private FavoritCatchList catchList;
-
+    
     @OneToMany(mappedBy = "catcha", cascade = CascadeType.ALL,orphanRemoval=true)
     private List<FavoritStringCatch> favStringCatches;
 

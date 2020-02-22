@@ -29,6 +29,7 @@ public class User {
     @Column(length=2500)
     private String userToken;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL,orphanRemoval=true)
     private List<FavoritCatchList> favoritCatchLists;
 

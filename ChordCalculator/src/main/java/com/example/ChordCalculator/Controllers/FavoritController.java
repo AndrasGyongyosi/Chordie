@@ -36,6 +36,7 @@ public class FavoritController {
     @RequestMapping(path="/lists/{userToken:.+}", method= RequestMethod.GET)
     public List<FavoritCatchList> getLists(@PathVariable String userToken) {
         User user = userRepository.findByUserToken(userToken);
+        if (user ==null) return Lists.newArrayList();
         List<FavoritCatchList> catchLists = user.getFavoritCatchLists();
         return catchLists;
     }
