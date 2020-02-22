@@ -1,5 +1,6 @@
 /target/
-/clases/
+/classes/
+/bin/
 !.mvn/wrapper/maven-wrapper.jar
 
 ### STS ###
