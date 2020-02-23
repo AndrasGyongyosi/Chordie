@@ -70,6 +70,7 @@ public class InstrumentController {
         }
         return result;
     }
+    @RequestMapping(path="/new", method= RequestMethod.POST)
     public boolean addNewInstrumentForUser(@RequestBody LinkedHashMap<String, Object> params ){
         Instrument newInstr = new Instrument();
         User owner = userRepository.findByUserToken((String) params.get("user"));
