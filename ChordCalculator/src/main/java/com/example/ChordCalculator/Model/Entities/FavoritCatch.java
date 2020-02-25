@@ -3,6 +3,10 @@ package com.example.ChordCalculator.Model.Entities;
 import com.example.ChordCalculator.Helper.RandomToken;
 import com.example.ChordCalculator.Model.Catch;
 import com.example.ChordCalculator.Model.StringCatch;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.api.client.util.Lists;
 
 import javax.persistence.*;
@@ -15,10 +19,13 @@ public class FavoritCatch {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
+    @JsonBackReference
     @ManyToOne
     private FavoritCatchList catchList;
     
+    @JsonProperty("stringCatches")
     @OneToMany(mappedBy = "catcha", cascade = CascadeType.ALL,orphanRemoval=true)
+    @JsonManagedReference
     private List<FavoritStringCatch> favStringCatches;
 
     @Column(length=2500)

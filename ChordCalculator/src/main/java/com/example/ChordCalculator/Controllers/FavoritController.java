@@ -3,6 +3,7 @@ package com.example.ChordCalculator.Controllers;
 import com.example.ChordCalculator.DTOs.CatchDTO;
 import com.example.ChordCalculator.DTOs.CatchResultDTO;
 import com.example.ChordCalculator.DTOs.StringCatchDTO;
+import com.example.ChordCalculator.Helper.Logger;
 import com.example.ChordCalculator.Model.Entities.FavoritCatch;
 import com.example.ChordCalculator.Model.Entities.FavoritCatchList;
 import com.example.ChordCalculator.Model.Entities.FavoritStringCatch;
@@ -32,55 +33,61 @@ public class FavoritController {
 
     @Autowired
     FavoritCatchRepository favoritCatchRepository;
-
+    
+    Logger logger = new Logger(FavoritCatchList.class);
+    
     @RequestMapping(path="/lists/{userToken:.+}", method= RequestMethod.GET)
     public List<FavoritCatchList> getLists(@PathVariable String userToken) {
+    	logger.info("getLists endpoint called.");
         User user = userRepository.findByUserToken(userToken);
-        if (user ==null) return Lists.newArrayList();
+        if (user == null) return Lists.newArrayList();
+        logger.info("user email: "+user.getEmail());
         List<FavoritCatchList> catchLists = user.getFavoritCatchLists();
         return catchLists;
     }
 
+    @RequestMapping(path="/newlistwithcatch", method= RequestMethod.POST)
+    public FavoritCatchList addNewListWithCatch(@RequestBody LinkedHashMap<String, Object> params ) {
+    	logger.info("addNewListWithCatch endpoint called.");
+    	FavoritCatchList result = createFavoritCatchList(params);
+    	FavoritCatch catcha = createFavoritCatch(params);
+    	catcha.setCatchList(result);
+        result.addCatch(catcha);
+        favoritCatchListRepository.save(result);
+        return result;
+    }
+    
     @RequestMapping(path="/newlist", method= RequestMethod.POST)
     public FavoritCatchList addNewList(@RequestBody LinkedHashMap<String, Object> params ) {
-        User user = userRepository.findByUserToken((String) params.get("userToken"));
+    	logger.info("addNewList endpoint called.");
+        FavoritCatchList result = createFavoritCatchList(params);
 
-        FavoritCatchList catchList = new FavoritCatchList();
-        catchList.setName((String) params.get("name"));
-        catchList.setUser(user);
-
-        favoritCatchListRepository.save(catchList);
-        return catchList;
+        favoritCatchListRepository.save(result);
+        return result;
     }
+
 
     @RequestMapping(path="/addToList", method=RequestMethod.POST)
     public boolean addToList(@RequestBody LinkedHashMap<String, Object> params ){
+    	logger.info("addToList endpoint called.");
         FavoritCatchList favoritCatchList = favoritCatchListRepository.findAllByListToken((String) params.get("listToken"));
-        FavoritCatch favCatch = new FavoritCatch();
-        for(HashMap<String, Object> stringCatch : (List<HashMap<String, Object>>) params.get("catch")){
-            FavoritStringCatch fsc = new FavoritStringCatch();
-            fsc.setFinger((int) stringCatch.get("finger"));
-            fsc.setBund((int) stringCatch.get("bund"));
-            fsc.setSound((String) stringCatch.get("sound"));
-            fsc.setCatcha(favCatch);
-            favCatch.addFavStringCatch(fsc);
-        }
-        favCatch.setInstrument((String) params.get("instrument"));
-        favCatch.setChord((String) params.get("chord"));
-        favCatch.setCatchList(favoritCatchList);
+        FavoritCatch favCatch = createFavoritCatch(params);
         favoritCatchList.addCatch(favCatch);
-
+        favCatch.setCatchList(favoritCatchList);
         favoritCatchListRepository.save(favoritCatchList);
         return true;
     }
+
     @Transactional
     @RequestMapping(path="/list/{listToken}", method = RequestMethod.DELETE)
     public void deleteList(@PathVariable String listToken){
+    	logger.info("deleteList endpoint called with listToken "+listToken);
         favoritCatchListRepository.deleteAllByListToken(listToken);
     }
     @Transactional
     @RequestMapping(path="/catch/{catchToken}", method = RequestMethod.DELETE)
     public void deleteCatch(@PathVariable String catchToken){
+    	logger.info("deleteCatch endpoint called with catchToken "+catchToken);
         favoritCatchRepository.deleteAllByCatchToken(catchToken);
     }
     private List<CatchDTO> getCatches(FavoritCatchList favoritCatchList){
@@ -103,4 +110,27 @@ public class FavoritController {
         }
         return result;
     }
+    
+    private FavoritCatchList createFavoritCatchList(LinkedHashMap<String, Object> params) {
+		User user = userRepository.findByUserToken((String) params.get("userToken"));
+
+        FavoritCatchList catchList = new FavoritCatchList();
+        catchList.setName((String) params.get("name"));
+        catchList.setUser(user);
+		return catchList;
+	}
+    private FavoritCatch createFavoritCatch(LinkedHashMap<String, Object> params) {
+		FavoritCatch favCatch = new FavoritCatch();
+        for(HashMap<String, Object> stringCatch : (List<HashMap<String, Object>>) params.get("catch")){
+            FavoritStringCatch fsc = new FavoritStringCatch();
+            fsc.setFinger((int) stringCatch.get("finger"));
+            fsc.setBund((int) stringCatch.get("bund"));
+            fsc.setSound((String) stringCatch.get("sound"));
+            fsc.setCatcha(favCatch);
+            favCatch.addFavStringCatch(fsc);
+        }
+        favCatch.setInstrument((String) params.get("instrument"));
+        favCatch.setChord((String) params.get("chord"));
+		return favCatch;
+	}
 }

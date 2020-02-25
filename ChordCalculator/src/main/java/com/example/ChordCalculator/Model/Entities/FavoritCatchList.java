@@ -2,6 +2,8 @@ package com.example.ChordCalculator.Model.Entities;
 
 import com.example.ChordCalculator.Helper.RandomToken;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.google.common.collect.Lists;
 
 import javax.persistence.*;
 import java.util.List;
@@ -19,11 +21,16 @@ public class FavoritCatchList{
     private User user;
 
     @OneToMany(mappedBy = "catchList", cascade = CascadeType.ALL,orphanRemoval=true)
+    @JsonManagedReference
     private List<FavoritCatch> catches;
 
     @Column(length=2500)
     private String listToken = RandomToken.randomString(32);
-
+    
+    public FavoritCatchList() {
+    	catches = Lists.newArrayList();
+    }
+    
     public Integer getId() {
         return id;
     }

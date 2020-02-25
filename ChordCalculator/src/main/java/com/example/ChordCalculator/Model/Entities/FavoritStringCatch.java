@@ -2,6 +2,8 @@ package com.example.ChordCalculator.Model.Entities;
 
 import com.example.ChordCalculator.Model.Sound;
 import com.example.ChordCalculator.Model.StringCatch;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 
@@ -12,7 +14,9 @@ public class FavoritStringCatch {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
+    
     @ManyToOne
+    @JsonBackReference
     private FavoritCatch catcha;
 
     private int finger;
@@ -22,7 +26,7 @@ public class FavoritStringCatch {
     private String sound;
 
     public FavoritStringCatch(){
-
+    	
     }
 
     public Integer getId() {
