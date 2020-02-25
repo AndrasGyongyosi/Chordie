@@ -54,7 +54,6 @@ class CatchView extends React.Component{
         //console.log("min: "+min+" max: "+max);
         return resultArray;
     }
-
     render(){
         const{catcha, favoritLists, token, instrument, view} = this.props;
         var min = this.getMinBund(catcha.stringCatches);

@@ -19,7 +19,6 @@ class ButtonDropDown extends Component {
 
       showMenu(event) {
         event.preventDefault();
-        
         this.setState({ showMenu: true }, () => {
           document.addEventListener('click', this.closeMenu);
         });
@@ -40,7 +39,7 @@ class ButtonDropDown extends Component {
         //let strings = this.props.catch.props.strings;
         let parameters = {
           "catch" : catcha.stringCatches.reverse(),
-          "listToken" : list.token,
+          "listToken" : list.listToken,
           "instrument": this.props.instrument.name,
           "chord": this.props.catch.props.chord,
         };
@@ -51,7 +50,7 @@ class ButtonDropDown extends Component {
         axios.post(addToListURL, parameters)
             .then(res=>{
                 console.log(res);
-                //window.location.reload();
+                window.location.reload();
         });
 
       }
@@ -101,15 +100,18 @@ class ButtonDropDown extends Component {
       }
 
       handleAccept = () => {
-
-        let newListURL = myURLs.getURL() + "favorit/newlist"; 
+        let catcha = this.props.catch.props.catcha;
+        let newListURL = myURLs.getURL() + "favorit/newlistwithcatch"; 
         let passedParameters = {
           "name": document.getElementById("listName").value,
           "userToken": this.props.token,
+          "catch" : catcha.stringCatches.reverse(),
+          "instrument": this.props.instrument.name,
+          "chord": this.props.catch.props.chord,
       };
+      console.log(passedParameters);
       axios.post(newListURL, passedParameters)
           .then(res=>{
-              //this.addToList(res.data);
               this.setState({newList:false});
               window.location.reload();
       });

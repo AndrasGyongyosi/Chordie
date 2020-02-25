@@ -31,7 +31,7 @@ export default class FavoritListView extends Component {
         this.hideModal();
     };
     removeList(list){
-        let removeListURL = myURLs.getURL() + "favorit/list/"+list.token;
+        let removeListURL = myURLs.getURL() + "favorit/list/"+list.listToken;
         console.log(removeListURL);
         axios.delete(removeListURL).then(
             res=>{
@@ -39,7 +39,7 @@ export default class FavoritListView extends Component {
         });
     };
     generatePDF(list){
-        html2canvas(document.getElementById(list.token+"_view")).then(canvas =>
+        html2canvas(document.getElementById(list.listToken+"_view")).then(canvas =>
             {
                 let pdf = new jsPDF('p', 'mm', 'a4');
                 pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, 0, 211, 298);
@@ -47,7 +47,7 @@ export default class FavoritListView extends Component {
             });
     };
     removeCatch(catcha){
-        let removeCatchURL = myURLs.getURL() + "favorit/catch/"+catcha.token;
+        let removeCatchURL = myURLs.getURL() + "favorit/catch/"+catcha.catchToken;
         console.log(removeCatchURL);
         axios.delete(removeCatchURL).then(
             res=>{
@@ -60,7 +60,7 @@ export default class FavoritListView extends Component {
                 <ModalDialogWithoutFooter title={this.title} show={this.state.show} handleReject={this.handleReject}>
                               {this.props.favoritLists != null ? 
                            (this.props.favoritLists.map(list=>
-                                    <div class="row" id={list.token+"_view"}>
+                                    <div class="row" id={list.listToken+"_view"}>
                                         <div>
                                             <p>{"List name: "+list.name}</p>
                                             <button onClick={()=>this.generatePDF(list)}><i class="fa fa-file-pdf-o"></i></button>
