@@ -3,13 +3,15 @@ import './App.css';
 import axios from "axios";
 import Dashboard from './Modal/Dashboard';
 import myURLs from './myURLs.js';
-import ModalDialog from './Modal/ModalDialog';
+import EditableModalDialog from './Modal/EditableModalDialog';
 
 class Instruments extends React.Component {
     state={instruments : [],
             loaded : false,
             error: null,
             newInstrumentalStrings: [],
+            editMode: false,
+            detailedInstrument: undefined
     };
     componentDidMount() {
         let instrumentURL = myURLs.getURL() + "instrument/" + this.props.chordChooserList.ancestor.props.token;
@@ -35,18 +37,7 @@ class Instruments extends React.Component {
     setInstrument(instrumental){
         this.props.chordChooserList.instrumentalChange(instrumental);
     }
-    editInstrument(instrumental){
-        console.log("edit "+instrumental.name);
-        this.setState({editableInstrument: Object.assign({},instrumental),
-                            newInstrumentalStrings: Object.assign([],instrumental.strings).reverse()})
-    }
-    removeInstrument(instrumental){
-        let deleteInstrumentURL = myURLs.getURL()+"instrument/delete/"+instrumental.token;
-        axios.delete(deleteInstrumentURL).then(res=>{
-            window.location.reload();
-            alert(res.data);
-        });  
-    }
+   
     newInstrument(){
 
         let newInstrumentURL = myURLs.getURL() + "instrument/new/";
@@ -73,32 +64,50 @@ class Instruments extends React.Component {
                 
         })
     }
-    canceledModal(){
+    cancelCreateInstrument(){
         this.ancestor.setState({newInstrumentalStrings : [] });
         console.log("Modal cancelled.");
     }
-    handleReject = () => {
-        this.setState({newInstrumentalStrings : [], editableInstrument: undefined});
+    cancelEditInstrument = () => {
+        this.setState({newInstrumentalStrings : [], detailedInstrument: undefined, editMode: false});
         console.log("Modal cancelled.");
-        console.log(this);
     };
-    handleAccept = () => {
-        let editInstrumentURL = myURLs.getURL()+"instrument/edit/"+this.state.editableInstrument.token;
+    approveEditInstrument = () => {
+        let editInstrumentURL = myURLs.getURL()+"instrument/edit/"+this.state.detailedInstrument.token;
         let passedParameters = {
             "instrumentalName": document.getElementById("instrumentName").value,
             "maxBundDif": document.getElementById("maxBundDif").value,
             "bundNumber": document.getElementById("bundNumber").value,
             "strings": this.state.newInstrumentalStrings
         };
+        console.log(passedParameters);
         axios.post(editInstrumentURL, passedParameters)
             .then(res=>{
                 console.log(res);
                 window.location.reload();
         });
-
-
-        this.setState({newInstrumentalStrings : [], editableInstrument: undefined});
+        
+        this.setState({newInstrumentalStrings : [], detailedInstrument: undefined, editMode: false});
     };
+    showDetails(instrumental){
+        console.log("show details of "+instrumental.name);
+        this.setState({detailedInstrument: Object.assign({},instrumental),
+                        newInstrumentalStrings: Object.assign([],instrumental.strings).reverse()})
+    }
+
+    removeInstrument=()=>{
+        console.log(this);
+        let deleteInstrumentURL = myURLs.getURL()+"instrument/delete/"+this.state.detailedInstrument.token;
+        axios.delete(deleteInstrumentURL).then(res=>{
+            window.location.reload();
+        });
+        this.setState({detailedInstrument:undefined});
+    }
+    handleEdit=()=>{
+        console.log(this.state.detailedInstrument);
+        this.setState({editMode : true,
+        newInstrumentalStrings: this.state.detailedInstrument.strings});
+    }
     deleteString(string){
         var strings = this.state.newInstrumentalStrings;
         var index = strings.indexOf(string)
@@ -108,7 +117,8 @@ class Instruments extends React.Component {
         this.setState({newInstrumentalStrings: strings});
     }
     render(){
-        const {loaded, instruments, newInstrumentalStrings} = this.state;
+        const {loaded, instruments, newInstrumentalStrings,detailedInstrument} = this.state;
+        let isPublic = detailedInstrument!=undefined ? detailedInstrument.isPublic : false;
         return (<React.Fragment>
                     <nav className="navbar navbar-expand-sm navbar-light">
                         <button className="navbar-toggler" type="button" data-toggle="collapse"
@@ -123,9 +133,8 @@ class Instruments extends React.Component {
                                         instrumental =>{
                                         return (
                                                 <span>
-                                                    <button type="button" class="btn btn-warning btn-sm minibutton" onClick={()=>this.editInstrument(instrumental)} hidden={instrumental.public}><i class="fa fa-edit"></i></button>
+                                                    <button type="button" class="btn btn-outline-dark nav-item btn-sm minibutton" onClick={()=>this.showDetails(instrumental)}><i class="fa fa-edit"></i></button>
                                                     <button className="btn btn-outline-success nav-item" onClick={() =>this.setInstrument(instrumental)} type="button">{instrumental.name}</button>                                                    
-                                                    <button type="button" class="btn btn-danger btn-sm minibutton" onClick={()=>this.removeInstrument(instrumental)} hidden={instrumental.public}><i class="fa fa-close"></i></button>
                                                 </span>
                                         );
                                         })}
@@ -135,7 +144,7 @@ class Instruments extends React.Component {
                                 ) : (<h2>Loading...</h2>))}
                         </div>
                         <div hidden={this.props.chordChooserList.ancestor.props.token==undefined}>
-                        <Dashboard title="New" onAccept={this.newInstrument} onReject={this.canceledModal} ancestor={this}>
+                        <Dashboard title="New" onAccept={this.newInstrument} onReject={this.cancelCreateInstrument} ancestor={this}>
                             <div className="container">
                             <div className="row">
                             <div className="col-lg-6">
@@ -165,7 +174,7 @@ class Instruments extends React.Component {
                                 string =>{
                                     return(
                                         <div className="col-lg-2">
-                                            <p>{string.name}</p>
+                                            <p>{string.label}</p>
                                             <button onClick={()=>this.deleteString(string)}>Delete</button>
                                         </div>)
                             })}
@@ -173,30 +182,37 @@ class Instruments extends React.Component {
                             </div>
                         </Dashboard>
                         </div>
-                        <ModalDialog title="Edit" show={this.state.editableInstrument!=undefined} handleAccept={this.handleAccept} handleReject={this.handleReject} >
+                        <EditableModalDialog title={this.state.editMode? "Edit instrument":"Instrument details"}  
+                        show={this.state.detailedInstrument!=undefined}
+                        isPublic={isPublic}
+                        approveEdit={this.approveEditInstrument}
+                        handleEdit={this.handleEdit}
+                        handleDelete={this.removeInstrument}
+                        handleReject={this.cancelEditInstrument}
+                        editMode={this.state.editMode} >
                             <div className="container">
                             <div className="row">
                             <div className="col-lg-6">
                                 <label htmlFor="instumentName">Instrument name</label>
-                                <input type="text" className="form-control" id="instrumentName" placeholder="Instrument name" autofocus="true" defaultValue={this.state.editableInstrument ? this.state.editableInstrument.name: " "}/>
+                                <input type="text" className="form-control" id="instrumentName" placeholder="Instrument name" autofocus="true" defaultValue={this.state.detailedInstrument ? this.state.detailedInstrument.name : ""} readOnly={!this.state.editMode}/>
                             </div>
                             <div className="col-lg-3">
-                            <label htmlFor="maxBundDif">Maximum bund difference</label>
-                            <input type="number" className="form-control" id="maxBundDif" placeholder="Maximum bund different" defaultValue={this.state.editableInstrument ? this.state.editableInstrument.maxBundDif: ""}/>
+                            <label htmlFor="maxBundDif">Maximum bund</label>
+                            <input readOnly={!this.state.editMode} type="number" className="form-control" id="maxBundDif" placeholder="Maximum bund" defaultValue={this.state.detailedInstrument ? this.state.detailedInstrument.maxBundDif: ""}/>
                             </div>
                             <div className="col-lg-3">
                             <label htmlFor="bundNumber">Bund number</label>
-                            <input type="number" className="form-control" id="bundNumber" placeholder="Bund number" defaultValue={this.state.editableInstrument ? this.state.editableInstrument.bundNumber: ""}/>
+                            <input readOnly={!this.state.editMode} type="number" className="form-control" id="bundNumber" placeholder="Bund number" defaultValue={this.state.detailedInstrument ? this.state.detailedInstrument.bundNumber: ""}/>
                             </div>
                             </div>
                             <div>
                                 <h2>Strings</h2>
-                                <select id="baseSoundSelect">
+                                <select hidden={!this.state.editMode} id="baseSoundSelect">
                                     {this.props.chordChooserList.state.baseSounds.map(bs =>{
                                         return (<option  value={bs.name}>{bs.label}</option>)
                                     })}
                                 </select>
-                                <button onClick={() =>this.addNewInstrumentString()}>Add</button>
+                                <button hidden={!this.state.editMode} onClick={() =>this.addNewInstrumentString()}>Add</button>
                             </div>
                                 <div className="row">
                             {newInstrumentalStrings.map(
@@ -204,12 +220,12 @@ class Instruments extends React.Component {
                                     return(
                                         <div className="col-lg-2 col-md-2">
                                             <p>{string.label}</p>
-                                            <button onClick={()=>this.deleteString(string)}>Delete</button>
+                                            <button hidden={!this.state.editMode} onClick={()=>this.deleteString(string)}>Delete</button>
                                         </div>)
                             })}
                             </div>
                             </div>
-                        </ModalDialog>
+                        </EditableModalDialog>
                     </nav>
 
                 </React.Fragment>

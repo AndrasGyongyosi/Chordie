@@ -120,7 +120,7 @@ class ChordChooserList extends React.Component{
                                     )}
                                 </select>
                                 <div hidden={this.ancestor.props.token==undefined}>
-                                <FavoritListView favoritLists={this.ancestor.props.favoritLists}></FavoritListView>
+                                <FavoritListView favoritLists={this.ancestor.props.favoritLists} userToken={this.props.userToken}></FavoritListView>
                                 </div>
                                 
                             </div>
@@ -188,24 +188,11 @@ class ChordChooserPage extends React.Component {
                     }).catch(error => this.setState({error, catchLoaded: false}));
             }
     }
-    /*stringQuery(){
-        if (this.state.instrumental) {
-            let stringURL = myURLs.getURL() + "instrument/strings/" + this.state.instrumental.token;
-            axios.get(stringURL)
-                .then(res => {
-                    this.setState(
-                        {
-                            strings: res.data,
-                            stringLoaded: true
-                        });
-                }).catch(error => this.setState({error, stringLoaded: false}));
-        }
-    }*/
     render() {
         const {catches , catchLoaded, bundDif, instrumental, chord} = this.state;
         return (
             <div>
-                <ChordChooserList ancestor={this}></ChordChooserList>
+                <ChordChooserList ancestor={this} userToken={this.props.token}></ChordChooserList>
                 <div className="container">
                     <div className="row">
                         {( this.isValid()) ?

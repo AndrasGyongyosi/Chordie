@@ -60,10 +60,13 @@ class CatchView extends React.Component{
         var max = this.getMaxBund(min);
         return(
             <React.Fragment>
-                <div className={view=="page" ? "col-sm-10 col-md-10 col-lg-5 col-xl-5" : "col-sm-2 col-md-2 col-lg-1 col-xl-1"}>
-                <div hidden={view=="page"}>
-                <p>{catcha.chord+" chord on "+catcha.instrument}</p>
+                <div className={view=="page" ? "col-sm-10 col-md-10 col-lg-5 col-xl-5" : "col-sm-10 col-md-10 col-lg-10 col-xl-10"}>
+                <div className="row" hidden={view=="page"}>
+                    <p className="col-lg-11 inline">{catcha.chord+" on "+catcha.instrument}</p>
+                    
+                    <button className="col-lg-1 btn" onClick={this.props.removeCatch}><i class="fa fa-close"></i></button>
                 </div>
+                <div class="row">
                 <table cellSpacing="0" cellPadding="0">
                     <thead>
                     <tr>
@@ -110,13 +113,11 @@ class CatchView extends React.Component{
                     })}
                     </tbody>
                 </table>
+                </div>
                 <hr/>
                 </div>
                 <div className="col-sm-2 col-md-2 col-lg-1 col-xl-1 left" hidden={token==undefined}>
                     <ButtonDropDown catch={this} favoritLists = {favoritLists} token = {token} instrument={instrument}></ButtonDropDown>
-                </div>
-                <div className="col-sm-2 col-md-2 col-lg-1 col-xl-1 left" hidden={view!="list"}>
-                    <button onClick={this.props.removeCatch}><i class="fa fa-close"></i></button>
                 </div>
             </React.Fragment>
         )

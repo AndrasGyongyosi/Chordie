@@ -25,6 +25,8 @@ body {
 }
 .right{
   text-align: right;
+  align-self: flex-end;
+  align-items: flex-end;
 }
 .btn-outline-success{
   border-color: var(--foreground);
@@ -68,6 +70,28 @@ code {
 }
 .centered{
   text-align: center;
+}
+.catchlist{
+  background-color: lightblue;
+  align-items: center;
+}
+.catchlistheader{
+  background-color: lightblue;
+  align-items: center;
+  border-width: thin;
+  border-style: ridge;
+  border-color: black;
+}
+.catchlistbody{
+  background-color: whitesmoke;
+  align-items: center;
+  border-width: thin;
+  border-style: ridge;
+  border-color: black;
+}
+.inline{
+  display: inline;
+  vertical-align: text-bottom;
 }
 select { text-align-last:center; }
 

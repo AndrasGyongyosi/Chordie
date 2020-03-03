@@ -5,6 +5,7 @@ import axios from 'axios';
 import myURLs from './myURLs.js';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
+import ModalDialog from "./Modal/ModalDialog"
 
 export default class FavoritListView extends Component {
     title = "Lists"
@@ -30,20 +31,88 @@ export default class FavoritListView extends Component {
         this.props.onAccept();
         this.hideModal();
     };
-    removeList(list){
-        let removeListURL = myURLs.getURL() + "favorit/list/"+list.listToken;
+    
+    render() {
+        return (
+            <div>
+                <ModalDialogWithoutFooter title={this.title} show={this.state.show} handleReject={this.handleReject}>
+                            {this.props.favoritLists != null ? 
+                            this.props.favoritLists.map(list=> <CatchList list={list}/>) : 
+                            <h2>There is no list for this user.</h2>
+                                }
+                            <NewCatchList userToken={this.props.userToken}></NewCatchList>
+                </ModalDialogWithoutFooter>
+                <button className="btn btn-outline-secondary" onClick={this.showModal}>{this.title}</button>
+            </div>
+            )
+    };
+}
+
+class NewCatchList extends Component{
+    state={
+        show:false,
+    }
+    showModal(){
+        this.setState({
+            show:true
+        });
+    }
+
+    handleAccept = () => {
+        let newListURL = myURLs.getURL() + "favorit/newlist"; 
+        let passedParameters = {
+          "name": document.getElementById("listName").value,
+          "userToken": this.props.userToken,
+      };
+      axios.post(newListURL, passedParameters)
+          .then(res=>{
+              this.setState({show:false});
+              window.location.reload();
+      });
+      }
+      handleReject = () => {
+        console.log("new List Rejected");
+        this.setState({show:false});
+      }
+
+    render(){
+        return(
+            <div>
+                <button className="right" onClick={()=>this.showModal()}><i class="fa fa-plus-square"></i></button>
+                <ModalDialog title="Add" show={this.state.show} handleAccept={this.handleAccept} handleReject={this.handleReject} >
+                    <div className="container">
+                        <div className="row">
+                        <div className="col-lg-6">
+                            <label htmlFor="listName">List name</label>
+                            <input type="text" className="form-control" id="listName" placeholder="List name" autofocus="true" defaultValue=""/>
+                        </div>
+                        </div>
+                    </div>
+                </ModalDialog>
+            </div>
+        );
+    }
+}
+
+class CatchList extends Component{
+    state = {
+        show : false
+    }
+
+    removeList(){
+        let removeListURL = myURLs.getURL() + "favorit/list/"+this.props.list.listToken;
         console.log(removeListURL);
         axios.delete(removeListURL).then(
             res=>{
                 window.location.reload();
         });
     };
-    generatePDF(list){
-        html2canvas(document.getElementById(list.listToken+"_view")).then(canvas =>
+    generatePDF(){
+        html2canvas(document.getElementById(this.props.list.listToken+"_view")).then(canvas =>
             {
                 let pdf = new jsPDF('p', 'mm', 'a4');
                 pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, 0, 211, 298);
-                pdf.save(list.name+".pdf");
+                pdf.save(this.props.list.name+".pdf");
             });
     };
     removeCatch(catcha){
@@ -54,31 +123,46 @@ export default class FavoritListView extends Component {
                 window.location.reload();
         });
     }
+    showDetails(){
+        this.setState({show : true});
+    }
+    hideDetails(){
+        this.setState({show : false});
+    }
+
     render() {
-        return (
-            <div>
-                <ModalDialogWithoutFooter title={this.title} show={this.state.show} handleReject={this.handleReject}>
-                              {this.props.favoritLists != null ? 
-                           (this.props.favoritLists.map(list=>
-                                    <div class="row" id={list.listToken+"_view"}>
-                                        <div>
-                                            <p>{"List name: "+list.name}</p>
-                                            <button onClick={()=>this.generatePDF(list)}><i class="fa fa-file-pdf-o"></i></button>
-                                            <button onClick={()=>this.removeList(list)}><i class="fa fa-close"></i></button>
-                                        </div>
-                                        <div class="col-lg-4">
-                                        {list.catches.map(catcha =>
-                                            <CatchView catcha={catcha} view="list" bundDif={5} removeCatch={()=>this.removeCatch(catcha)}></CatchView>
-                                            )
-                                        }
-                                        <br/>
-                                        </div>
-                                    </div>
-                                )) : <h2>There is no list for this user.</h2>
-                                }
-                </ModalDialogWithoutFooter>
-                <button className="btn btn-outline-secondary" onClick={this.showModal}>{this.title}</button>
+        const {list} = this.props;
+        return ( 
+        <div class="container catchlist" id={list.listToken+"_view"}>
+            <div class="catchlistheader row">
+                <h2 class="inline col-lg-4">{list.name}</h2>
+                <p class="inline col-lg-4">{"size : "+list.catches.length}</p>
+                <div className="inline col-lg-4">
+                    <button onClick={()=>this.generatePDF()}><i class="fa fa-file-pdf-o"></i></button>
+                    <button onClick={()=>this.removeList()}><i class="fa fa-close"></i></button>
+                    {(this.state.show ? 
+                    (<button onClick={()=>this.hideDetails()}><i class="fa fa-hand-o-up"></i></button>):
+                    (<button onClick={()=>this.showDetails()}><i class="fa fa-hand-o-down"></i></button>)
+                    )}
+                </div>
             </div>
-            )
-    };
+            {(this.state.show ? (
+            <div>
+                {list.catches.map(catcha =>
+                <div className="catchlistbody row">
+                    <div className="col-lg-2"/>
+                    <div className="col-lg-8">
+                    <hr/>
+                    <CatchView catcha={catcha} view="list" bundDif={5} removeCatch={()=>this.removeCatch(catcha)}></CatchView>
+                    </div>
+                    <div className="col-lg-2"/>
+                </div>
+                    )
+                }
+            <br/>
+            </div>
+            ) : (<div></div>))
+                        }
+        </div>
+    )};
 }

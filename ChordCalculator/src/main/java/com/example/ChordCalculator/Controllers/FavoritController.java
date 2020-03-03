@@ -121,6 +121,7 @@ public class FavoritController {
 	}
     private FavoritCatch createFavoritCatch(LinkedHashMap<String, Object> params) {
 		FavoritCatch favCatch = new FavoritCatch();
+		System.out.println("bundNumbers:");
         for(HashMap<String, Object> stringCatch : (List<HashMap<String, Object>>) params.get("catch")){
             FavoritStringCatch fsc = new FavoritStringCatch();
             fsc.setFinger((int) stringCatch.get("finger"));
@@ -128,7 +129,9 @@ public class FavoritController {
             fsc.setSound((String) stringCatch.get("sound"));
             fsc.setCatcha(favCatch);
             favCatch.addFavStringCatch(fsc);
+            System.out.print(stringCatch.get("bund"));
         }
+        System.out.println("---");
         favCatch.setInstrument((String) params.get("instrument"));
         favCatch.setChord((String) params.get("chord"));
 		return favCatch;

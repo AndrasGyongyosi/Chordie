@@ -131,7 +131,7 @@ public class InstrumentController {
         for(Map<String, String> mString : (List<Map<String, String>>)params.get("strings")){
             try {
                 //TODO in future : octave specialize
-                MString newString = new MString(Sound.valueOf(mString.get("value")), -2, instrument, order++);
+                MString newString = new MString(Sound.valueOf(mString.get("name")), -2, instrument, order++);
                 mStringRepository.save(newString);
             } catch(InaudibleVoiceException e){
                 e.printStackTrace();
