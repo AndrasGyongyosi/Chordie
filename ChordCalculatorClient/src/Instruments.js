@@ -134,7 +134,7 @@ class Instruments extends React.Component {
                                         return (
                                                 <span>
                                                     <button type="button" class="btn btn-outline-dark nav-item btn-sm minibutton" onClick={()=>this.showDetails(instrumental)}><i class="fa fa-edit"></i></button>
-                                                    <button className="btn btn-outline-success nav-item" onClick={() =>this.setInstrument(instrumental)} type="button">{instrumental.name}</button>                                                    
+                                                    <button className="btn btn-outline-success nav-item instrument" onClick={() =>this.setInstrument(instrumental)} type="button">{instrumental.name}</button>                                                    
                                                 </span>
                                         );
                                         })}

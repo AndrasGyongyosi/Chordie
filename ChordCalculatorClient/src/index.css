@@ -93,6 +93,9 @@ code {
   display: inline;
   vertical-align: text-bottom;
 }
+.instrument{
+  margin-right:10px;
+}
 select { text-align-last:center; }
 
 label { text-align:left; }

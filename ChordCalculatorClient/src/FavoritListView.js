@@ -6,6 +6,7 @@ import myURLs from './myURLs.js';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import ModalDialog from "./Modal/ModalDialog"
+import ReactDOM from 'react-dom'
 
 export default class FavoritListView extends Component {
     title = "Lists"
@@ -108,7 +109,19 @@ class CatchList extends Component{
         });
     };
     generatePDF(){
-        html2canvas(document.getElementById(this.props.list.listToken+"_view")).then(canvas =>
+        let html = document.createElement("root");
+        this.props.list.catches.map(catcha =>
+            ReactDOM.render((<div className="catchlistbody row">
+                                <div className="col-lg-2"/>
+                                <div className="col-lg-8">
+                                <hr/>
+                                <CatchView catcha={catcha} view="list" bundDif={5} removeCatch={()=>this.removeCatch(catcha)}></CatchView>
+                                </div>
+                                <div className="col-lg-2"/>
+                            </div>), html)
+                );
+        console.log(html);
+        html2canvas(html).then(canvas =>
             {
                 let pdf = new jsPDF('p', 'mm', 'a4');
                 pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, 0, 211, 298);
