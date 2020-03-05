@@ -109,23 +109,47 @@ class CatchList extends Component{
         });
     };
     generatePDF(){
-        let html = document.createElement("root");
-        this.props.list.catches.map(catcha =>
-            ReactDOM.render((<div className="catchlistbody row">
-                                <div className="col-lg-2"/>
-                                <div className="col-lg-8">
-                                <hr/>
-                                <CatchView catcha={catcha} view="list" bundDif={5} removeCatch={()=>this.removeCatch(catcha)}></CatchView>
-                                </div>
-                                <div className="col-lg-2"/>
-                            </div>), html)
-                );
+        let pdf = new jsPDF('p', 'mm', 'a4');
+        let height = 10;
+        let newrow=true;
+        let html = document.querySelector("#pdf");
+        console.log(html); 
+        let header = document.createElement("div");
+        //header.id = "header";
+        header.className="col-lg-12";
+        ReactDOM.render(( <h2 className= "centered">{this.props.list.name}</h2>),header);
+        html.appendChild(header);
+        console.log(header);
+        let row;
+        let catchHtml
+        this.props.list.catches.map(catcha => {
+            if (newrow){
+                row = document.createElement("div");
+                row.className="row";
+                newrow=false;
+            } else {
+                newrow=true;
+            }
+            catchHtml = document.createElement("div");
+            catchHtml.className="col-lg-6";
+            ReactDOM.render((
+                <CatchView catcha={catcha} view="print" bundDif={4} removeCatch={()=>this.removeCatch(catcha)}></CatchView>), catchHtml);
+            row.appendChild(catchHtml);
+            if (newrow){
+                html.appendChild(row);
+                height+=60;
+            }
+        });
+        if (!newrow){
+            html.appendChild(row);
+            height+=60;
+        }
         console.log(html);
         html2canvas(html).then(canvas =>
             {
-                let pdf = new jsPDF('p', 'mm', 'a4');
-                pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, 0, 211, 298);
+                pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, 0, 200, height);
                 pdf.save(this.props.list.name+".pdf");
+                ReactDOM.render(<p></p>,html);
             });
     };
     removeCatch(catcha){
@@ -176,6 +200,7 @@ class CatchList extends Component{
             </div>
             ) : (<div></div>))
                         }
+        <div id="pdf" className="container"></div>
         </div>
     )};
 }

@@ -55,16 +55,17 @@ class CatchView extends React.Component{
         return resultArray;
     }
     render(){
+        // view -> page, list or print
         const{catcha, favoritLists, token, instrument, view} = this.props;
         var min = this.getMinBund(catcha.stringCatches);
         var max = this.getMaxBund(min);
         return(
             <React.Fragment>
                 <div className={view=="page" ? "col-sm-10 col-md-10 col-lg-5 col-xl-5" : "col-sm-10 col-md-10 col-lg-10 col-xl-10"}>
-                <div className="row" hidden={view=="page"}>
-                    <p className="col-lg-11 inline">{catcha.chord+" on "+catcha.instrument}</p>
+                <div className="row">
+                    <p className="col-lg-11 inline" hidden={view=="page"}>{catcha.chord+" on "+catcha.instrument}</p>
                     
-                    <button className="col-lg-1 btn" onClick={this.props.removeCatch}><i class="fa fa-close"></i></button>
+                    <button className="col-lg-1 btn" onClick={this.props.removeCatch} hidden={view!="list"}><i class="fa fa-close"></i></button>
                 </div>
                 <div class="row">
                 <table cellSpacing="0" cellPadding="0">
@@ -89,10 +90,10 @@ class CatchView extends React.Component{
                                 <td>
                                 {
                                     (string.bund == -1) ?
-                                        (<img src="view/nut_unplayed.png" height="20" width="60" max-width="12%"></img>) :
+                                        (<img src={"view/nut_unplayed.png"} height={this.props.view=="print" ? "15" : "20"} width={this.props.view=="print" ? "40" : "60"} max-width="12%"></img>) :
                                         ((string.bund==0)?
-                                        (<img src="view/nut_open.png" height="20" width="60" max-width="12%"></img>):
-                                            (<img src="view/nut_default.png" height="20" width="60" max-width="12%"></img>))
+                                        (<img src={"view/nut_open.png"} height={this.props.view=="print" ? "15" : "20"} width={this.props.view=="print" ? "40" : "60"} max-width="12%"></img>):
+                                            (<img src={"view/nut_default.png"} height={this.props.view=="print" ? "15" : "20"} width={this.props.view=="print" ? "40" : "60"} max-width="12%"></img>))
                                 }
                                 </td>
                                 {
@@ -101,8 +102,8 @@ class CatchView extends React.Component{
                                         return (<td>
                                                     {
                                                         (bund == 1) ?
-                                                            (<img src={playedBundSrc} height="20" width="60" max-width="12%"></img>) :
-                                                            (<img src="view/bund_unplayed.png" height="20" width="60" max-width="12%"></img>)
+                                                            (<img src={playedBundSrc} height={this.props.view=="print" ? "15" : "20"} width={this.props.view=="print" ? "40" : "60"} max-width="12%"></img>) :
+                                                            (<img src={"view/bund_unplayed.png"} height={this.props.view=="print" ? "15" : "20"} width={this.props.view=="print" ? "40" : "60"} max-width="12%"></img>)
                                                     }
                                                 </td>);
                                     })
