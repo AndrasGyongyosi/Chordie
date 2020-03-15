@@ -1,12 +1,14 @@
 {
-  "name": "autsoft_test",
+  "name": "Chordie",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
     "axios": "^0.18.1",
     "html2canvas": "^1.0.0-rc.5",
     "jspdf": "^1.5.3",
+    "midi-sounds-react": "^1.2.54",
     "react": "^16.8.3",
+    "react-contextmenu": "^2.13.0",
     "react-dom": "^16.8.3",
     "react-google-login": "^5.0.4",
     "react-modal": "^3.8.1",

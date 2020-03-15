@@ -9,6 +9,9 @@ public class ChordDTO {
 	String baseSound;
 	String baseType;	
 	String chordType;
+	
+	String rootNote;
+	Integer capo;
 
 	public String getBaseSound() {
 		return baseSound;
@@ -28,4 +31,17 @@ public class ChordDTO {
 	public void setChordType(String chordType) {
 		this.chordType = chordType;
 	}
+	public String getRootNote() {
+		return rootNote;
+	}
+	public void setRootNote(String rootNote) {
+		this.rootNote = rootNote;
+	}
+	public Integer getCapo() {
+		return capo;
+	}
+	public void setCapo(Integer capo) {
+		this.capo = capo;
+	}
+	
 }

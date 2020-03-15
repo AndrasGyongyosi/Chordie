@@ -5,20 +5,38 @@ import Instruments from "./Instruments";
 import myURLs from './myURLs.js';
 import FavoritListView from './FavoritListView';
 import CatchView from './CatchView.js';
+import MIDISounds from 'midi-sounds-react';
+
 class ChordView extends React.Component {
+    componentDidMount(){
+        this.midiSounds.cacheInstrument(256);
+    }
+    clickOnCatchView = (catcha)=>{
+        this.midiSounds.cancelQueue();
+        let selectedInstrument = 256;
+        let counter = 0;
+        catcha.stringCatches.slice().reverse().forEach(stringCatch=>{
+            if (stringCatch.midiCode!=0){
+                this.midiSounds.playChordAt(this.midiSounds.contextTime() + 0.5 * counter++, selectedInstrument, [stringCatch.midiCode], 1);
+            
+        }});
+        }
     render() {
         const {catchLoaded, catches, bundDif, favoritLists, token, instrument, chord} = this.props;
         return (
             <React.Fragment>
-                {(catchLoaded) ? (
+                {(catchLoaded) ? (           
                     catches.slice(0,10).map(catcha => {
                             return (
-                                <CatchView view="page" chord={chord} catcha={catcha} bundDif={bundDif} favoritLists={favoritLists} token={token} instrument={instrument}></CatchView>
+                                    <CatchView view="page" chord={chord} catcha={catcha} bundDif={bundDif} click={this.clickOnCatchView} favoritLists={favoritLists} token={token} instrument={instrument}></CatchView>
                             );
-                    })  
+                    })
                 ) : (
                     <h3>Loading...</h3>
                 )}
+                <div hidden={true}>
+                    <MIDISounds ref={(ref) => (this.midiSounds = ref)} appElementName="root" instruments={[3]} />
+                </div>
             </React.Fragment>
         )
     }
@@ -74,24 +92,28 @@ class ChordChooserList extends React.Component{
     instrumentalChange(instr){
         this.ancestor.setInstrument(instr);
     }
-    sendFreeTextChord(){
-        let freeText = document.getElementById("freeTextChord").value;
-        if (!freeText) return;
-        axios.get(this.freeTextChordURL+encodeURIComponent(freeText))
-            .then(res => {
-                console.log(this.freeTextChordURL);
-                console.log(res);
-                document.getElementById('baseSoundSelect').value=res.data.baseSound;
-                document.getElementById('baseTypeSelect').value=res.data.baseType;
-                document.getElementById('chordTypeSelect').value=res.data.chordType;
-                this.ancestor.setState({baseSound: res.data.baseSound,
-                                        baseType: res.data.baseType,
-                                        chordType: res.data.chordType});
-                this.ancestor.catchQuery();
-            }).catch(error => {
-                //this.setState({error, isLoaded: false});
-                alert("Bad Expression");
-            });
+    sendFreeTextChord = (e) =>{
+        if (e.key==='Enter'){
+            let freeText = document.getElementById("freeTextChord").value;
+            if (!freeText) return;
+            freeText = freeText.replace(/[/]/g,'>');
+            freeText = freeText.replace(/[.]/g,'<');
+            axios.get(this.freeTextChordURL+encodeURIComponent(freeText))
+                .then(res => {
+                    console.log(this.freeTextChordURL);
+                    console.log(res);
+                    document.getElementById('baseSoundSelect').value=res.data.baseSound;
+                    document.getElementById('baseTypeSelect').value=res.data.baseType;
+                    document.getElementById('chordTypeSelect').value=res.data.chordType;
+                    this.ancestor.setState({baseSound: res.data.baseSound,
+                                            baseType: res.data.baseType,
+                                            chordType: res.data.chordType});
+                    this.ancestor.catchQuery();
+                }).catch(error => {
+                    //this.setState({error, isLoaded: false});
+                    alert("Bad Expression");
+                });
+        }
     }
     render(){
         const {baseSounds, baseTypes, chordTypes, isLoaded, perfectExpression} = this.state;
@@ -103,7 +125,7 @@ class ChordChooserList extends React.Component{
                         <div>
                             <div className="d-flex bd-highlight">
                                 <input className="form-control centered bgPrim" id="freeTextChord" type="text" placeholder="Type chord!"
-                                       onKeyUp={() => this.sendFreeTextChord()} autoFocus={true} ></input>
+                                       onKeyDown={this.sendFreeTextChord} autoFocus={true} ></input>
                                 <select className="form-control p-2 flex-fill bd-highlight bgPrim" onChange={this.baseSoundChange} value={this.state.value} id="baseSoundSelect">
                                     {baseSounds.map((baseSound) =>
                                         <option  value={baseSound.name}>{baseSound.label}</option>
@@ -137,6 +159,8 @@ class ChordChooserPage extends React.Component {
         baseSound : "C",
         baseType: "maj",
         chordType: "n",
+        capo: 0,
+
         instrumental: {},
         bundDif : 5,
 

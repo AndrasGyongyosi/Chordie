@@ -11,6 +11,8 @@ public class StringCatchDTO {
 	int bund;
 	String sound;	
 	int finger;
+	int midiCode;
+	
 	public int getBund() {
 		return bund;
 	}
@@ -29,5 +31,12 @@ public class StringCatchDTO {
 	public void setFinger(int finger) {
 		this.finger = finger;
 	}
+	public int getMidiCode() {
+		return midiCode;
+	}
+	public void setMidiCode(int midiCode) {
+		this.midiCode = midiCode;
+	}
+	
 	
 }

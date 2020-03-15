@@ -7,6 +7,7 @@ import com.example.ChordCalculator.DTOs.ChordDTO;
 import com.example.ChordCalculator.DTOs.LabeledStringDTO;
 import com.example.ChordCalculator.DTOs.StringCatchDTO;
 import com.example.ChordCalculator.Exceptions.BadExpressionException;
+import com.example.ChordCalculator.Helper.RandomToken;
 import com.example.ChordCalculator.Model.Catch;
 import com.example.ChordCalculator.Model.CatchPerfection;
 import com.example.ChordCalculator.Model.Chord.BaseType;
@@ -70,12 +71,23 @@ public class ChordController {
         text = text.trim().toLowerCase();
         ChordDTO result = new ChordDTO();
         
-        String[] parts = text.split("//");
+        String[] parts = text.split("<");
+        text = parts[0];
+        if (parts.length>1) {
+            String capoPart = parts[1];
+            
+            //TODO: validation
+            result.setCapo(Integer.parseInt(capoPart));
+        }
+        
+        parts = text.split(">");
         String chordPart = parts[0];
         if (parts.length>1) {
             String rootNotePart = parts[1];
+            result.setRootNote(getSoundFromChordText(rootNotePart).name());
+            
         }
-        Sound baseSound = getBaseSoundFromChordText(chordPart);
+        Sound baseSound = getSoundFromChordText(chordPart);
         	
         result.setBaseSound(baseSound.name());
 
@@ -144,14 +156,22 @@ public class ChordController {
             
             for (StringCatch stringCatch : catcha.getStringCatches()) {
             	StringCatchDTO stringCatchDTO = new StringCatchDTO();
+            	Sound sound = stringCatch.getSound();
                 stringCatchDTO.setBund(stringCatch.getBund());
-                stringCatchDTO.setSound(stringCatch.getSound()==null ? null : stringCatch.getSound().getSoundName());
                 stringCatchDTO.setFinger(stringCatch.getFinger());
+                
+                if (sound!=null) {
+                	stringCatchDTO.setSound(sound.getSoundName());
+                	int octave = stringCatch.getString().getOctave(stringCatch.getBund());
+					stringCatchDTO.setMidiCode(sound.getMIDICodeAtOctave(octave));
+                }
+                
                 fingerPoints.add(stringCatchDTO);
             }
 
             catchInfo.setStringCatches(fingerPoints);
             catchInfo.setPerfection(catcha.getPerfection());
+            catchInfo.setToken(RandomToken.randomString(32));
             catchList.add(catchInfo);
         }
         //sort catches by best to worst.
@@ -169,7 +189,7 @@ public class ChordController {
         return result;
     }
     
-    private Sound getBaseSoundFromChordText(String text){
+    private Sound getSoundFromChordText(String text){
         int resultLength = 0;
         Sound result = null;
         for(Sound sound : Sound.values()) {

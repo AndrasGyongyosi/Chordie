@@ -15,6 +15,7 @@ public class CatchDTO {
 	String chord;
 	String instrument;
 	String token;
+	
 	public CatchPerfection getPerfection() {
 		return perfection;
 	}

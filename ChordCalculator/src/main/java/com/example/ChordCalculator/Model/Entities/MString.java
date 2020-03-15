@@ -80,6 +80,10 @@ public class MString {
     public int getOctave() {
         return octave;
     }
+    public int getOctave(int bund) {
+    	int ord = sound.ordinal()+bund;
+        return octave + (ord - ord%12)/12; 
+    }
 
     public void setOctave(int octave) {
         this.octave = octave;

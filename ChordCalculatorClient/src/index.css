@@ -96,6 +96,9 @@ code {
 .instrument{
   margin-right:10px;
 }
+.catchView:hover{
+  background-color: bisque;
+}
 select { text-align-last:center; }
 
 label { text-align:left; }

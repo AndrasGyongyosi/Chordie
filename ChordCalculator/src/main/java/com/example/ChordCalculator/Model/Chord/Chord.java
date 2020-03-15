@@ -4,6 +4,7 @@ import com.example.ChordCalculator.Model.*;
 import com.example.ChordCalculator.Model.CatchPerfection;
 import com.example.ChordCalculator.Model.Entities.Instrument;
 import com.example.ChordCalculator.Model.Entities.MString;
+import com.google.common.collect.Lists;
 
 import java.util.*;
 
@@ -13,13 +14,14 @@ public class Chord {
     private ChordType chordType;
     private BaseType baseType;
     private Sound baseSound;
+    private Integer capo;
 
     public Chord(Sound sound, BaseType bt, ChordType ct){
         baseSound = sound;
         baseType = bt;
         chordType = ct;
 
-        ArrayList<Integer> neededNotes = new ArrayList(bt.getStructure());
+        ArrayList<Integer> neededNotes = Lists.newArrayList(bt.getStructure());
         if (ct.getModifiedNotes()!=null) {
             for (HashMap.Entry<Integer, Integer> entry : ct.getModifiedNotes().entrySet()) {
                 neededNotes.set(entry.getKey(), entry.getValue());
@@ -100,13 +102,11 @@ public class Chord {
         LinkedHashMap<MString, HashMap<Integer, Sound>> options = getPossibleFingerPoints(instrument);
 
         List<MString> strings = new ArrayList<MString>(options.keySet());
-        //for(MString string : strings)
-        //    System.out.println(string.getSound());
+        
         List<List<StringCatch>> stringCatches = new ArrayList();
 
         getAllCatches(strings,options, instrument, new ArrayList(),stringCatches);
 
-        //System.out.println("String Catches: " + stringCatches.size());
         List<Catch> catches = new ArrayList();
         for(List<StringCatch>  scs : stringCatches) {
             Catch actCatch = new Catch(this, instrument, scs, 0);
@@ -209,4 +209,11 @@ public class Chord {
     public void setBaseSound(Sound baseSound) {
         this.baseSound = baseSound;
     }
+	public Integer getCapo() {
+		return capo;
+	}
+	public void setCapo(Integer capo) {
+		this.capo = capo;
+	}
+    
 }
