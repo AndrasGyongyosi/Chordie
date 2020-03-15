@@ -14,7 +14,6 @@ public class Chord {
     private ChordType chordType;
     private BaseType baseType;
     private Sound baseSound;
-    private Integer capo;
 
     public Chord(Sound sound, BaseType bt, ChordType ct){
         baseSound = sound;
@@ -98,14 +97,14 @@ public class Chord {
         }
     }
 
-    public List<Catch> getCatches(Instrument instrument) {
+    public List<Catch> getCatches(Instrument instrument, Sound rootNote) {
         LinkedHashMap<MString, HashMap<Integer, Sound>> options = getPossibleFingerPoints(instrument);
 
         List<MString> strings = new ArrayList<MString>(options.keySet());
         
         List<List<StringCatch>> stringCatches = new ArrayList();
 
-        getAllCatches(strings,options, instrument, new ArrayList(),stringCatches);
+        getAllCatches(strings, options, instrument, new ArrayList(),stringCatches);
 
         List<Catch> catches = new ArrayList();
         for(List<StringCatch>  scs : stringCatches) {
@@ -209,11 +208,4 @@ public class Chord {
     public void setBaseSound(Sound baseSound) {
         this.baseSound = baseSound;
     }
-	public Integer getCapo() {
-		return capo;
-	}
-	public void setCapo(Integer capo) {
-		this.capo = capo;
-	}
-    
 }

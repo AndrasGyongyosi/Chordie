@@ -126,22 +126,16 @@ public class ChordController {
 
     }
 
-    @RequestMapping(path = "type/{baseSoundString}/{baseTypeString}/{chordTypeString}")
-    public List<String> getChordSoundsInString(@PathVariable String baseSoundString, @PathVariable String baseTypeString, @PathVariable String chordTypeString) throws BadExpressionException{
-        ArrayList<String> result = Lists.newArrayList();
-        for (Sound s : getChord(baseSoundString,baseTypeString,chordTypeString).getSounds()) {
-            result.add(s.getSoundName());
-        }
-        return result;
-    }
-
-    @RequestMapping(path="/catch/{instrumentToken}/{baseSoundString}/{baseTypeString}/{chordTypeString}")
-    public CatchResultDTO getChordCatches(@PathVariable String instrumentToken, @PathVariable String baseSoundString, @PathVariable String baseTypeString, @PathVariable String chordTypeString) throws BadExpressionException{
+    @RequestMapping(path="/catch/{instrumentToken}/{baseSoundString}/{baseTypeString}/{chordTypeString}/{rootNoteString}/{capo}")
+    public CatchResultDTO getChordCatches(@PathVariable String instrumentToken, @PathVariable String baseSoundString, @PathVariable String baseTypeString, @PathVariable String chordTypeString, @PathVariable String rootNoteString, @PathVariable Integer capo) throws BadExpressionException{
     	CatchResultDTO result = new CatchResultDTO();
     	
         Instrument instrument = instrumentRepository.findByInstrumentToken(instrumentToken);
         Chord chord = getChord(baseSoundString,baseTypeString,chordTypeString);
-        List<Catch> catches = chord.getCatches(instrument);
+        
+        Sound rootNote = Sound.valueOf(rootNoteString);
+        
+        List<Catch> catches = chord.getCatches(instrument.getInstrumentWithCapo(capo), rootNote);
 
         List<CatchDTO> catchList = Lists.newArrayList();
         
@@ -157,12 +151,12 @@ public class ChordController {
             for (StringCatch stringCatch : catcha.getStringCatches()) {
             	StringCatchDTO stringCatchDTO = new StringCatchDTO();
             	Sound sound = stringCatch.getSound();
-                stringCatchDTO.setBund(stringCatch.getBund());
+                stringCatchDTO.setBund(stringCatch.getBund()+capo);
                 stringCatchDTO.setFinger(stringCatch.getFinger());
                 
                 if (sound!=null) {
                 	stringCatchDTO.setSound(sound.getSoundName());
-                	int octave = stringCatch.getString().getOctave(stringCatch.getBund());
+                	int octave = stringCatch.getString().getOctave(stringCatch.getBund()+capo);
 					stringCatchDTO.setMidiCode(sound.getMIDICodeAtOctave(octave));
                 }
                 

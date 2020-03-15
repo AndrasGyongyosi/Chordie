@@ -57,6 +57,9 @@ public enum Sound {
 		return (octave+5)*12 + MIDICode;
 	}
     
+	public Sound addCapo(Integer capo) {
+		return values()[(ordinal()+capo)%12];
+	}
 }
 
 

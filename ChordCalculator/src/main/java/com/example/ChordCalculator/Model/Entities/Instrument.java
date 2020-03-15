@@ -2,11 +2,13 @@ package com.example.ChordCalculator.Model.Entities;
 
 import com.example.ChordCalculator.Helper.RandomToken;
 import com.example.ChordCalculator.Model.Catch;
+import com.example.ChordCalculator.Model.Sound;
 import com.example.ChordCalculator.Model.Entities.MString;
 import com.example.ChordCalculator.Model.Entities.Rule.Rule;
 import com.example.ChordCalculator.Model.Entities.User;
 import com.example.ChordCalculator.Model.StringCatch;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.google.common.collect.Lists;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -22,8 +24,8 @@ public class Instrument {
 
     public Instrument(){
         super();
-        mStrings = new ArrayList();
-        users = new ArrayList();
+        mStrings = Lists.newArrayList();
+        users = Lists.newArrayList();
         publc = false;
     }
     @OneToMany(mappedBy = "instrument", cascade = CascadeType.ALL,fetch=FetchType.EAGER, orphanRemoval=true)
@@ -54,7 +56,7 @@ public class Instrument {
     }
 
     public void setMStrings(List<MString> strings) {
-        this.mStrings = new ArrayList(strings);
+        this.mStrings = Lists.newArrayList(strings);
     }
     public boolean isValid(List<StringCatch> stringCatches) throws Exception{
         //System.out.println("strings ok?");
@@ -123,4 +125,17 @@ public class Instrument {
     public void setInstrumentToken(String instrumentToken) {
         this.instrumentToken = instrumentToken;
     }
+
+	public Instrument getInstrumentWithCapo(Integer capo) {
+		Instrument result = new Instrument();
+		result.setBundNumber(bundNumber-capo);
+		result.setPublc(publc);
+		result.setRules(rules);
+		List<MString> strings = Lists.newArrayList(mStrings);
+		for(MString mString : strings) {
+			mString.setSound(mString.getSound().addCapo(capo));
+		}
+		result.setMStrings(strings);
+		return result;
+	}
 }

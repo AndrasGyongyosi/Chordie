@@ -8,9 +8,6 @@ import CatchView from './CatchView.js';
 import MIDISounds from 'midi-sounds-react';
 
 class ChordView extends React.Component {
-    componentDidMount(){
-        this.midiSounds.cacheInstrument(256);
-    }
     clickOnCatchView = (catcha)=>{
         this.midiSounds.cancelQueue();
         let selectedInstrument = 256;
@@ -35,7 +32,7 @@ class ChordView extends React.Component {
                     <h3>Loading...</h3>
                 )}
                 <div hidden={true}>
-                    <MIDISounds ref={(ref) => (this.midiSounds = ref)} appElementName="root" instruments={[3]} />
+                    <MIDISounds ref={(ref) => (this.midiSounds = ref)} appElementName="root" instruments={[256]} />
                 </div>
             </React.Fragment>
         )
@@ -107,16 +104,18 @@ class ChordChooserList extends React.Component{
                     document.getElementById('chordTypeSelect').value=res.data.chordType;
                     this.ancestor.setState({baseSound: res.data.baseSound,
                                             baseType: res.data.baseType,
-                                            chordType: res.data.chordType});
+                                            chordType: res.data.chordType,
+                                            rootNote: res.data.rootNote,
+                                            capo: res.data.capo
+                                        });
                     this.ancestor.catchQuery();
                 }).catch(error => {
-                    //this.setState({error, isLoaded: false});
                     alert("Bad Expression");
                 });
         }
     }
     render(){
-        const {baseSounds, baseTypes, chordTypes, isLoaded, perfectExpression} = this.state;
+        const {baseSounds, baseTypes, chordTypes, isLoaded} = this.state;
         return(
             <div>
                 {(isLoaded) ? (
@@ -159,6 +158,7 @@ class ChordChooserPage extends React.Component {
         baseSound : "C",
         baseType: "maj",
         chordType: "n",
+        rootNote: "C",
         capo: 0,
 
         instrumental: {},
@@ -197,7 +197,7 @@ class ChordChooserPage extends React.Component {
 
     catchQuery(){
             if (this.isValid()) {
-            let catchURL = myURLs.getURL() + "chord/catch/" + this.state.instrumental.token + "/" + this.state.baseSound + "/" + this.state.baseType + "/" + this.state.chordType;
+            let catchURL = myURLs.getURL() + "chord/catch/" + this.state.instrumental.token + "/" + this.state.baseSound + "/" + this.state.baseType + "/" + this.state.chordType+"/"+this.state.baseSound+"/"+this.state.capo;
                 axios.get(catchURL)
                     .then(res => {
                         console.log(res.data);
