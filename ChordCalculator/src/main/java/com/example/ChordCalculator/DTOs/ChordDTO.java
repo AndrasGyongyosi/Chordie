@@ -13,6 +13,10 @@ public class ChordDTO {
 	String rootNote;
 	Integer capo;
 
+	public ChordDTO() {
+		capo = 0;
+	}
+	
 	public String getBaseSound() {
 		return baseSound;
 	}

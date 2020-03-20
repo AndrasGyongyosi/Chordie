@@ -105,7 +105,6 @@ public class FavoritController {
                 fscList.add(stringCatch);
             }
             catcha.setStringCatches(fscList);
-            catcha.setToken(fc.getCatchToken());
             result.add(catcha);
         }
         return result;
@@ -129,9 +128,7 @@ public class FavoritController {
             fsc.setSound((String) stringCatch.get("sound"));
             fsc.setCatcha(favCatch);
             favCatch.addFavStringCatch(fsc);
-            System.out.print(stringCatch.get("bund"));
         }
-        System.out.println("---");
         favCatch.setInstrument((String) params.get("instrument"));
         favCatch.setChord((String) params.get("chord"));
 		return favCatch;

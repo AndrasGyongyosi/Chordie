@@ -104,6 +104,13 @@ public class MString {
     public void setId(int id) {
         this.id = id;
     }
+    public void addCapo(Integer capo) {
+    	Integer newSoundOrd = (sound.ordinal()+capo)%12;
+    	Integer octaveIncr = ((sound.ordinal()+capo) - newSoundOrd)/12;
+    	sound = Sound.values()[newSoundOrd];
+    	octave = octave + octaveIncr;
+    }
+    
 
     @PreRemove
     private void beforeRemove(){

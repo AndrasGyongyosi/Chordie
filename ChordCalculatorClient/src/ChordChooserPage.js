@@ -13,6 +13,7 @@ class ChordView extends React.Component {
         let selectedInstrument = 256;
         let counter = 0;
         catcha.stringCatches.slice().reverse().forEach(stringCatch=>{
+            console.log(stringCatch);
             if (stringCatch.midiCode!=0){
                 this.midiSounds.playChordAt(this.midiSounds.contextTime() + 0.5 * counter++, selectedInstrument, [stringCatch.midiCode], 1);
             
@@ -158,13 +159,12 @@ class ChordChooserPage extends React.Component {
         baseSound : "C",
         baseType: "maj",
         chordType: "n",
-        rootNote: "C",
+        rootNote: null,
         capo: 0,
 
         instrumental: {},
         bundDif : 5,
 
-        //strings: [],
         catches: [],
         catchLoaded: false,
         stringLoaded: false,
@@ -172,33 +172,40 @@ class ChordChooserPage extends React.Component {
 
     setBaseSound(baseSound){
         this.state.baseSound =  baseSound;
+        this.state.rootNote=null;
+        this.state.capo=0;
         //this.setState({baseSound :baseSound});
         this.catchQuery();
     }
     setBaseType(baseType){
         this.state.baseType = baseType;
+        this.state.rootNote=null;
+        this.state.capo=0;
         //this.setState({baseType :baseType});
         this.catchQuery();
     }
     setChordType(chordType){
         this.state.chordType = chordType;
+        this.state.rootNote=null;
+        this.state.capo=0;
         //this.setState({chordType :chordType});
         this.catchQuery();
     }
     setInstrument(inst){
         this.state.instrumental = inst;
-        //this.stringQuery();
         this.catchQuery();
     }
 
     isValid() {
+        console.log(this);
+        console.log((this.state.instrumental && this.state.instrumental.token != null && this.state.baseSound != null && this.state.baseType != null && this.state.chordType != null));
         return (this.state.instrumental && this.state.instrumental.token != null && this.state.baseSound != null && this.state.baseType != null && this.state.chordType != null);
     }
 
     catchQuery(){
             if (this.isValid()) {
-            let catchURL = myURLs.getURL() + "chord/catch/" + this.state.instrumental.token + "/" + this.state.baseSound + "/" + this.state.baseType + "/" + this.state.chordType+"/"+this.state.baseSound+"/"+this.state.capo;
-                axios.get(catchURL)
+            let catchURL = myURLs.getURL() + "chord/catch/" + this.state.instrumental.token + "/" + this.state.baseSound + "/" + this.state.baseType + "/" + this.state.chordType+"/"+this.state.rootNote+"/"+this.state.capo;
+            axios.get(catchURL)
                     .then(res => {
                         console.log(res.data);
                         this.setState(
@@ -208,7 +215,6 @@ class ChordChooserPage extends React.Component {
                                 bundDif: res.data.bundDif,
                                 catchLoaded: true
                             });
-
                     }).catch(error => this.setState({error, catchLoaded: false}));
             }
     }

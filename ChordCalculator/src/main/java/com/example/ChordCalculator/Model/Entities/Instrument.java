@@ -35,7 +35,7 @@ public class Instrument {
     @JsonIgnore
     private List<User> users;
 
-    private java.lang.String name;
+    private String name;
 
     @OneToMany(mappedBy="instrument", cascade = CascadeType.ALL, orphanRemoval=true)
     private List<Rule> rules;
@@ -133,7 +133,7 @@ public class Instrument {
 		result.setRules(rules);
 		List<MString> strings = Lists.newArrayList(mStrings);
 		for(MString mString : strings) {
-			mString.setSound(mString.getSound().addCapo(capo));
+			mString.addCapo(capo);
 		}
 		result.setMStrings(strings);
 		return result;

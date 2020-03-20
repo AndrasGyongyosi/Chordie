@@ -102,16 +102,15 @@ public class Chord {
 
         List<MString> strings = new ArrayList<MString>(options.keySet());
         
-        List<List<StringCatch>> stringCatches = new ArrayList();
+        List<List<StringCatch>> stringCatches = Lists.newArrayList();
 
-        getAllCatches(strings, options, instrument, new ArrayList(),stringCatches);
+        getAllCatches(strings, options, instrument, Lists.newArrayList(),stringCatches);
 
-        List<Catch> catches = new ArrayList();
+        List<Catch> catches = Lists.newArrayList();
         for(List<StringCatch>  scs : stringCatches) {
-            Catch actCatch = new Catch(this, instrument, scs, 0);
             catches.add(new Catch(this, instrument, scs, 0));
         }
-        List<Catch> validatedCatches = validateCatches(catches, instrument);
+        List<Catch> validatedCatches = validateCatches(catches, instrument, rootNote);
         validatedCatches = addFingerNumbers(validatedCatches);
 
         return validatedCatches;
@@ -144,7 +143,7 @@ public class Chord {
         return result;
     }
 
-    private List<Catch> validateCatches(List<Catch> catches, Instrument instrument){
+    private List<Catch> validateCatches(List<Catch> catches, Instrument instrument, Sound rootNote){
         List<Catch> result = new ArrayList();
         for(Catch catcha : catches){
             List<Sound> usedSounds = new ArrayList(sounds);
@@ -160,14 +159,19 @@ public class Chord {
                 }
             }
 
-            //System.out.println(baseSound.getSoundName());
-            //System.out.println(stringCatches.get(lastUsedStringIndex).getSound());
-            if (usedSounds.size()==0 && instrument.isValid(catcha)){
-                if (stringCatches.get(lastUsedStringIndex).getSound().equals(baseSound))
-                    catcha.setPerfection(CatchPerfection.HIGH);
-                else
-                    catcha.setPerfection(CatchPerfection.MEDIUM);
-                result.add(catcha);
+            if (usedSounds.isEmpty() && instrument.isValid(catcha)){
+            	if (rootNote == null) {
+	                if (stringCatches.get(lastUsedStringIndex).getSound().equals(baseSound))
+	                    catcha.setPerfection(CatchPerfection.HIGH);
+	                else
+	                    catcha.setPerfection(CatchPerfection.MEDIUM);
+	                result.add(catcha);
+            	} else {
+            		if (stringCatches.get(lastUsedStringIndex).getSound().equals(rootNote)) {
+            			catcha.setPerfection(CatchPerfection.HIGH);
+            			result.add(catcha);
+            		}
+            	}
             }
         }
         return result;

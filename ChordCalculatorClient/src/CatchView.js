@@ -41,10 +41,12 @@ class CatchView extends React.Component{
         return arr;
     }
 
-    getBunds(min, string, max){
+    getBunds(min, string, capo, max){
         var resultArray = [];
         for(var i=min; i<=max;i++){
-            if (i==string){
+            if (i==capo){
+                resultArray.push(-1);
+            } else if (i==string){
                 resultArray.push(1);
             }
             else{
@@ -102,13 +104,16 @@ class CatchView extends React.Component{
                                 }
                                 </td>
                                 {
-                                    this.getBunds(min, string.bund, max).map(bund => {
+                                    this.getBunds(min, string.bund, catcha.capo, max).map(bund => {
                                         var playedBundSrc = "view/bund_played_"+string.finger+".png";
                                         return (<td>
                                                     {
                                                         (bund == 1) ?
                                                             (<img src={playedBundSrc} height={imgHeight} width={imgWidth} max-width="12%"></img>) :
+                                                            ((bund == -1) ? 
+                                                            (<img src={"view/bund_capo.png"} height={imgHeight} width={imgWidth} max-width="12%"></img>):
                                                             (<img src={"view/bund_unplayed.png"} height={imgHeight} width={imgWidth} max-width="12%"></img>)
+                                                            )
                                                     }
                                                 </td>);
                                     })

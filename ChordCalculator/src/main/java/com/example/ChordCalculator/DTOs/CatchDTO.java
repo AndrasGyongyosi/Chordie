@@ -14,7 +14,7 @@ public class CatchDTO {
 	List<StringCatchDTO> stringCatches;
 	String chord;
 	String instrument;
-	String token;
+	Integer capo;
 	
 	public CatchPerfection getPerfection() {
 		return perfection;
@@ -40,13 +40,12 @@ public class CatchDTO {
 	public void setInstrument(String instrument) {
 		this.instrument = instrument;
 	}
-	public String getToken() {
-		return token;
+	public Integer getCapo() {
+		return capo;
 	}
-	public void setToken(String token) {
-		this.token = token;
+	public void setCapo(Integer capo) {
+		this.capo = capo;
 	}
-	
 
 	
 }

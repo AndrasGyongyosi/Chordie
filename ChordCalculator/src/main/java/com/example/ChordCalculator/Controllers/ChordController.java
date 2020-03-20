@@ -133,7 +133,12 @@ public class ChordController {
         Instrument instrument = instrumentRepository.findByInstrumentToken(instrumentToken);
         Chord chord = getChord(baseSoundString,baseTypeString,chordTypeString);
         
-        Sound rootNote = Sound.valueOf(rootNoteString);
+        
+        Sound rootNote = null;
+        for (Sound sound : Sound.values()) {
+            if (sound.name().equalsIgnoreCase(rootNoteString))
+                rootNote = sound;
+        }
         
         List<Catch> catches = chord.getCatches(instrument.getInstrumentWithCapo(capo), rootNote);
 
@@ -151,7 +156,7 @@ public class ChordController {
             for (StringCatch stringCatch : catcha.getStringCatches()) {
             	StringCatchDTO stringCatchDTO = new StringCatchDTO();
             	Sound sound = stringCatch.getSound();
-                stringCatchDTO.setBund(stringCatch.getBund()+capo);
+                stringCatchDTO.setBund(stringCatch.getBund()<0 ? stringCatch.getBund(): stringCatch.getBund()+capo);
                 stringCatchDTO.setFinger(stringCatch.getFinger());
                 
                 if (sound!=null) {
@@ -165,7 +170,7 @@ public class ChordController {
 
             catchInfo.setStringCatches(fingerPoints);
             catchInfo.setPerfection(catcha.getPerfection());
-            catchInfo.setToken(RandomToken.randomString(32));
+            catchInfo.setCapo(capo);
             catchList.add(catchInfo);
         }
         //sort catches by best to worst.
