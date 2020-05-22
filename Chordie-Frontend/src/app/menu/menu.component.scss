@@ -1,0 +1,51 @@
+.main-nav {
+    background-color: rgba(80, 80, 80, 0.5);
+    height: 60px;
+    border-bottom: 1px solid #111122;
+    position: fixed;
+    width: 100%;
+    top: 0;
+}
+
+ul {
+    list-style-type: none;
+}
+
+.logo {
+    float:left; 
+    padding-left:7%;
+    margin-top: -10px;
+}
+
+.menu {
+    float: right;
+    display: block;
+    padding: 5px 5px;
+    text-align: center;
+    margin-top: -10px;
+    margin-right: 10px;
+    font-family: "komtitFont";
+    font-size: 24px;
+}
+
+.menu a {   
+    color: rgb(15, 12, 12);
+    text-decoration: none;
+    padding-right: 5px;
+    padding-left: 5px;
+    padding-top: 5px;
+    cursor: pointer;
+}
+
+.lastmenuitem {
+    margin-right: 5%;
+}
+
+.firstmenuitem {
+    padding-right: 60px;
+}
+
+.menu a:hover {
+    border-bottom: 1.3px solid rgba($color: #da7b00, $alpha: 1);
+}
+
