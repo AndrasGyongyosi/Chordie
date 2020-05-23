@@ -5,22 +5,15 @@
                 <img src="./assets/img/logo.png" alt="Chordie logo" width="150" height="50">
             </a>
         </li>
-        <li class="menu lastmenuitem"><a href="#contact">Login</a></li>
-        <!-- <li class="menu"><a href="#about">Logout</a></li> -->
+        <li *ngIf="!currentUserName" class="menu lastmenuitem" id="loginButton"><a (click)="login()">Login</a></li>
+        <li *ngIf="currentUserName" class="menu" id="logoutButton"><a (click)="logout()">Logout</a></li>
         <li class="menu"><a (click)="scrollToAbout()">About</a></li>
+        <li *ngIf="currentUserName" class="menu"><a (click)="scrollToIstrumentsAndLists()">Instruments & Lists</a></li>
         <li class="menu"><a (click)="scrollToHome()">Home</a></li>
-        <li class="menu firstmenuitem">Hello Péter!</li>
+        <li *ngIf="currentUserName" class="menu line"></li>
+        <li *ngIf="currentUserName" class="menu firstmenuitem" tooltip="{{currentUserEmail}}" placement="bottom" show-delay="300">
+            <img src={{currentUserPhotoUrl}} width="30" height="30" style="margin-left: -10px; border-radius: 30px;">
+        </li>
+        <li *ngIf="currentUserName" class="menu">Hello {{currentUserName}}!</li>
     </ul>
 </div>
-
-<!-- <div style="position: fixed; width:100%">
-    <div style="float:right; padding: 48vh 3% 0 0; margin: 0;">
-        <img src="assets/img/scrollUp.png">
-
-    </div>
-</div>
-<div style="position: fixed; width:100%">
-    <div style="float:right; padding: 52vh 3% 0 0; margin: 0;">
-        <img src="assets/img/scrollDown.png">
-    </div>
-</div> -->

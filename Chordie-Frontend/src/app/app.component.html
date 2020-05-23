@@ -1,6 +1,13 @@
 <div>
-  <app-menu></app-menu>
+  <app-menu (isLoggedInEvent)="isLoggedIn=$event"></app-menu>
+</div>
+<div>
   <app-teszt></app-teszt>
+</div>
+<div *ngIf="isLoggedIn">
+  <app-instruments-and-lists></app-instruments-and-lists>
+</div>
+<div>
   <app-about></app-about>
 </div>
 
