@@ -3,13 +3,15 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { MenuComponent } from './menu/menu.component';
-import { TesztComponent } from './teszt/teszt.component';
-import { AboutComponent } from './about/about.component';
 import { HttpClientModule } from '@angular/common/http';
-import { InstrumentsAndListsComponent } from './instruments-and-lists/instruments-and-lists.component';
 import { SocialLoginModule, AuthServiceConfig, GoogleLoginProvider } from 'angularx-social-login';
 import { TooltipModule } from 'ng2-tooltip-directive';
+import { MenuComponent } from './components/menu/menu.component';
+import { HomeComponent } from './components/home/home.component';
+import { AboutComponent } from './components/about/about.component';
+import { InstrumentsAndListsComponent } from './components/instruments-and-lists/instruments-and-lists.component';
+import { InstrumentAndChordSelectorComponent } from './components/home/instrument-and-chord-selector/instrument-and-chord-selector.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 const config = new AuthServiceConfig([
   {
@@ -25,16 +27,18 @@ export function provideConfig() {
   declarations: [
     AppComponent,
     MenuComponent,
-    TesztComponent,
+    HomeComponent,
     AboutComponent,
-    InstrumentsAndListsComponent
+    InstrumentsAndListsComponent,
+    InstrumentAndChordSelectorComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     SocialLoginModule,
-    TooltipModule
+    TooltipModule,
+    NgbModule
   ],
   providers: [
     {

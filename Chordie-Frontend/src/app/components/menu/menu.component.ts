@@ -1,6 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { CurrentUserService } from '../services/current-user.service';
-import { AuthenticationService } from '../services/authentication.service';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
   selector: 'app-menu',
@@ -9,15 +8,19 @@ import { AuthenticationService } from '../services/authentication.service';
 })
 export class MenuComponent implements OnInit {
 
-  @Output() public isLoggedInEvent = new EventEmitter(); 
   currentUserName: string;
   currentUserEmail: string;
   currentUserPhotoUrl: string;
 
-  constructor(private authenticationService: AuthenticationService, private currentUserService: CurrentUserService) { }
+  constructor(private authenticationService: AuthenticationService) { }
 
   ngOnInit() {
-
+    this.setCurrentUser();
+    
+    this.authenticationService.isLoggedInEvent.subscribe(
+      () => {
+        this.setCurrentUser();
+      });  
   }  
 
   scrollToAbout() {
@@ -34,18 +37,19 @@ export class MenuComponent implements OnInit {
 
   async login() {
     await this.authenticationService.login();
-
-    this.currentUserName = this.currentUserService.currentUser.firstName;
-    this.currentUserPhotoUrl = this.currentUserService.currentUser.photoUrl;
-    this.currentUserEmail = this.currentUserService.currentUser.email;
-    this.isLoggedInEvent.emit(this.currentUserName);
+    
+    this.setCurrentUser();
   }
 
   logout() {
     this.authenticationService.logout();
-
     this.currentUserName = null;
-    this.isLoggedInEvent.emit(null);
+  }
+
+  private setCurrentUser() {
+    this.currentUserName = localStorage.getItem("userFirstName")
+    this.currentUserPhotoUrl = localStorage.getItem("userPhotoUrl");
+    this.currentUserEmail = localStorage.getItem("userEmail");
   }
 
 

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ChordComponent } from '../model/ChordComponent.model';
-import { ChordService } from '../services/chord.service';
+import { ChordComponent } from 'src/app/model/ChordComponent.model';
+import { ChordService } from 'src/app/services/chord.service';
 
 @Component({
   selector: 'app-about',

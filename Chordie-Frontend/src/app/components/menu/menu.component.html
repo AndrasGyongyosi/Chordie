@@ -1,17 +1,17 @@
 <div class="main-nav">
     <ul>
         <li class="logo">
-            <a href="/">
+            <a href="">
                 <img src="./assets/img/logo.png" alt="Chordie logo" width="150" height="50">
             </a>
         </li>
-        <li *ngIf="!currentUserName" class="menu lastmenuitem" id="loginButton"><a (click)="login()">Login</a></li>
+        <li *ngIf="!currentUserName" class="menu lastmenuitem" id="loginButton"><a (click)="login()">Login with </a><img src="./assets/img/google_icon.png" width="20" height="20"></li>
         <li *ngIf="currentUserName" class="menu" id="logoutButton"><a (click)="logout()">Logout</a></li>
         <li class="menu"><a (click)="scrollToAbout()">About</a></li>
         <li *ngIf="currentUserName" class="menu"><a (click)="scrollToIstrumentsAndLists()">Instruments & Lists</a></li>
         <li class="menu"><a (click)="scrollToHome()">Home</a></li>
         <li *ngIf="currentUserName" class="menu line"></li>
-        <li *ngIf="currentUserName" class="menu firstmenuitem" tooltip="{{currentUserEmail}}" placement="bottom" show-delay="300">
+        <li *ngIf="currentUserName && currentUserPhotoUrl" class="menu firstmenuitem" tooltip="{{currentUserEmail}}" placement="bottom" show-delay="300">
             <img src={{currentUserPhotoUrl}} width="30" height="30" style="margin-left: -10px; border-radius: 30px;">
         </li>
         <li *ngIf="currentUserName" class="menu">Hello {{currentUserName}}!</li>

@@ -45,11 +45,11 @@ ul {
 }
 
 .menu a:hover {
-    border-bottom: 1.3px solid rgba($color: #da7b00, $alpha: 1);
+    border-bottom: 1.3px solid rgba($color: rgb(196,79,0), $alpha: 1);
 }
 
 .line {
-    border-left: 1px solid #da7b00;
+    border-left: 1px solid rgb(196,79,0);
     height: 30px;
     margin-top: 10px;
     padding-left: 10px;

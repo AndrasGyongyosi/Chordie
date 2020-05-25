@@ -1,0 +1,97 @@
+
+
+<div class="row row2">
+    <div class="col">
+        <p>Instrument</p>
+    </div>
+    <div class="col">
+    </div>
+    <div class="col">
+       <p>Base Sound</p>
+    </div>
+    <div class="col">
+        <p>Base Type</p>
+    </div>
+    <div class="col">
+        <p>Chord Type</p>
+    </div>
+    <div class="col optional">
+        <p>Capo</p>
+    </div>
+    <div class="col optional">
+        <p>Root Note</p>
+    </div>
+    <div class="col">
+    </div>
+</div>
+
+<div *ngIf="chordComponent" class="row row1">
+    <div class="col">
+        <div ngbDropdown class="d-inline-block">
+            <button class="btn btn-outline-warning" id="dropdownBasic1" ngbDropdownToggle style="width: 115px; font-size: 16px;">Guitar</button>
+            <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                <button ngbDropdownItem>Action - 1</button>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <input type="text" class="form-control" style="width: 115px;">
+      </div>
+    <div class="col">
+        <div ngbDropdown class="d-inline-block">
+            <button class="btn btn-outline-warning" id="dropdownBasic1" ngbDropdownToggle style="width: 115px;"> {{selectedBaseSound}} </button>
+            <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                <button ngbDropdownItem (click)="selectCurrentBaseSound('')"></button>
+                <button *ngFor="let baseSound of chordComponent.baseSounds" ngbDropdownItem (click)="selectCurrentBaseSound(baseSound.label)"> {{baseSound.label}} </button>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div ngbDropdown class="d-inline-block">
+            <button class="btn btn-outline-warning" id="dropdownBasic1" ngbDropdownToggle style="width: 115px;"> {{selectedBaseType}} </button>
+            <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                <button ngbDropdownItem (click)="selectedCurrentBaseType('')"></button>
+                <button *ngFor="let baseType of chordComponent.baseTypes" ngbDropdownItem (click)="selectedCurrentBaseType(baseType.name)"> {{baseType.name}} </button>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div ngbDropdown class="d-inline-block">
+            <button class="btn btn-outline-warning" id="dropdownBasic1" ngbDropdownToggle style="width: 115px;"> {{selectedChordType}} </button>
+            <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                <button *ngFor="let chordType of chordComponent.chordTypes" ngbDropdownItem (click)="selectedCurrentChordType(chordType.label)"> {{chordType.label}} </button>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div ngbDropdown class="d-inline-block">
+            <button class="btn btn-outline-secondary" id="dropdownBasic1" ngbDropdownToggle style="width: 115px;"></button>
+            <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                <button ngbDropdownItem>1</button>
+                <button ngbDropdownItem>2</button>
+                <button ngbDropdownItem>3</button>
+                <button ngbDropdownItem>4</button>
+                <button ngbDropdownItem>5</button>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div ngbDropdown class="d-inline-block">
+            <button class="btn btn-outline-secondary" id="dropdownBasic1" ngbDropdownToggle style="width: 115px;"></button>
+            <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                <button ngbDropdownItem>Action - 1</button>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <button type="button" class="btn btn-outline-light">Ok</button>
+    </div>
+</div>
+
+<div class="row list">
+    <div class="col" >
+        <p *ngIf="!isLoggedIn"><a (click)="login()">Log in</a> to manage your lists!</p>
+        <p *ngIf="isLoggedIn" style="display: inline-block; padding-right: 10px;"> Select your list: </p> 
+        <button type="button" *ngIf="isLoggedIn" class="btn btn-outline-secondary btn-sm" style="display: inline-block;">Create list</button>
+    </div>  
+</div>
