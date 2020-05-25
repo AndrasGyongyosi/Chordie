@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ChordService } from 'src/app/services/chord.service';
 import { ChordComponent } from 'src/app/model/ChordComponent.model';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { Instrument } from 'src/app/model/instrument.model';
+import { InstrumentService } from 'src/app/services/instrument.service';
 
 @Component({
   selector: 'app-instrument-and-chord-selector',
@@ -10,18 +12,26 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 })
 export class InstrumentAndChordSelectorComponent implements OnInit {
 
+  public instruments: Instrument[] = [];
   public chordComponent: ChordComponent;
+  
+  public selectedInstrument;
   public selectedBaseSound;
   public selectedBaseType;
   public selectedChordType;
+  
 
   public isLoggedIn;
 
-  constructor(private chordService: ChordService, private authService: AuthenticationService) { }
+  constructor(private chordService: ChordService, private authService: AuthenticationService, private instrumentService: InstrumentService) { }
 
   ngOnInit(): void {
     this.chordService.getChordComponents().subscribe(
       data => this.chordComponent = data
+    );
+
+    this.instrumentService.getInstrumentsByUser().subscribe(
+      instruments => this.instruments = instruments
     );
 
     this.isLoggedIn = localStorage.getItem("userIdToken");
@@ -30,15 +40,19 @@ export class InstrumentAndChordSelectorComponent implements OnInit {
     );
   }
 
+  selectInstrument(instrument) {
+    this.selectedInstrument = instrument;
+  }
+
   selectCurrentBaseSound(baseSound) {
     this.selectedBaseSound = baseSound;
   }
 
-  selectedCurrentBaseType(baseType) {
+  selectCurrentBaseType(baseType) {
     this.selectedBaseType = baseType;
   }
 
-  selectedCurrentChordType(chordType) {
+  selectCurrentChordType(chordType) {
     this.selectedChordType = chordType;
   }
 
