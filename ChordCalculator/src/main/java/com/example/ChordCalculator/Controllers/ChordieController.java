@@ -77,7 +77,7 @@ public class ChordieController {
             else{
                 return null;
             }
-        } catch(GeneralSecurityException|IOException e){
+        } catch(Exception e){
             e.printStackTrace();
         }
         return null;
