@@ -189,6 +189,11 @@ public class ChordController {
         return result;
     }
     
+    @RequestMapping(path="/sound/{baseSoundString}/{baseTypeString}/{chordTypeString}/{capo}")
+    public List<Sound> getSoundsByChordComponents(@PathVariable String baseSoundString, @PathVariable String baseTypeString, @PathVariable String chordTypeString, @PathVariable Integer capo) throws BadExpressionException{
+    	Chord chord = getChord(baseSoundString, baseTypeString, chordTypeString);
+    	return chord.transponeSounds(capo);
+    }
     private Sound getSoundFromChordText(String text){
         int resultLength = 0;
         Sound result = null;

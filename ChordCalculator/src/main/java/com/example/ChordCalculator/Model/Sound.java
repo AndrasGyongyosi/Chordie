@@ -56,6 +56,10 @@ public enum Sound {
 	public Integer getMIDICodeAtOctave(Integer octave) {
 		return (octave+5)*12 + MIDICode;
 	}
+	
+	public Sound transpone(Integer capo) {
+		return Sound.values()[(ordinal()+capo)%12];
+	}
    
 }
 
