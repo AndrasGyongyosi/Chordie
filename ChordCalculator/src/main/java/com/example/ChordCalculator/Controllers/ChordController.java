@@ -170,7 +170,6 @@ public class ChordController {
 
             catchInfo.setStringCatches(fingerPoints);
             catchInfo.setPerfection(catcha.getPerfection());
-            catchInfo.setCapo(capo);
             catchList.add(catchInfo);
         }
         //sort catches by best to worst.
@@ -185,6 +184,8 @@ public class ChordController {
         result.setCatches(catchList);
         result.setBundDif(bundDif);
         result.setChord(chord.getFullName());
+        result.setCapo(capo);
+        result.setRootNote(rootNoteString);
         return result;
     }
     

@@ -12,9 +12,23 @@ public class CatchResultDTO {
 	int bundDif;
 	String chord;
 	String instrument;
+	int capo;
+	String rootNote;
 	
 	public List<CatchDTO> getCatches() {
 		return catches;
+	}
+	public int getCapo() {
+		return capo;
+	}
+	public void setCapo(int capo) {
+		this.capo = capo;
+	}
+	public String getRootNote() {
+		return rootNote;
+	}
+	public void setRootNote(String rootNote) {
+		this.rootNote = rootNote;
 	}
 	public void setCatches(List<CatchDTO> catches) {
 		this.catches = catches;
