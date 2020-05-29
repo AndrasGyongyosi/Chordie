@@ -17,19 +17,25 @@
                     </thead>
                     <tbody>
                         <tr class="main-catch" *ngFor="let string of chordCatches.catches[0].stringCatches">
-
-                            <td *ngIf="string.bund == 0"><img class="main-catch-img" src="assets/img/view/nut_open.png">
-                            </td>
-                            <td *ngIf="string.bund == -1"><img class="main-catch-img"
+                            <td *ngIf="string.bund == 0">
+                                <img class="main-catch-img" 
+                                    src="assets/img/view/nut_open.png"></td>
+                            <td *ngIf="string.bund == -1">
+                                <img class="main-catch-img"
                                     src="assets/img/view/nut_unplayed.png"></td>
-                            <td *ngIf="string.bund != 0 && string.bund != -1"><img class="main-catch-img"
+                            <td *ngIf="string.bund != 0 && string.bund != -1">
+                                <img class="main-catch-img"
                                     src="assets/img/view/nut_default.png"></td>
 
                             <td *ngFor="let bund of bundsByCatch[0]">
-                                <img *ngIf="bund != string.bund" class="main-catch-img"
-                                    src="assets/img/view/bund_unplayed.png">
-                                <img *ngIf="bund == string.bund" class="main-catch-img"
-                                    src="assets/img/view/bund_played_{{string.finger}}.png">
+                                <img *ngIf="bund == chordCatches.catches[0].capo; else elseBlock" class="main-catch-img"
+                                    src="assets/img/view/bund_capo.png">
+                                <ng-template #elseBlock>
+                                    <img *ngIf="bund != string.bund" class="main-catch-img"
+                                        src="assets/img/view/bund_unplayed.png">
+                                    <img *ngIf="bund == string.bund" class="main-catch-img"
+                                        src="assets/img/view/bund_played_{{string.finger}}.png">
+                                </ng-template>
                             </td>
                         </tr>
                     </tbody>
@@ -63,10 +69,14 @@
                                     src="assets/img/view/nut_default.png"></td>
 
                             <td *ngFor="let bund of bundsByCatch[1]">
-                                <img *ngIf="bund != string.bund" class="other-catch-img"
-                                    src="assets/img/view/bund_unplayed.png">
-                                <img *ngIf="bund == string.bund" class="other-catch-img"
-                                    src="assets/img/view/bund_played_{{string.finger}}.png">
+                                <img *ngIf="bund == chordCatches.catches[1].capo; else elseBlock" class="other-catch-img"
+                                    src="assets/img/view/bund_capo.png">
+                                <ng-template #elseBlock>
+                                    <img *ngIf="bund != string.bund" class="other-catch-img"
+                                        src="assets/img/view/bund_unplayed.png">
+                                    <img *ngIf="bund == string.bund" class="other-catch-img"
+                                        src="assets/img/view/bund_played_{{string.finger}}.png">
+                                </ng-template>
                             </td>
                         </tr>
                     </tbody>
@@ -91,10 +101,14 @@
                                     src="assets/img/view/nut_default.png"></td>
 
                             <td *ngFor="let bund of bundsByCatch[2]">
-                                <img *ngIf="bund != string.bund" class="other-catch-img"
-                                    src="assets/img/view/bund_unplayed.png">
-                                <img *ngIf="bund == string.bund" class="other-catch-img"
-                                    src="assets/img/view/bund_played_{{string.finger}}.png">
+                                <img *ngIf="bund == chordCatches.catches[2].capo; else elseBlock" class="other-catch-img"
+                                    src="assets/img/view/bund_capo.png">
+                                <ng-template #elseBlock>
+                                    <img *ngIf="bund != string.bund" class="other-catch-img"
+                                        src="assets/img/view/bund_unplayed.png">
+                                    <img *ngIf="bund == string.bund" class="other-catch-img"
+                                        src="assets/img/view/bund_played_{{string.finger}}.png">
+                                </ng-template>
                             </td>
                         </tr>
                     </tbody>
@@ -119,10 +133,14 @@
                                     src="assets/img/view/nut_default.png"></td>
 
                             <td *ngFor="let bund of bundsByCatch[3]">
-                                <img *ngIf="bund != string.bund" class="other-catch-img"
-                                    src="assets/img/view/bund_unplayed.png">
-                                <img *ngIf="bund == string.bund" class="other-catch-img"
-                                    src="assets/img/view/bund_played_{{string.finger}}.png">
+                                <img *ngIf="bund == chordCatches.catches[3].capo; else elseBlock" class="other-catch-img"
+                                    src="assets/img/view/bund_capo.png">
+                                <ng-template #elseBlock>
+                                    <img *ngIf="bund != string.bund" class="other-catch-img"
+                                        src="assets/img/view/bund_unplayed.png">
+                                    <img *ngIf="bund == string.bund" class="other-catch-img"
+                                        src="assets/img/view/bund_played_{{string.finger}}.png">
+                                </ng-template>
                             </td>
                         </tr>
                     </tbody>

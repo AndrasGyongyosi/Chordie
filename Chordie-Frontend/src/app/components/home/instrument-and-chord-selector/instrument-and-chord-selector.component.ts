@@ -83,7 +83,7 @@ export class InstrumentAndChordSelectorComponent implements OnInit {
     this.instrumentService.addNewInstrumentForUser(instrumentName, maxBundDif, bundNumber);
   }
 
-  chordAnalyze(text) {
+  chordAnalyze(text: String) {
     if (!text) {
       this.selectedChordLabel.baseSound = null;
       this.selectedChordLabel.baseType = null;
@@ -91,6 +91,10 @@ export class InstrumentAndChordSelectorComponent implements OnInit {
       this.selectedChordLabel.capo = 0;
       this.selectedChordLabel.rootNote = null;
     } else {
+      text = text.split('/').join('>');
+      text = text.split('.').join('<');
+
+      // Type example: Cmaj7/C.2
       this.chordService.chordTextAnalyze(text).subscribe(
         (data) => {
           this.selectedChordName = data;

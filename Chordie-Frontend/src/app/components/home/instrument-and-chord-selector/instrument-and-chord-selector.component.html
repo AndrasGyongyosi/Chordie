@@ -42,15 +42,6 @@
     </div>
     <div class="col">
         <div ngbDropdown class="d-inline-block">
-            <button *ngIf="selectedChordLabel" class="btn btn-outline-secondary" id="dropdownBasic1" ngbDropdownToggle style="width: 150px;"><i>Capo:</i> {{selectedChordLabel.capo}}</button>
-            <button *ngIf="!selectedChordLabel" class="btn btn-outline-secondary" id="dropdownBasic1" ngbDropdownToggle style="width: 150px;"><i>Capo</i></button>
-            <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                <button *ngFor="let capo of capos" ngbDropdownItem (click)="selectCapo(capo)">{{capo}}</button>
-            </div>
-        </div>
-    </div>
-    <div class="col">
-        <div ngbDropdown class="d-inline-block">
             <button *ngIf="selectedChordLabel && selectedChordLabel.rootNote" class="btn btn-outline-secondary" id="dropdownBasic1" ngbDropdownToggle style="width: 150px;">{{selectedChordLabel.rootNote}}</button>
             <button *ngIf="!selectedChordLabel || !selectedChordLabel.rootNote" class="btn btn-outline-secondary" id="dropdownBasic1" ngbDropdownToggle style="width: 150px;">Root Note</button>
             <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
@@ -58,6 +49,15 @@
             </div>
         </div>
     </div>
+    <div class="col">
+        <div ngbDropdown class="d-inline-block">
+            <button *ngIf="selectedChordLabel" class="btn btn-outline-secondary" id="dropdownBasic1" ngbDropdownToggle style="width: 150px;"><i>Capo:</i> {{selectedChordLabel.capo}}</button>
+            <button *ngIf="!selectedChordLabel" class="btn btn-outline-secondary" id="dropdownBasic1" ngbDropdownToggle style="width: 150px;"><i>Capo</i></button>
+            <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                <button *ngFor="let capo of capos" ngbDropdownItem (click)="selectCapo(capo)">{{capo}}</button>
+            </div>
+        </div>
+    </div> 
     <div class="col">
         <button type="button" class="btn btn-outline-light" (click)="getChordCatches()">Ok</button>
     </div>
