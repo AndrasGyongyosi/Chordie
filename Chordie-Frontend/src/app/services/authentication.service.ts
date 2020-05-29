@@ -13,17 +13,18 @@ export class AuthenticationService {
 
   async login() {
     await this.authService.signIn(GoogleLoginProvider.PROVIDER_ID);
-    
+
     this.authService.authState.subscribe((user) => {
       localStorage.setItem("userFirstName", user.firstName);
       localStorage.setItem("userEmail", user.email);
       localStorage.setItem("userPhotoUrl", user.photoUrl);
       localStorage.setItem("userIdToken", user.idToken);
+      console.log(localStorage.getItem("userIdToken"));
+      this.isLoggedInEvent.emit(localStorage.getItem("userIdToken"));
+      this.userService.saveUser();
     });   
     
-    this.isLoggedInEvent.emit(localStorage.getItem("userIdToken"));
     
-    this.userService.saveUser();
   }
 
   logout() {

@@ -9,6 +9,7 @@
         <li *ngIf="currentUserName" class="menu" id="logoutButton"><a (click)="logout()">Logout</a></li>
         <li class="menu"><a (click)="scrollToAbout()">About</a></li>
         <li *ngIf="currentUserName" class="menu"><a (click)="scrollToIstrumentsAndLists()">Instruments & Lists</a></li>
+        <li class="menu menuChords"><a (click)="scrollToChords()">Chords</a></li>
         <li class="menu"><a (click)="scrollToHome()">Home</a></li>
         <li *ngIf="currentUserName" class="menu line"></li>
         <li *ngIf="currentUserName && currentUserPhotoUrl" class="menu firstmenuitem" tooltip="{{currentUserEmail}}" placement="bottom" show-delay="300">

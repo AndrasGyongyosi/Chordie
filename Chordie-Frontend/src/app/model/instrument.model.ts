@@ -1,6 +1,6 @@
 export interface Instrument {
-    name: String,
-    token: String,
-    bundNumber: String,
+    name: string,
+    token: string,
+    bundNumber: string,
     isPublic: boolean
 }

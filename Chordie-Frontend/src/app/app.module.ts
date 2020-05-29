@@ -12,6 +12,8 @@ import { AboutComponent } from './components/about/about.component';
 import { InstrumentsAndListsComponent } from './components/instruments-and-lists/instruments-and-lists.component';
 import { InstrumentAndChordSelectorComponent } from './components/home/instrument-and-chord-selector/instrument-and-chord-selector.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { FormsModule } from '@angular/forms';
+import { ChordsComponent } from './components/chords/chords.component';
 
 const config = new AuthServiceConfig([
   {
@@ -30,7 +32,8 @@ export function provideConfig() {
     HomeComponent,
     AboutComponent,
     InstrumentsAndListsComponent,
-    InstrumentAndChordSelectorComponent
+    InstrumentAndChordSelectorComponent,
+    ChordsComponent
   ],
   imports: [
     BrowserModule,
@@ -38,7 +41,8 @@ export function provideConfig() {
     HttpClientModule,
     SocialLoginModule,
     TooltipModule,
-    NgbModule
+    NgbModule,
+    FormsModule
   ],
   providers: [
     {

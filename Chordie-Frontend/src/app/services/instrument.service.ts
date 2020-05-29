@@ -16,4 +16,11 @@ export class InstrumentService {
   getInstrumentsByUser(): Observable<Instrument[]> {
     return this.http.get<Instrument[]>(httpConfig.baseUrl + this.controller + "/" + localStorage.getItem("userIdToken"));
   }
+
+  addNewInstrumentForUser(instrumentName, maxBundDif, bundNumber) {
+    return this.http.post(httpConfig.baseUrl + this.controller + "/new", 
+    { user: localStorage.getItem("userIdToken"), instrumentalName: instrumentName, maxBundDif: maxBundDif, bundNumber: bundNumber, strings: []}).subscribe(
+      (data) => console.log(data)
+    );  
+  }
 }

@@ -1,0 +1,137 @@
+<div id="chords" class="chords">
+    <div *ngIf="chordCatches" id="chordsContent" class="chordsContent">
+        <div class="row row1">
+            <div class="col col1">
+                <h3>Suggested catch</h3>
+                <h5>( {{chordCatches.chord}})</h5>
+            </div>
+        </div>
+        <div *ngIf="chordCatches && bundsByCatch" class="row">
+            <div class="col">
+                <table>
+                    <thead>
+                        <tr>
+                            <td></td>
+                            <td *ngFor="let bund of bundsByCatch[0]">{{bund}}</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="main-catch" *ngFor="let string of chordCatches.catches[0].stringCatches">
+
+                            <td *ngIf="string.bund == 0"><img class="main-catch-img" src="assets/img/view/nut_open.png">
+                            </td>
+                            <td *ngIf="string.bund == -1"><img class="main-catch-img"
+                                    src="assets/img/view/nut_unplayed.png"></td>
+                            <td *ngIf="string.bund != 0 && string.bund != -1"><img class="main-catch-img"
+                                    src="assets/img/view/nut_default.png"></td>
+
+                            <td *ngFor="let bund of bundsByCatch[0]">
+                                <img *ngIf="bund != string.bund" class="main-catch-img"
+                                    src="assets/img/view/bund_unplayed.png">
+                                <img *ngIf="bund == string.bund" class="main-catch-img"
+                                    src="assets/img/view/bund_played_{{string.finger}}.png">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <hr>
+        
+        <div class="row row2">
+            <div class="col">
+                <h3>Other options</h3>
+            </div>
+        </div>
+        <div class="row other-catches">
+            <div class="col">
+                <table>
+                    <thead>
+                        <tr>
+                            <td></td>
+                            <td *ngFor="let bund of bundsByCatch[1]">{{bund}}</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let string of chordCatches.catches[1].stringCatches">
+
+                            <td *ngIf="string.bund == 0"><img class="other-catch-img"
+                                    src="assets/img/view/nut_open.png"></td>
+                            <td *ngIf="string.bund == -1"><img class="other-catch-img"
+                                    src="assets/img/view/nut_unplayed.png"></td>
+                            <td *ngIf="string.bund != 0 && string.bund != -1"><img class="other-catch-img"
+                                    src="assets/img/view/nut_default.png"></td>
+
+                            <td *ngFor="let bund of bundsByCatch[1]">
+                                <img *ngIf="bund != string.bund" class="other-catch-img"
+                                    src="assets/img/view/bund_unplayed.png">
+                                <img *ngIf="bund == string.bund" class="other-catch-img"
+                                    src="assets/img/view/bund_played_{{string.finger}}.png">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col">
+                <table>
+                    <thead>
+                        <tr>
+                            <td></td>
+                            <td *ngFor="let bund of bundsByCatch[2]">{{bund}}</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let string of chordCatches.catches[2].stringCatches">
+
+                            <td *ngIf="string.bund == 0"><img class="other-catch-img"
+                                    src="assets/img/view/nut_open.png"></td>
+                            <td *ngIf="string.bund == -1"><img class="other-catch-img"
+                                    src="assets/img/view/nut_unplayed.png"></td>
+                            <td *ngIf="string.bund != 0 && string.bund != -1"><img class="other-catch-img"
+                                    src="assets/img/view/nut_default.png"></td>
+
+                            <td *ngFor="let bund of bundsByCatch[2]">
+                                <img *ngIf="bund != string.bund" class="other-catch-img"
+                                    src="assets/img/view/bund_unplayed.png">
+                                <img *ngIf="bund == string.bund" class="other-catch-img"
+                                    src="assets/img/view/bund_played_{{string.finger}}.png">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col">
+                <table>
+                    <thead>
+                        <tr>
+                            <td></td>
+                            <td *ngFor="let bund of bundsByCatch[3]">{{bund}}</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let string of chordCatches.catches[3].stringCatches">
+
+                            <td *ngIf="string.bund == 0"><img class="other-catch-img"
+                                    src="assets/img/view/nut_open.png"></td>
+                            <td *ngIf="string.bund == -1"><img class="other-catch-img"
+                                    src="assets/img/view/nut_unplayed.png"></td>
+                            <td *ngIf="string.bund != 0 && string.bund != -1"><img class="other-catch-img"
+                                    src="assets/img/view/nut_default.png"></td>
+
+                            <td *ngFor="let bund of bundsByCatch[3]">
+                                <img *ngIf="bund != string.bund" class="other-catch-img"
+                                    src="assets/img/view/bund_unplayed.png">
+                                <img *ngIf="bund == string.bund" class="other-catch-img"
+                                    src="assets/img/view/bund_played_{{string.finger}}.png">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+    <div *ngIf="!chordCatches" class="noContent">
+        <a (click)="scrollToHome()">Select a Chord!</a>
+    </div>
+</div>

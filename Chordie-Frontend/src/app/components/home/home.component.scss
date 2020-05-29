@@ -5,9 +5,10 @@
 }
 
 .selector {
-    background-color: rgba( #112233, 0.5);
-    border: 1px solid rgb(196,79,0);
+    background-color: rgba( #161414, 0.5);
+    border: 1px solid var(--yellow);
     width: 1024px;
+    margin-top: 25vh;
     margin-left: unquote("-webkit-calc((100% - 1024px)/2)");
     margin-right: unquote("-webkit-calc((100% - 1024px)/2)");
     border-radius: 10px;

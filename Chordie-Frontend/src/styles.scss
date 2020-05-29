@@ -8,3 +8,10 @@
 
 /* Importing Bootstrap SCSS file. */
 @import '~bootstrap/scss/bootstrap';
+
+:root{
+
+  /* Global colors */
+  --yellow: rgb(211, 164, 61);
+  --black: rgb(39, 32, 32);
+}

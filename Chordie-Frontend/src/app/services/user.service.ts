@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { CurrentUser } from '../model/CurrentUser.model';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import httpConfig from './httpConfig.json';
-import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +11,17 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
-  saveUser(): Observable<CurrentUser> {
-    return this.http.post<CurrentUser>(httpConfig.baseUrl + this.controller + "/new",
-     { token: localStorage.getItem("userIdToken"), email: localStorage.getItem("userEmail") });
+  protected httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json'
+    })
+  };
+
+  saveUser() {
+    console.log(httpConfig.baseUrl + this.controller + "/new");
+    console.log(localStorage.getItem("userIdToken"));
+    return this.http.post(httpConfig.baseUrl + this.controller + "/new", {
+      token: localStorage.getItem("userIdToken"), email: localStorage.getItem("userEmail")
+    }).subscribe( (data) => console.log(data));
   }
 }

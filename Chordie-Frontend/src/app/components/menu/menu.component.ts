@@ -35,6 +35,10 @@ export class MenuComponent implements OnInit {
     document.getElementById("instrumentsandlists").scrollIntoView({behavior: "smooth", block: "start"});
   }
 
+  scrollToChords() {
+    document.getElementById("chords").scrollIntoView({behavior: "smooth", block: "start"});
+  }
+
   async login() {
     await this.authenticationService.login();
     
