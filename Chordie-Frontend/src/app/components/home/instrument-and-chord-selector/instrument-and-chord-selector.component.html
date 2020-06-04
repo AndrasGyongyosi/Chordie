@@ -8,9 +8,10 @@
         </div>
     </div>
     <div class="col">
-        <input autofocus type="text" [(ngModel)]="chordText" (ngModelChange)="chordAnalyze(chordText)" (keyup.enter)="getChordCatches()" 
-        class="form-control inputText" style="width: 200px; height:50px; font-size: 24px;" placeholder="Type your chord!">
-      </div>
+        <input type="text" #typeChord [(ngModel)]="chordText" (ngModelChange)="chordAnalyze(chordText)" (keyup.enter)="getChordCatches()" 
+        class="form-control inputText" style="width: 200px; height:50px; font-size: 24px; display: inline-block;" placeholder="Type your chord!">
+        <p class="help" ngbTooltip="Example: Cmaj7/C.2" [openDelay]="300"><img src="assets/img/help.png" width="30" height="30"></p>
+    </div>
 </div>
 <div *ngIf="chordComponent" class="row row2">
     <div class="col">
@@ -65,7 +66,7 @@
 
 <div class="row list">
     <div class="col" >
-        <p *ngIf="!isLoggedIn"><a (click)="login()">Log in</a> to manage your lists!</p>
+        <p *ngIf="!isLoggedIn"><a (click)="login()">Log in</a> to manage your lists and create new instruments!</p>
         <p *ngIf="isLoggedIn" style="display: inline-block; padding-right: 10px;"> Select your list: </p> 
         <button type="button" *ngIf="isLoggedIn" class="btn btn-outline-secondary btn-sm" style="display: inline-block;">Create list</button>
     </div>  

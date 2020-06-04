@@ -1,0 +1,53 @@
+<h2 *ngIf="!data.instrumentToken">New instrument</h2>
+<h2 *ngIf="data.instrumentToken">Edit instrument</h2>
+<mat-dialog-content class="mat-typography">
+    <form>
+        <div class="form-group">
+            <label for="exampleInputEmail1">Instrument Name</label>
+            <input [disabled]="data.isPublic" class="form-control" placeholder="Electric guitar" name="instrumentName" [(ngModel)]="data.instrumentName">
+        </div>
+        <div class="form-group">
+            <label for="maxBundDif">Maximum bund difference</label>
+            <input [disabled]="data.isPublic" class="form-control" id="maxBundDif" name="maxBundDif" placeholder="5" [(ngModel)]="data.maxBundDif">
+            <small class="form-text text-muted">You can specify the maximum number of bund distances within a
+                catch.</small>
+        </div>
+        <div class="form-group">
+            <label for="bundNumber">Bund number</label>
+            <input [disabled]="data.isPublic" class="form-control" id="bundNumber" name="bundNumber" placeholder="15" [(ngModel)]="data.bundNumber">
+            <small class="form-text text-muted">Enter how many bunds are on your instrument!</small>
+        </div>
+        <label for="stringSelect">Strings</label>
+        <div class="input-group">         
+            <select [disabled]="data.isPublic" class="custom-select" id="stringSelect" name="stringSelect" [(ngModel)]="selectedString">
+                <option *ngFor="let baseSound of data.baseSounds" value="{{baseSound.label}}">{{baseSound.label}}</option>
+            </select>
+            <div class="input-group-append">
+                <button [disabled]="data.isPublic" class="btn btn-outline-secondary" type="button" (click)="addString()">Add</button>
+            </div>  
+        </div>
+        <small class="form-text text-muted">Enter the tuning of the strings!</small>
+
+        <table>
+            <tr>
+                <td><p class="stringsText">Strings:</p></td>
+                <a *ngFor="let selectedString of temp_selectedStrings; let i = index;">
+                    <td>
+                        <p *ngIf="data.isPublic" class="strings">{{selectedString.label}}</p>
+                        <p *ngIf="!data.isPublic" class="strings stringsNotPublic" ngbTooltip="Click to delete!" (click)="removeSelectedString(i)">{{selectedString.label}}</p>
+                    </td>
+                </a>
+            </tr>
+        </table>
+
+    </form>
+
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button class="btn btn-outline-warning" style="margin-right: 10px;" mat-button (click)="onNoClick()">Cancel</button>
+    <button *ngIf="!data.isPublic" class="btn btn-outline-success" mat-button (click)="Accept()" [mat-dialog-close]="data" cdkFocusInitial>Accept</button>
+</mat-dialog-actions>
+
+<button class="btn btn-outline-danger" mat-button *ngIf="data.instrumentToken && !data.isPublic" (click)="deleteInstrument(data.instrumentToken)">Delete</button>

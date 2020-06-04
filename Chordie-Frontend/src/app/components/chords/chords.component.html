@@ -1,150 +1,137 @@
 <div id="chords" class="chords">
     <div *ngIf="chordCatches" id="chordsContent" class="chordsContent">
         <div class="row row1">
+            <div class="col"></div>
             <div class="col col1">
-                <h3>Suggested catch</h3>
-                <h5>( {{chordCatches.chord}})</h5>
+                <div style="display:block; margin-left: 40px">
+                    <h3 style="font-family: 'komtitFont'; font-size: 30px; display: inline-block;">Suggested catch</h3>
+                    <a (click)="openCatchTipDialog()"><p class="help" ngbTooltip="Click here to explain how to read the catches!" [openDelay]="300"><img
+                            src="assets/img/help2.png" width="30" height="30"></p></a>
+                </div>
+                <div style="display:block">
+                    <h5 style="display:inline-block;">( {{chordCatches.chord}})</h5>
+                    <h5 *ngIf="chordCatches.rootNote != 'null'" style="display:inline-block">&nbsp;/ Root Note:
+                        {{chordCatches.rootNote}}</h5>
+                    <h5 *ngIf="chordCatches.capo != 0" style="display:inline-block">&nbsp;/ Capo: {{chordCatches.capo}}
+                    </h5>
+                </div>
+            </div>
+            <div class="col">
+                <div *ngIf="chordCatches.capo != 0" class="alert alert-warning alert-dismissible fade show"
+                    style="width:250px; margin-bottom: -100px; margin-right: auto; margin-left: auto; padding: 5px;">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <p style="font-size: 20px;">INFO</p>
+                    <hr>
+                    <p>If the capo is too far from the catches, we will not show it.</p>
+                </div>
             </div>
         </div>
-        <div *ngIf="chordCatches && bundsByCatch" class="row">
-            <div class="col">
-                <table>
-                    <thead>
-                        <tr>
-                            <td></td>
-                            <td *ngFor="let bund of bundsByCatch[0]">{{bund}}</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="main-catch" *ngFor="let string of chordCatches.catches[0].stringCatches">
-                            <td *ngIf="string.bund == 0">
-                                <img class="main-catch-img" 
-                                    src="assets/img/view/nut_open.png"></td>
-                            <td *ngIf="string.bund == -1">
-                                <img class="main-catch-img"
-                                    src="assets/img/view/nut_unplayed.png"></td>
-                            <td *ngIf="string.bund != 0 && string.bund != -1">
-                                <img class="main-catch-img"
-                                    src="assets/img/view/nut_default.png"></td>
+        <div *ngIf="chordCatches && bundsByCatch" class="main-catch">
+            <div style="width: 50%; margin: 0 30%;">
+                <mat-accordion>
+                    <mat-expansion-panel style="background-color: rgb(173, 144, 82); width: 500px; padding: 0">
+                        <mat-expansion-panel-header style="background-color: var(--yellow); padding: 0"
+                            [collapsedHeight]="'250px'" [expandedHeight]="'250px'">
+                            <mat-panel-title>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <td></td>
+                                            <td *ngFor="let bund of bundsByCatch[0]" style="text-align: center; font-family: 'komtitFont';">{{bund}}</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let string of chordCatches.catches[0].stringCatches">
+                                            <td *ngIf="string.bund == 0">
+                                                <img class="main-catch-img" src="assets/img/view/nut_open.png"></td>
+                                            <td *ngIf="string.bund == -1">
+                                                <img class="main-catch-img" src="assets/img/view/nut_unplayed.png"></td>
+                                            <td *ngIf="string.bund != 0 && string.bund != -1">
+                                                <img class="main-catch-img" src="assets/img/view/nut_default.png"></td>
 
-                            <td *ngFor="let bund of bundsByCatch[0]">
-                                <img *ngIf="bund == chordCatches.catches[0].capo; else elseBlock" class="main-catch-img"
-                                    src="assets/img/view/bund_capo.png">
-                                <ng-template #elseBlock>
-                                    <img *ngIf="bund != string.bund" class="main-catch-img"
-                                        src="assets/img/view/bund_unplayed.png">
-                                    <img *ngIf="bund == string.bund" class="main-catch-img"
-                                        src="assets/img/view/bund_played_{{string.finger}}.png">
-                                </ng-template>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                                            <td *ngFor="let bund of bundsByCatch[0]">
+                                                <img *ngIf="bund == chordCatches.capo; else elseBlock"
+                                                    class="main-catch-img" src="assets/img/view/bund_capo.png">
+                                                <ng-template #elseBlock>
+                                                    <img *ngIf="bund != string.bund" class="main-catch-img"
+                                                        src="assets/img/view/bund_unplayed.png">
+                                                    <img *ngIf="bund == string.bund" class="main-catch-img"
+                                                        src="assets/img/view/bund_played_{{string.finger}}.png">
+                                                </ng-template>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <hr>
+                        <div>
+                            asdasdasdasdasd
+                        </div>
+                    </mat-expansion-panel>
+                    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                    </mat-expansion-panel>
+                </mat-accordion>
             </div>
         </div>
         <hr>
-        
+
         <div class="row row2">
             <div class="col">
-                <h3>Other options</h3>
+                <h3 style="font-family: 'komtitFont'; font-size: 24px;">Other options</h3>
             </div>
         </div>
         <div class="row other-catches">
-            <div class="col">
-                <table>
-                    <thead>
-                        <tr>
-                            <td></td>
-                            <td *ngFor="let bund of bundsByCatch[1]">{{bund}}</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let string of chordCatches.catches[1].stringCatches">
+            <div *ngFor="let number of [1,2,3]" class="col">
+                <mat-accordion>
+                    <mat-expansion-panel style="background-color: rgb(173, 144, 82); width: 370px; padding: 0">
+                        <mat-expansion-panel-header style="background-color: rgb(155, 142, 115); padding: 0"
+                            [collapsedHeight]="'200px'" [expandedHeight]="'200px'">
+                            <mat-panel-title>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <td></td>
+                                            <td *ngFor="let bund of bundsByCatch[number]">{{bund}}</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let string of chordCatches.catches[number].stringCatches">
 
-                            <td *ngIf="string.bund == 0"><img class="other-catch-img"
-                                    src="assets/img/view/nut_open.png"></td>
-                            <td *ngIf="string.bund == -1"><img class="other-catch-img"
-                                    src="assets/img/view/nut_unplayed.png"></td>
-                            <td *ngIf="string.bund != 0 && string.bund != -1"><img class="other-catch-img"
-                                    src="assets/img/view/nut_default.png"></td>
+                                            <td *ngIf="string.bund == 0"><img class="other-catch-img"
+                                                    src="assets/img/view/nut_open.png"></td>
+                                            <td *ngIf="string.bund == -1"><img class="other-catch-img"
+                                                    src="assets/img/view/nut_unplayed.png"></td>
+                                            <td *ngIf="string.bund != 0 && string.bund != -1"><img
+                                                    class="other-catch-img" src="assets/img/view/nut_default.png"></td>
 
-                            <td *ngFor="let bund of bundsByCatch[1]">
-                                <img *ngIf="bund == chordCatches.catches[1].capo; else elseBlock" class="other-catch-img"
-                                    src="assets/img/view/bund_capo.png">
-                                <ng-template #elseBlock>
-                                    <img *ngIf="bund != string.bund" class="other-catch-img"
-                                        src="assets/img/view/bund_unplayed.png">
-                                    <img *ngIf="bund == string.bund" class="other-catch-img"
-                                        src="assets/img/view/bund_played_{{string.finger}}.png">
-                                </ng-template>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="col">
-                <table>
-                    <thead>
-                        <tr>
-                            <td></td>
-                            <td *ngFor="let bund of bundsByCatch[2]">{{bund}}</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let string of chordCatches.catches[2].stringCatches">
+                                            <td *ngFor="let bund of bundsByCatch[number]">
+                                                <img *ngIf="bund == chordCatches.capo; else elseBlock"
+                                                    class="other-catch-img" src="assets/img/view/bund_capo.png">
+                                                <ng-template #elseBlock>
+                                                    <img *ngIf="bund != string.bund" class="other-catch-img"
+                                                        src="assets/img/view/bund_unplayed.png">
+                                                    <img *ngIf="bund == string.bund" class="other-catch-img"
+                                                        src="assets/img/view/bund_played_{{string.finger}}.png">
+                                                </ng-template>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <hr>
+                        <div>
+                            asdasdasdasdasd
+                        </div>
+                    </mat-expansion-panel>
+                    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                    </mat-expansion-panel>
+                </mat-accordion>
 
-                            <td *ngIf="string.bund == 0"><img class="other-catch-img"
-                                    src="assets/img/view/nut_open.png"></td>
-                            <td *ngIf="string.bund == -1"><img class="other-catch-img"
-                                    src="assets/img/view/nut_unplayed.png"></td>
-                            <td *ngIf="string.bund != 0 && string.bund != -1"><img class="other-catch-img"
-                                    src="assets/img/view/nut_default.png"></td>
 
-                            <td *ngFor="let bund of bundsByCatch[2]">
-                                <img *ngIf="bund == chordCatches.catches[2].capo; else elseBlock" class="other-catch-img"
-                                    src="assets/img/view/bund_capo.png">
-                                <ng-template #elseBlock>
-                                    <img *ngIf="bund != string.bund" class="other-catch-img"
-                                        src="assets/img/view/bund_unplayed.png">
-                                    <img *ngIf="bund == string.bund" class="other-catch-img"
-                                        src="assets/img/view/bund_played_{{string.finger}}.png">
-                                </ng-template>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="col">
-                <table>
-                    <thead>
-                        <tr>
-                            <td></td>
-                            <td *ngFor="let bund of bundsByCatch[3]">{{bund}}</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let string of chordCatches.catches[3].stringCatches">
 
-                            <td *ngIf="string.bund == 0"><img class="other-catch-img"
-                                    src="assets/img/view/nut_open.png"></td>
-                            <td *ngIf="string.bund == -1"><img class="other-catch-img"
-                                    src="assets/img/view/nut_unplayed.png"></td>
-                            <td *ngIf="string.bund != 0 && string.bund != -1"><img class="other-catch-img"
-                                    src="assets/img/view/nut_default.png"></td>
 
-                            <td *ngFor="let bund of bundsByCatch[3]">
-                                <img *ngIf="bund == chordCatches.catches[3].capo; else elseBlock" class="other-catch-img"
-                                    src="assets/img/view/bund_capo.png">
-                                <ng-template #elseBlock>
-                                    <img *ngIf="bund != string.bund" class="other-catch-img"
-                                        src="assets/img/view/bund_unplayed.png">
-                                    <img *ngIf="bund == string.bund" class="other-catch-img"
-                                        src="assets/img/view/bund_played_{{string.finger}}.png">
-                                </ng-template>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
             </div>
         </div>
 

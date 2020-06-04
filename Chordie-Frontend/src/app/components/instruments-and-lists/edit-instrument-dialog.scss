@@ -1,0 +1,20 @@
+table {
+    margin: 20px 20px 0px 20px
+}
+
+.strings {
+    font-size: 20px;
+    font-family: "komtitFont";
+    margin-right: 15px;
+}
+
+.stringsText {
+    font-size: 20px;
+    font-family: "komtitFont";
+    margin-right: 30px;
+}
+
+.stringsNotPublic:hover {
+    background-color: lightgray;
+    cursor: pointer;
+}

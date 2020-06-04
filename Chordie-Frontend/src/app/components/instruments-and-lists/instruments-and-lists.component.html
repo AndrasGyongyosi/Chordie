@@ -1,3 +1,37 @@
 <div id="instrumentsandlists" class="instrumentsandlists">
-    <h1 class="title">Instruments & Lists</h1> 
+    <div class="instrumentscontent">
+        <div class="instrument">
+            <h3>Instrument</h3>
+            
+            <hr class="hr">
+            <button mat-button class="btn btn-outline-warning" style="width: 250px; margin-bottom: 25px;" (click)="openDialog()">Add new</button>
+            <div style="width: 400px; margin: 25px; padding-top: 0">
+                <mat-accordion>
+                    <mat-expansion-panel style="background-color: rgb(173, 144, 82)">
+                        <mat-expansion-panel-header style="background-color: var(--yellow); font-family: 'komtitFont';">
+                            <mat-panel-title style="font-size: 20px;">
+                                Your instruments
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <hr>
+                        <div *ngFor="let instrument of instruments">
+                            <a *ngIf="!instrument.isPublic" (click)="openEditInstrumentDialog(instrument)"><img src="assets/img/edit.png" class="edit"><p class="instrumentlist">{{instrument.name}}</p> </a>
+                            <a *ngIf="instrument.isPublic" (click)="openEditInstrumentDialog(instrument)"><img src="assets/img/watch.png" class="edit"><p class="instrumentlist">{{instrument.name}}</p> </a>   
+                            <hr>
+                        </div>  
+                    </mat-expansion-panel>
+                    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </div>
+
+        </div>
+        
+    </div>
+    <div class="listscontent">
+        <div class="list">
+            <h3>List</h3>
+            <hr class="hr">
+        </div>
+    </div>
 </div>

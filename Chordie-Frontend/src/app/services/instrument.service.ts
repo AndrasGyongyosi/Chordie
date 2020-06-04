@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import httpConfig from './httpConfig.json';
 import { Instrument } from '../model/instrument.model';
 import { Observable } from 'rxjs';
+import { ChordProperty } from '../model/ChordProperty.model';
 
 @Injectable({
   providedIn: 'root'
@@ -17,10 +18,19 @@ export class InstrumentService {
     return this.http.get<Instrument[]>(httpConfig.baseUrl + this.controller + "/" + localStorage.getItem("userIdToken"));
   }
 
-  addNewInstrumentForUser(instrumentName, maxBundDif, bundNumber) {
-    return this.http.post(httpConfig.baseUrl + this.controller + "/new", 
-    { user: localStorage.getItem("userIdToken"), instrumentalName: instrumentName, maxBundDif: maxBundDif, bundNumber: bundNumber, strings: []}).subscribe(
-      (data) => console.log(data)
-    );  
+  addNewInstrumentForUser(instrumentName: string, maxBundDif: string, bundNumber: string, strings: ChordProperty[]): Observable<boolean> {
+    return this.http.post<boolean>(httpConfig.baseUrl + this.controller + "/new", 
+        { user: localStorage.getItem("userIdToken"), instrumentalName: instrumentName, maxBundDif: maxBundDif, bundNumber: bundNumber, strings: strings});  
+  }
+
+  editInstrumentByUser(instrumentToken: string, instrumentName: string, maxBundDif: string, bundNumber: string, strings: ChordProperty[]): Observable<String> {
+    console.log(instrumentToken, instrumentName, maxBundDif, bundNumber, strings);
+    return this.http.post<String>(httpConfig.baseUrl + this.controller + "/edit/" + instrumentToken, 
+        { instrumentalName: instrumentName, maxBundDif: maxBundDif, bundNumber: bundNumber, strings: strings});
+  }
+
+  deleteInstrument(instrumentToken): Observable<String> {
+    return this.http.delete<String>(httpConfig.baseUrl + this.controller + "/delete/" + instrumentToken);
+
   }
 }

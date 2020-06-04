@@ -1,13 +1,19 @@
 .chords {
-    background: url("/assets/img/background2.jpg");
+    background: url("/assets/img/background1.jpg");
     background-size: cover;
     padding:100px 0px 1px 0px; 
-    height: 940px;
+    height: 1080px;
     font-family: 'komtitFont';
 }
 
 .col {
     text-align: center;
+}
+
+h5 {
+    font-family: 'komtitFont'; 
+    font-size: 20px;
+    
 }
 
 .row1 {
@@ -27,22 +33,37 @@
 
 table {
     margin: 0 auto; /* or margin: 0 auto 0 auto */
-  }
+}
+
+.help {
+    display: inline-block;
+    margin-left: 15px;
+    vertical-align: top;
+    cursor: pointer;
+}
+
+.main-catch {
+    margin-bottom: 30px;
+}
 
 .main-catch-img {
-    height: 20px;
-    width: 60px;
+    height: 26px;
+    width: 66px;  
 }
 
 .other-catch-img {
-    height: 15px;
-    width: 45px;
+    height: 22px;
+    width: 51px;
+}
+
+.other-catches {
+    padding: 0;
 }
 
 .chordsContent {
-    width: 1024px;
-    margin-left: unquote("-webkit-calc((100% - 1024px)/2)");
-    margin-right: unquote("-webkit-calc((100% - 1024px)/2)");
+    width: 1180px;
+    margin-left: unquote("-webkit-calc((100% - 1180px)/2)");
+    margin-right: unquote("-webkit-calc((100% - 1180px)/2)");
     background-color: rgba(185, 179, 174, 0.9);
     border: 2px solid rgb(255, 244, 244);
     border-radius: 10px;

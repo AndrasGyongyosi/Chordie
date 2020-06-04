@@ -1,11 +1,69 @@
-.title {
-    font-family: "komtitFont";
-    text-align: center;
-    padding-top: 5%;
+.instrumentsandlists {
+    background: url("/assets/img/background5.jpg");
+    background-size: cover;
+    padding:60px 0px 1px 0px; 
+    height: 100vh;
+    min-height: 1024px;
 }
 
-.instrumentsandlists {
-    background: url("/assets/img/background2.jpg");
-    background-size: cover;
-    padding:60px 0px 1px 0px; height: 100vh;
+.instrumentscontent, .listscontent {
+    background-color: rgba( #29211b, 0.7);
+    border: 1px solid rgb(201, 175, 119);
+    width: 504px;
+    margin-top: 10vh;
+    margin-left: unquote("-webkit-calc((100% - 1024px)/2)");
+    margin-right: unquote("-webkit-calc((100% - 1024px)/2)");
+    border-radius: 10px;
+    font-family: "komtitFont";
+    text-align: center;
+}
+
+.instrument:hover, .list:hover {
+    background-color: rgba( #29211b, 0.9);
+}
+
+.instrumentscontent {
+    float: right;
+}
+
+.listscontent {
+    position: absolute;
+}
+
+.instrument, .list {
+    width: 480px;
+    margin: 12px;
+    padding: 0px;
+    background-color: rgba( #29211b, 0.5);
+    border: 1px solid rgb(201, 175, 119);
+    border-radius: 10px;
+    color: rgb(201, 175, 119);
+}
+
+.instrumentlist {
+    text-align: left;
+    font-size: 18px;
+    font-family: 'komtitFont';
+}
+
+.edit {
+    float: right;
+    width:30px;
+    height: 30px;
+    cursor: pointer;  
+}
+
+h3 {
+    margin-top: 25px;
+    font-family: "komtitFont";
+    font-size: 24px;
+}
+
+a {
+    cursor: pointer;
+}
+
+.hr {
+    width: 300px;
+    background-color: var(--yellow);
 }

@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -9,11 +9,14 @@ import { TooltipModule } from 'ng2-tooltip-directive';
 import { MenuComponent } from './components/menu/menu.component';
 import { HomeComponent } from './components/home/home.component';
 import { AboutComponent } from './components/about/about.component';
-import { InstrumentsAndListsComponent } from './components/instruments-and-lists/instruments-and-lists.component';
+import { InstrumentsAndListsComponent, EditInstrumentDialog } from './components/instruments-and-lists/instruments-and-lists.component';
 import { InstrumentAndChordSelectorComponent } from './components/home/instrument-and-chord-selector/instrument-and-chord-selector.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
-import { ChordsComponent } from './components/chords/chords.component';
+import { ChordsComponent, CatchTipDialogComponent } from './components/chords/chords.component';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatDialogModule } from '@angular/material/dialog';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 const config = new AuthServiceConfig([
   {
@@ -32,8 +35,10 @@ export function provideConfig() {
     HomeComponent,
     AboutComponent,
     InstrumentsAndListsComponent,
+    EditInstrumentDialog,
     InstrumentAndChordSelectorComponent,
-    ChordsComponent
+    ChordsComponent,
+    CatchTipDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -42,7 +47,10 @@ export function provideConfig() {
     SocialLoginModule,
     TooltipModule,
     NgbModule,
-    FormsModule
+    FormsModule,
+    MatExpansionModule,
+    BrowserAnimationsModule,
+    MatDialogModule
   ],
   providers: [
     {
@@ -50,6 +58,13 @@ export function provideConfig() {
       useFactory: provideConfig
     }
   ],
-  bootstrap: [AppComponent]
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA
+  ],
+  bootstrap: [AppComponent],
+  entryComponents: [
+    EditInstrumentDialog,
+    CatchTipDialogComponent
+  ]
 })
 export class AppModule { }

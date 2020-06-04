@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { ChordService } from 'src/app/services/chord.service';
 import { ChordComponent } from 'src/app/model/ChordComponent.model';
 import { AuthenticationService } from 'src/app/services/authentication.service';
@@ -11,7 +11,7 @@ import { ChordModel } from 'src/app/model/chord.model';
   templateUrl: './instrument-and-chord-selector.component.html',
   styleUrls: ['./instrument-and-chord-selector.component.scss']
 })
-export class InstrumentAndChordSelectorComponent implements OnInit {
+export class InstrumentAndChordSelectorComponent implements OnInit, AfterViewInit {
 
   public instruments: Instrument[] = [];
   public chordComponent: ChordComponent;
@@ -24,6 +24,7 @@ export class InstrumentAndChordSelectorComponent implements OnInit {
   public isLoggedIn;
 
   constructor(private chordService: ChordService, private authService: AuthenticationService, private instrumentService: InstrumentService) { }
+  @ViewChild("typeChord") private _inputElement: ElementRef;
 
   ngOnInit(): void {
     this.chordService.getChordComponents().subscribe(
@@ -44,6 +45,10 @@ export class InstrumentAndChordSelectorComponent implements OnInit {
     this.authService.isLoggedInEvent.subscribe(
       (isLoggedIn) => this.isLoggedIn = isLoggedIn
     );
+  }
+
+  ngAfterViewInit(): void {
+    this._inputElement.nativeElement.focus();
   }
 
   selectInstrument(instrument) {
@@ -77,10 +82,6 @@ export class InstrumentAndChordSelectorComponent implements OnInit {
 
   login() {
     this.authService.login();
-  }
-
-  addNewInstrument(instrumentName, maxBundDif, bundNumber) {
-    this.instrumentService.addNewInstrumentForUser(instrumentName, maxBundDif, bundNumber);
   }
 
   chordAnalyze(text: String) {

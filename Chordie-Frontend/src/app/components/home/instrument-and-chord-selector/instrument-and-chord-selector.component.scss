@@ -36,3 +36,10 @@ a {
 a:hover {
     border-bottom: 1.3px solid rgb(201, 175, 119);
 }
+
+.help {
+    display: inline-block;
+    margin-left: 15px;
+    margin-right: 150px;
+    cursor: pointer;
+}
