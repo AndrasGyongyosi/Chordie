@@ -6,17 +6,20 @@ import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { SocialLoginModule, AuthServiceConfig, GoogleLoginProvider } from 'angularx-social-login';
 import { TooltipModule } from 'ng2-tooltip-directive';
-import { MenuComponent } from './components/menu/menu.component';
-import { HomeComponent } from './components/home/home.component';
-import { AboutComponent } from './components/about/about.component';
-import { InstrumentsAndListsComponent, EditInstrumentDialog } from './components/instruments-and-lists/instruments-and-lists.component';
-import { InstrumentAndChordSelectorComponent } from './components/home/instrument-and-chord-selector/instrument-and-chord-selector.component';
+import { MenuComponent } from './components/main-components/menu/menu.component';
+import { HomeComponent } from './components/main-components/home/home.component';
+import { AboutComponent } from './components/main-components/about/about.component';
+import { InstrumentsAndListsComponent } from './components/main-components/instruments-and-lists/instruments-and-lists.component';
+import { InstrumentAndChordSelectorComponent } from './components/main-components/home/instrument-and-chord-selector/instrument-and-chord-selector.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
-import { ChordsComponent, CatchTipDialogComponent } from './components/chords/chords.component';
+import { ChordsComponent } from './components/main-components/chords/chords.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatDialogModule } from '@angular/material/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CatchTipDialogComponent } from './components/dialogs/catch-tip-dialog/catch-tip-dialog.component';
+import { EditInstrumentDialogComponent } from './components/dialogs/edit-instrument-dialog/edit-instrument-dialog.component';
+import { AddNewListDialogComponent } from './components/dialogs/add-new-list-dialog/add-new-list-dialog.component';
 
 const config = new AuthServiceConfig([
   {
@@ -35,10 +38,12 @@ export function provideConfig() {
     HomeComponent,
     AboutComponent,
     InstrumentsAndListsComponent,
-    EditInstrumentDialog,
+    EditInstrumentDialogComponent,
     InstrumentAndChordSelectorComponent,
     ChordsComponent,
-    CatchTipDialogComponent
+    CatchTipDialogComponent,
+    AddNewListDialogComponent
+    
   ],
   imports: [
     BrowserModule,
@@ -63,8 +68,9 @@ export function provideConfig() {
   ],
   bootstrap: [AppComponent],
   entryComponents: [
-    EditInstrumentDialog,
-    CatchTipDialogComponent
+    EditInstrumentDialogComponent,
+    CatchTipDialogComponent,
+    AddNewListDialogComponent
   ]
 })
 export class AppModule { }

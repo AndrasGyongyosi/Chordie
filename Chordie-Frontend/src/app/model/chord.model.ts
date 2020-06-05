@@ -1,4 +1,4 @@
-import { ChordProperty } from './ChordProperty.model';
+import { ChordProperty } from './chordProperty.model';
 
 export interface ChordModel {
     baseSound?: string,

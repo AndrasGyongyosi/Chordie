@@ -1,5 +1,5 @@
 <h2 *ngIf="!data.instrumentToken">New instrument</h2>
-<h2 *ngIf="data.instrumentToken">Edit instrument</h2>
+<h2 *ngIf="data.instrumentToken && !data.isPublic">Edit instrument</h2>
 <mat-dialog-content class="mat-typography">
     <form>
         <div class="form-group">

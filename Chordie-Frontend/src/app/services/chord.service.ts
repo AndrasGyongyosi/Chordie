@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 import { Observable, BehaviorSubject } from 'rxjs';
-import { ChordComponent } from '../model/ChordComponent.model';
+import { ChordComponent } from '../model/chordComponent.model';
 import httpConfig from './httpConfig.json';
 import { ChordModel } from '../model/chord.model';
 import { CatchResult } from '../model/catchResult.model';

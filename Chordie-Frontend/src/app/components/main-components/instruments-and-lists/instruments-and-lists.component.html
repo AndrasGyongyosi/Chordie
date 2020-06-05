@@ -1,14 +1,13 @@
 <div id="instrumentsandlists" class="instrumentsandlists">
     <div class="instrumentscontent">
         <div class="instrument">
-            <h3>Instrument</h3>
-            
+            <h3>Instrument</h3>  
             <hr class="hr">
-            <button mat-button class="btn btn-outline-warning" style="width: 250px; margin-bottom: 25px;" (click)="openDialog()">Add new</button>
+            <button mat-button class="btn btn-outline-warning" style="width: 250px; margin-bottom: 25px;" (click)="openNewInstrumentDialog()">Add new</button>
             <div style="width: 400px; margin: 25px; padding-top: 0">
                 <mat-accordion>
                     <mat-expansion-panel style="background-color: rgb(173, 144, 82)">
-                        <mat-expansion-panel-header style="background-color: var(--yellow); font-family: 'komtitFont';">
+                        <mat-expansion-panel-header style="background-color: var(--yellow);">
                             <mat-panel-title style="font-size: 20px;">
                                 Your instruments
                             </mat-panel-title>
@@ -32,6 +31,7 @@
         <div class="list">
             <h3>List</h3>
             <hr class="hr">
+            <button mat-button class="btn btn-outline-warning" style="width: 250px; margin-bottom: 25px;" (click)="openAddNewListDialog()">Add new</button>
         </div>
     </div>
 </div>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ChordComponent } from 'src/app/model/ChordComponent.model';
+import { ChordComponent } from 'src/app/model/chordComponent.model';
 import { ChordService } from 'src/app/services/chord.service';
 
 @Component({

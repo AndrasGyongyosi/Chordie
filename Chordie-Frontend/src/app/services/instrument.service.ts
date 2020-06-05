@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import httpConfig from './httpConfig.json';
 import { Instrument } from '../model/instrument.model';
 import { Observable } from 'rxjs';
-import { ChordProperty } from '../model/ChordProperty.model';
+import { ChordProperty } from '../model/chordProperty.model';
 
 @Injectable({
   providedIn: 'root'

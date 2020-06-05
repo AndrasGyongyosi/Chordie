@@ -1,10 +1,13 @@
 <div class="catchdialog">
     <h2 style="display: inline;">Tips</h2>
-    <p class="nutImg" style="display: inline;"><img src="assets/img/tips.png" width="75" height="60"></p>
+    <a class="nutImg" style="display: inline;" (click)="changeTipImg(yellow)"><img id="tip" src="assets/img/tips{{yellow}}.png" width="75" height="60"></a>
 </div>
 <hr style="width: 400px">
-<p class="catchdialog">Guitar position</p>
-<p class="catchdialog"><img src="assets/img/guitar.png" width="580" height="400"></p>
+<mat-dialog-content class="mat-typography">
+<div style="width: 50vh; margin: 0 auto">
+    <p class="catchdialog">Guitar position</p>
+    <p class="catchdialog"><img src="assets/img/guitar.png" width="100%" height="25%"></p>
+</div>
 <hr>
 <div class="row">
     <div class="col">
@@ -22,6 +25,7 @@
         <p class="nutText">Catch the string with the marked finger.</p>
     </div>
 </div>
+</mat-dialog-content>
 <hr style="width: 400px">
 
 <mat-dialog-actions align="end">

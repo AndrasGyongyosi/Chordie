@@ -4,9 +4,9 @@
             <div class="col"></div>
             <div class="col col1">
                 <div style="display:block; margin-left: 40px">
-                    <h3 style="font-family: 'komtitFont'; font-size: 30px; display: inline-block;">Suggested catch</h3>
-                    <a (click)="openCatchTipDialog()"><p class="help" ngbTooltip="Click here to explain how to read the catches!" [openDelay]="300"><img
-                            src="assets/img/help2.png" width="30" height="30"></p></a>
+                    <h3 style="font-size: 30px; display: inline-block;">Suggested catch</h3>
+                    <a (click)="openCatchTipDialog()" (mouseenter)="changeHelpOnHover('help')" (mouseleave)="changeHelpAfterHover('help')"><p class="help" ngbTooltip="Click here to explain how to read the catches!" [openDelay]="300"><img
+                            id="help" src="assets/img/help2.png" width="30" height="30"></p></a>
                 </div>
                 <div style="display:block">
                     <h5 style="display:inline-block;">( {{chordCatches.chord}})</h5>
@@ -29,15 +29,15 @@
         <div *ngIf="chordCatches && bundsByCatch" class="main-catch">
             <div style="width: 50%; margin: 0 30%;">
                 <mat-accordion>
-                    <mat-expansion-panel style="background-color: rgb(173, 144, 82); width: 500px; padding: 0">
-                        <mat-expansion-panel-header style="background-color: var(--yellow); padding: 0"
-                            [collapsedHeight]="'250px'" [expandedHeight]="'250px'">
+                    <mat-expansion-panel style="background-color: rgb(173, 144, 82); width: 500px">
+                        <mat-expansion-panel-header class="mainheader" style="background-color: var(--yellow); padding: 0 30px 0 0"
+                            [collapsedHeight]="customMainHeight" [expandedHeight]="customMainHeight">
                             <mat-panel-title>
-                                <table>
+                                <table style="margin-bottom: 10px;">
                                     <thead>
                                         <tr>
                                             <td></td>
-                                            <td *ngFor="let bund of bundsByCatch[0]" style="text-align: center; font-family: 'komtitFont';">{{bund}}</td>
+                                            <td *ngFor="let bund of bundsByCatch[0]" style="text-align: center;">{{bund}}</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -65,8 +65,14 @@
                             </mat-panel-title>
                         </mat-expansion-panel-header>
                         <hr>
-                        <div>
-                            asdasdasdasdasd
+                        <div class="row">
+                            <div class="footer" style="margin: 0 auto">
+                                <a><img id="noteMain" (mouseenter)="changeNoteOnHover('noteMain')" (mouseleave)="changeNoteAfterHover('noteMain')" src="assets/img/note.png" width="30" height="30"></a>
+                            </div>
+                            <div style="margin: 0 auto">
+                                <p class="footer" style="margin-right: 15px; font-size: 16px;">Add to the selected list (///LIST///): </p>
+                                <a class="footer"><img id="addMain" (mouseenter)="changeAddOnHover('addMain')" (mouseleave)="changeAddAfterHover('addMain')" src="assets/img/add_black.png" width="30" height="30"></a>
+                            </div>
                         </div>
                     </mat-expansion-panel>
                     <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
@@ -78,17 +84,17 @@
 
         <div class="row row2">
             <div class="col">
-                <h3 style="font-family: 'komtitFont'; font-size: 24px;">Other options</h3>
+                <h3 style="font-size: 24px;">Other options</h3>
             </div>
         </div>
         <div class="row other-catches">
-            <div *ngFor="let number of [1,2,3]" class="col">
+            <div *ngFor="let number of [1,2,3]; let i = index" class="col">
                 <mat-accordion>
-                    <mat-expansion-panel style="background-color: rgb(173, 144, 82); width: 370px; padding: 0">
-                        <mat-expansion-panel-header style="background-color: rgb(155, 142, 115); padding: 0"
-                            [collapsedHeight]="'200px'" [expandedHeight]="'200px'">
+                    <mat-expansion-panel style="background-color: rgb(173, 144, 82); width: 370px">
+                        <mat-expansion-panel-header class="otherheader" style="background-color: rgb(172, 152, 111); padding: 0 30px 0 0"
+                            [collapsedHeight]="customOtherHeight" [expandedHeight]="customOtherHeight">
                             <mat-panel-title>
-                                <table>
+                                <table style="margin-bottom: 10px;">
                                     <thead>
                                         <tr>
                                             <td></td>
@@ -121,17 +127,19 @@
                             </mat-panel-title>
                         </mat-expansion-panel-header>
                         <hr>
-                        <div>
-                            asdasdasdasdasd
+                        <div class="row">
+                            <div class="footer" style="margin: 0 auto">
+                                <a><img id="noteOther{{i}}" (mouseenter)="changeNoteOnHover('noteOther' + i)" (mouseleave)="changeNoteAfterHover('noteOther' + i)" src="assets/img/note.png" width="30" height="30"></a>
+                            </div>
+                            <div style="margin: 0 auto">
+                                <p class="footer" style="margin-right: 15px; font-size: 14px;">Add to the selected list (///LIST///): </p>
+                                <a class="footer"><img id="addOther{{i}}" (mouseenter)="changeAddOnHover('addOther' + i)" (mouseleave)="changeAddAfterHover('addOther' + i)" src="assets/img/add_black.png" width="30" height="30"></a>
+                            </div>
                         </div>
                     </mat-expansion-panel>
                     <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
                     </mat-expansion-panel>
                 </mat-accordion>
-
-
-
-
             </div>
         </div>
 

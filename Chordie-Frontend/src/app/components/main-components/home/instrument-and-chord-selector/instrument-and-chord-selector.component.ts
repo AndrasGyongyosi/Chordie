@@ -1,6 +1,6 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, ViewEncapsulation } from '@angular/core';
 import { ChordService } from 'src/app/services/chord.service';
-import { ChordComponent } from 'src/app/model/ChordComponent.model';
+import { ChordComponent } from 'src/app/model/chordComponent.model';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { Instrument } from 'src/app/model/instrument.model';
 import { InstrumentService } from 'src/app/services/instrument.service';
@@ -9,7 +9,8 @@ import { ChordModel } from 'src/app/model/chord.model';
 @Component({
   selector: 'app-instrument-and-chord-selector',
   templateUrl: './instrument-and-chord-selector.component.html',
-  styleUrls: ['./instrument-and-chord-selector.component.scss']
+  styleUrls: ['./instrument-and-chord-selector.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class InstrumentAndChordSelectorComponent implements OnInit, AfterViewInit {
 
@@ -78,6 +79,11 @@ export class InstrumentAndChordSelectorComponent implements OnInit, AfterViewIni
   selectRootNote(rootNoteLabel) {
     this.selectedChordLabel.rootNote = rootNoteLabel;
     this.selectedChordName.rootNote = this.chordComponent.baseSounds.find(c => c.label == rootNoteLabel).name
+  }
+
+  fillInputWithExample() {
+    this._inputElement.nativeElement.value = "Cmaj7/C.2"
+    this.chordAnalyze("Cmaj7/C.2");
   }
 
   login() {

@@ -3,7 +3,6 @@
     background-size: cover;
     padding:100px 0px 1px 0px; 
     height: 1080px;
-    font-family: 'komtitFont';
 }
 
 .col {
@@ -11,9 +10,12 @@
 }
 
 h5 {
-    font-family: 'komtitFont'; 
     font-size: 20px;
     
+}
+
+a {
+    cursor: pointer;
 }
 
 .row1 {
@@ -57,17 +59,29 @@ table {
 }
 
 .other-catches {
-    padding: 0;
+    padding: 10px 15px 10px 10px;
+}
+
+.mainheader:hover {
+    background: rgba(211, 164, 61, 0.5) !important;
+}
+
+.otherheader:hover {
+    background: rgba(211, 164, 61, 0.1) !important;
 }
 
 .chordsContent {
     width: 1180px;
     margin-left: unquote("-webkit-calc((100% - 1180px)/2)");
     margin-right: unquote("-webkit-calc((100% - 1180px)/2)");
-    background-color: rgba(185, 179, 174, 0.9);
-    border: 2px solid rgb(255, 244, 244);
+    background-color: rgb(172, 152, 111);
+    border: 2px solid black;
     border-radius: 10px;
     padding-bottom: 20px;
+}
+
+.footer {
+    display: inline-block;
 }
 
 .noContent {

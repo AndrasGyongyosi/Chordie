@@ -1,5 +1,5 @@
 <div class="row row2">
-    <div class="col" >
+    <div class="col" style="margin-right: -150px">
         <div ngbDropdown class="d-inline-block">
             <button *ngIf="selectedInstrument" class="btn btn-outline-warning" id="dropdownBasic1" ngbDropdownToggle style="width: 200px; font-size: 16px; height:50px;">{{selectedInstrument.name}}</button>
             <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
@@ -7,10 +7,10 @@
             </div>
         </div>
     </div>
-    <div class="col">
+    <div class="col" style="margin-right: 100px">
         <input type="text" #typeChord [(ngModel)]="chordText" (ngModelChange)="chordAnalyze(chordText)" (keyup.enter)="getChordCatches()" 
         class="form-control inputText" style="width: 200px; height:50px; font-size: 24px; display: inline-block;" placeholder="Type your chord!">
-        <p class="help" ngbTooltip="Example: Cmaj7/C.2" [openDelay]="300"><img src="assets/img/help.png" width="30" height="30"></p>
+        <p class="help" ngbTooltip="Example: Cmaj7/C.2" [openDelay]="300" (click)="fillInputWithExample()"><img src="assets/img/help.png" width="30" height="30"></p>
     </div>
 </div>
 <div *ngIf="chordComponent" class="row row2">

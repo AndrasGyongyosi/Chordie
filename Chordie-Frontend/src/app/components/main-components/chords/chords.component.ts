@@ -3,7 +3,7 @@ import { ChordService } from 'src/app/services/chord.service';
 import { CatchResult } from 'src/app/model/catchResult.model';
 import { Catch } from 'src/app/model/catch.model';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { CommonDialogService } from 'src/app/services/common-dialog-service';
+import { DialogService } from 'src/app/services/dialog-service';
 
 @Component({
   selector: 'app-chords',
@@ -17,8 +17,10 @@ export class ChordsComponent implements OnInit {
   public chordPathVariables;
   public bundsByCatch: [number?, number?, number?, number?, number?][] = [[]];
   panelOpenState;
+  customMainHeight;
+  customOtherHeight;
 
-  constructor(private chordService: ChordService, private commonDialogService: CommonDialogService) { }
+  constructor(private chordService: ChordService, private dialogService: DialogService) { }
 
   ngOnInit(): void {
     this.chordService.chordPathVariables.subscribe(
@@ -31,17 +33,45 @@ export class ChordsComponent implements OnInit {
                 this.chordCatches = chordCatches
                 this.calculateBunds()
                 console.log(this.chordCatches)
+                this.customMainHeight = this.chordCatches.catches[0].stringCatches.length * 40 + 'px'
+                this.customOtherHeight = this.chordCatches.catches[1].stringCatches.length * 35 + 'px'
               }
           );
         }})
+
   }
 
   openCatchTipDialog() {
-    this.commonDialogService.openCatchTipDialog().subscribe();
+    this.dialogService.openCatchTipDialog().subscribe();
   }
 
   scrollToHome() {
     document.getElementById("home").scrollIntoView({behavior: "smooth", block: "start"}); 
+  }
+
+
+  changeNoteOnHover(id) {
+    (document.getElementById(id) as HTMLImageElement).src = "assets/img/note_white.png";
+  }
+
+  changeNoteAfterHover(id) {
+    (document.getElementById(id) as HTMLImageElement).src = "assets/img/note.png";
+  }
+
+  changeAddOnHover(id) {
+    (document.getElementById(id) as HTMLImageElement).src = "assets/img/add_white.png";
+  }
+
+  changeAddAfterHover(id) {
+    (document.getElementById(id) as HTMLImageElement).src = "assets/img/add_black.png";
+  }
+
+  changeHelpOnHover(id) {
+    (document.getElementById(id) as HTMLImageElement).src = "assets/img/help.png";
+  }
+
+  changeHelpAfterHover(id) {
+    (document.getElementById(id) as HTMLImageElement).src = "assets/img/help2.png";
   }
 
   calculateBunds() {
@@ -82,27 +112,4 @@ export class ChordsComponent implements OnInit {
 
     return false;
   }
-
-}
-
-@Component({
-  selector: 'catch-tip-dialog.component',
-  templateUrl: 'catch-tip-dialog.component.html',
-  styleUrls: ['./catch-tip-dialog.component.scss']
-})
-
-export class CatchTipDialogComponent implements OnInit {
-
-  constructor(public dialogRef: MatDialogRef<CatchTipDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) {}
-
-  ngOnInit(): void {
-    
-  }
-
-  onNoClick(): void {
-    console.log("close")
-    this.dialogRef.close();
-  }
-
 }
