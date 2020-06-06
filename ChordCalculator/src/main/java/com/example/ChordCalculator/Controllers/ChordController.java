@@ -170,7 +170,6 @@ public class ChordController {
 
             catchInfo.setStringCatches(fingerPoints);
             catchInfo.setPerfection(catcha.getPerfection());
-            catchInfo.setCapo(capo);
             catchList.add(catchInfo);
         }
         //sort catches by best to worst.
@@ -185,9 +184,16 @@ public class ChordController {
         result.setCatches(catchList);
         result.setBundDif(bundDif);
         result.setChord(chord.getFullName());
+        result.setCapo(capo);
+        result.setRootNote(rootNoteString);
         return result;
     }
     
+    @RequestMapping(path="/sound/{baseSoundString}/{baseTypeString}/{chordTypeString}/{capo}")
+    public List<Sound> getSoundsByChordComponents(@PathVariable String baseSoundString, @PathVariable String baseTypeString, @PathVariable String chordTypeString, @PathVariable Integer capo) throws BadExpressionException{
+    	Chord chord = getChord(baseSoundString, baseTypeString, chordTypeString);
+    	return chord.transponeSounds(capo);
+    }
     private Sound getSoundFromChordText(String text){
         int resultLength = 0;
         Sound result = null;

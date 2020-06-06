@@ -176,7 +176,15 @@ public class Chord {
         }
         return result;
     }
-
+    
+    public List<Sound> transponeSounds(Integer capo) {
+    	List<Sound> result = Lists.newArrayList();
+    	for(Sound sound : this.sounds) {
+    		result.add(sound.transpone(capo));
+    	}
+    	return result;
+    }
+    
     public String getFullName(){
         return baseSound.getSoundName()+" "+baseType.getName()+" "+chordType.getAliases().get(0);
     }
