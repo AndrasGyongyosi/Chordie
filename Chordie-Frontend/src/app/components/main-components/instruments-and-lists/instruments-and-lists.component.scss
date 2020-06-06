@@ -1,24 +1,20 @@
-.instrumentsandlists {
-    background: url("/assets/img/background5.jpg");
-    background-size: cover;
-    padding:60px 0px 1px 0px; 
-    height: 100vh;
+.instrumentsandlists {   
     min-height: 1024px;
 }
 
 .instrumentscontent, .listscontent {
-    background-color: rgba( #29211b, 0.7);
+    background-color: var(--backgroundGray);
     border: 1px solid rgb(201, 175, 119);
     width: 504px;
     margin-top: 10vh;
-    margin-left: unquote("-webkit-calc((100% - 1024px)/2)");
-    margin-right: unquote("-webkit-calc((100% - 1024px)/2)");
+    margin-left: unquote("-webkit-calc((100% - 1180px)/2)");
+    margin-right: unquote("-webkit-calc((100% - 1180px)/2)");
     border-radius: 10px;
     text-align: center;
 }
 
 .instrument:hover, .list:hover {
-    background-color: rgba( #29211b, 0.9);
+    background-color: var(--backgroundGrayDarker);
 }
 
 .instrumentscontent {
@@ -33,7 +29,7 @@
     width: 480px;
     margin: 12px;
     padding: 0px;
-    background-color: rgba( #29211b, 0.5);
+    background-color: var(--backgroundGrayLighter);
     border: 1px solid rgb(201, 175, 119);
     border-radius: 10px;
     color: rgb(201, 175, 119);

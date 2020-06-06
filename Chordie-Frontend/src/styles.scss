@@ -10,9 +10,25 @@
   font-family: 'komtitFont' !important;
 }
 
-:root{
+.page {
+  background: url("/assets/img/background5.jpg");
+}
+
+.page2 {
+  background: url("/assets/img/background1.jpg");
+}
+
+.page, .page2 {  
+  background-size: cover;
+  padding: 65px 0px 1px 0px; height: 100vh
+}
+
+:root {
 
   /* Global colors */
   --yellow: rgb(211, 164, 61);
   --black: rgb(39, 32, 32);
+  --backgroundGrayLighter: rgba(41, 33, 27, 0.5);
+  --backgroundGray: rgba(41, 33, 27, 0.9);
+  --backgroundGrayDarker: rgba(41, 33, 27, 0.95);
 }

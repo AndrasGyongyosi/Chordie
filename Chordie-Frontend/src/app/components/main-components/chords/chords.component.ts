@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { ChordService } from 'src/app/services/chord.service';
-import { CatchResult } from 'src/app/model/catchResult.model';
-import { Catch } from 'src/app/model/catch.model';
+import { CatchResult } from 'src/app/models/catchResult.model';
+import { Catch } from 'src/app/models/catch.model';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DialogService } from 'src/app/services/dialog-service';
 
@@ -75,10 +75,10 @@ export class ChordsComponent implements OnInit {
   }
 
   calculateBunds() {
-    for (let j = 0; j < 4; j++) {
+    for (let j = 0; j < ((this.chordCatches.catches.length > 4) ? 4 : (this.chordCatches.catches.length)); j++) {
       let minBund = this.calculateMinBundByCatchAndCapo(this.chordCatches.catches[j], this.chordCatches.capo);
       this.bundsByCatch[j] = [minBund, minBund+1, minBund+2, minBund+3, minBund+4];
-    }
+    } 
   }
 
   private calculateMinBundByCatchAndCapo(_catch: Catch, capo: number): number {

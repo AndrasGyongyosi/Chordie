@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { ChordComponent } from 'src/app/model/chordComponent.model';
-import { ChordProperty } from 'src/app/model/chordProperty.model';
+import { ChordComponent } from 'src/app/models/chordComponent.model';
+import { ChordProperty } from 'src/app/models/chordProperty.model';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { InstrumentService } from 'src/app/services/instrument.service';
 import { ChordService } from 'src/app/services/chord.service';

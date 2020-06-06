@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 import { Observable, BehaviorSubject } from 'rxjs';
-import { ChordComponent } from '../model/chordComponent.model';
-import httpConfig from './httpConfig.json';
-import { ChordModel } from '../model/chord.model';
-import { CatchResult } from '../model/catchResult.model';
+import { ChordComponent } from '../models/chordComponent.model';
+import httpConfig from '../configs/httpConfig.json';
+import { ChordModel } from '../models/chord.model';
+import { CatchResult } from '../models/catchResult.model';
 
 @Injectable({
   providedIn: 'root'

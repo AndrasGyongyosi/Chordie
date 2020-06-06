@@ -88,8 +88,9 @@
             </div>
         </div>
         <div class="row other-catches">
-            <div *ngFor="let number of [1,2,3]; let i = index" class="col">
-                <mat-accordion>
+            <div  *ngFor="let bund of bundsByCatch; let i = index" >
+            <div class="col" *ngIf="i > 0" style="margin: 10px; padding: 0;">
+                <mat-accordion >
                     <mat-expansion-panel style="background-color: rgb(173, 144, 82); width: 370px">
                         <mat-expansion-panel-header class="otherheader" style="background-color: rgb(172, 152, 111); padding: 0 30px 0 0"
                             [collapsedHeight]="customOtherHeight" [expandedHeight]="customOtherHeight">
@@ -98,11 +99,11 @@
                                     <thead>
                                         <tr>
                                             <td></td>
-                                            <td *ngFor="let bund of bundsByCatch[number]">{{bund}}</td>
+                                            <td *ngFor="let bund of bundsByCatch[i]">{{bund}}</td>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr *ngFor="let string of chordCatches.catches[number].stringCatches">
+                                        <tr *ngFor="let string of chordCatches.catches[i].stringCatches">
 
                                             <td *ngIf="string.bund == 0"><img class="other-catch-img"
                                                     src="assets/img/view/nut_open.png"></td>
@@ -111,7 +112,7 @@
                                             <td *ngIf="string.bund != 0 && string.bund != -1"><img
                                                     class="other-catch-img" src="assets/img/view/nut_default.png"></td>
 
-                                            <td *ngFor="let bund of bundsByCatch[number]">
+                                            <td *ngFor="let bund of bundsByCatch[i]">
                                                 <img *ngIf="bund == chordCatches.capo; else elseBlock"
                                                     class="other-catch-img" src="assets/img/view/bund_capo.png">
                                                 <ng-template #elseBlock>
@@ -140,6 +141,7 @@
                     <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
                     </mat-expansion-panel>
                 </mat-accordion>
+                </div>
             </div>
         </div>
 

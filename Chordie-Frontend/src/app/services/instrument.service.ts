@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import httpConfig from './httpConfig.json';
-import { Instrument } from '../model/instrument.model';
+import httpConfig from '../configs/httpConfig.json';
+import { Instrument } from '../models/instrument.model';
 import { Observable } from 'rxjs';
-import { ChordProperty } from '../model/chordProperty.model';
+import { ChordProperty } from '../models/chordProperty.model';
 
 @Injectable({
   providedIn: 'root'

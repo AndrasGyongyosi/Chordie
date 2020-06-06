@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
-import { Instrument } from '../model/instrument.model';
+import { Instrument } from '../models/instrument.model';
 import { CatchTipDialogComponent } from '../components/dialogs/catch-tip-dialog/catch-tip-dialog.component';
 import { EditInstrumentDialogComponent } from '../components/dialogs/edit-instrument-dialog/edit-instrument-dialog.component';
 import { AddNewListDialogComponent } from '../components/dialogs/add-new-list-dialog/add-new-list-dialog.component';

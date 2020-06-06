@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, ViewEncapsulation } from '@angular/core';
 import { ChordService } from 'src/app/services/chord.service';
-import { ChordComponent } from 'src/app/model/chordComponent.model';
+import { ChordComponent } from 'src/app/models/chordComponent.model';
 import { AuthenticationService } from 'src/app/services/authentication.service';
-import { Instrument } from 'src/app/model/instrument.model';
+import { Instrument } from 'src/app/models/instrument.model';
 import { InstrumentService } from 'src/app/services/instrument.service';
-import { ChordModel } from 'src/app/model/chord.model';
+import { ChordModel } from 'src/app/models/chord.model';
 
 @Component({
   selector: 'app-instrument-and-chord-selector',

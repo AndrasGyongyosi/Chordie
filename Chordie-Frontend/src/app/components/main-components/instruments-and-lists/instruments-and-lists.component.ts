@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { InstrumentService } from 'src/app/services/instrument.service';
-import { Instrument } from 'src/app/model/instrument.model';
+import { Instrument } from 'src/app/models/instrument.model';
 import { ChordService } from 'src/app/services/chord.service';
 import { DialogService } from 'src/app/services/dialog-service';
-import { ChordComponent } from 'src/app/model/chordComponent.model';
+import { ChordComponent } from 'src/app/models/chordComponent.model';
 
 @Component({
   selector: 'app-instruments-and-lists',
