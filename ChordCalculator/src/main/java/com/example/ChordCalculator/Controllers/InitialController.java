@@ -8,8 +8,14 @@ import com.example.ChordCalculator.Model.Repositories.InstrumentRepository;
 import com.example.ChordCalculator.Model.Repositories.MStringRepository;
 import com.example.ChordCalculator.Model.Repositories.RuleRepository;
 import com.example.ChordCalculator.Model.Repositories.UserRepository;
+
+import lombok.extern.slf4j.Slf4j;
+
 import com.example.ChordCalculator.Model.Entities.Rule.*;
 import com.example.ChordCalculator.Model.Sound;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +24,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-public class MainController {
+@Slf4j
+public class InitialController {
     @Autowired
     private InstrumentRepository instrumentRepository;
 
@@ -31,8 +38,11 @@ public class MainController {
     @Autowired
     RuleRepository ruleRepository;
 
+    private static Logger logger = LoggerFactory.getLogger(InitialController.class);
+    
     @RequestMapping(value = "/")
     public String signPage() {
+    	logger.info("Base page request.");
        // model.addAttribute("appName", "ChordCalculator");
         return "index";
     }
@@ -55,6 +65,7 @@ public class MainController {
     }*/
     @RequestMapping(value = "/reinit")
     public String reInit(){
+    	logger.info("Database reinit request.");
         mStringRepository.deleteAll();
         instrumentRepository.deleteAll();
         userRepository.deleteAll();
@@ -63,6 +74,7 @@ public class MainController {
     }
     @RequestMapping(value = "/init")
     public String init() {
+    	logger.info("Database intial request.");
         mStringRepository.deleteAll();
         ruleRepository.deleteAll();
         instrumentRepository.deleteAll();

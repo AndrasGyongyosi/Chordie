@@ -9,7 +9,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-public class FavoritCatchList{
+public class StoredCatchList{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -22,12 +22,12 @@ public class FavoritCatchList{
 
     @OneToMany(mappedBy = "catchList", cascade = CascadeType.ALL,orphanRemoval=true)
     @JsonManagedReference
-    private List<FavoritCatch> catches;
+    private List<StoredCatch> catches;
 
     @Column(length=2500)
-    private String listToken = RandomToken.randomString(32);
+    private String token = RandomToken.randomString(32);
     
-    public FavoritCatchList() {
+    public StoredCatchList() {
     	catches = Lists.newArrayList();
     }
     
@@ -55,21 +55,21 @@ public class FavoritCatchList{
         this.user = user;
     }
 
-    public List<FavoritCatch> getCatches() {
+    public List<StoredCatch> getCatches() {
         return catches;
     }
 
-    public void addCatch(FavoritCatch fc){ this.catches.add(fc);}
+    public void addCatch(StoredCatch fc){ this.catches.add(fc);}
 
-    public void setCatches(List<FavoritCatch> catches) {
+    public void setCatches(List<StoredCatch> catches) {
         this.catches = catches;
     }
 
-    public String getListToken() {
-        return listToken;
+    public String getToken() {
+        return token;
     }
 
-    public void setListToken(String listToken) {
-        this.listToken = listToken;
+    public void setToken(String listToken) {
+        this.token = listToken;
     }
 }

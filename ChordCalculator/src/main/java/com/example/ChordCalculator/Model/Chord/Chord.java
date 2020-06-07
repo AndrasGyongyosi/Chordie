@@ -6,8 +6,13 @@ import com.example.ChordCalculator.Model.Entities.Instrument;
 import com.example.ChordCalculator.Model.Entities.MString;
 import com.google.common.collect.Lists;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.*;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+@Slf4j
 public class Chord {
 
     private ArrayList<Sound> sounds;
@@ -15,6 +20,7 @@ public class Chord {
     private BaseType baseType;
     private Sound baseSound;
 
+    private static Logger logger = LoggerFactory.getLogger(Chord.class);
     public Chord(Sound sound, BaseType bt, ChordType ct){
         baseSound = sound;
         baseType = bt;
@@ -91,7 +97,7 @@ public class Chord {
                     if (instrument.isValid(scResult))
                         getAllCatches(strings.subList(1, strings.size()), options, instrument, scResult, futureResult);
                 }catch(Exception e){
-                    System.out.println(e.getMessage());
+                    logger.error(e.getMessage());
                 }
             }
         }

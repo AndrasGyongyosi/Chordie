@@ -28,9 +28,6 @@ public class MaxBundDifRule extends Rule {
             if (actualBund>max) max=actualBund;
             if (actualBund<min && actualBund>0) min = actualBund;
         }
-        //System.out.println("max " +max);
-        //System.out.println("min " +min);
-        //System.out.println(((max-min)+1<=value));
         return (max-min+1<=value);
     }
 }

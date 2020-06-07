@@ -3,6 +3,7 @@ package com.example.ChordCalculator.Controllers;
 import com.example.ChordCalculator.DTOs.InstrumentDTO;
 import com.example.ChordCalculator.DTOs.LabeledStringDTO;
 import com.example.ChordCalculator.Exceptions.InaudibleVoiceException;
+import com.example.ChordCalculator.Model.Entities.StoredCatchList;
 import com.example.ChordCalculator.Model.Entities.Instrument;
 import com.example.ChordCalculator.Model.Entities.MString;
 import com.example.ChordCalculator.Model.Entities.Rule.*;
@@ -12,7 +13,13 @@ import com.example.ChordCalculator.Model.Repositories.MStringRepository;
 import com.example.ChordCalculator.Model.Repositories.RuleRepository;
 import com.example.ChordCalculator.Model.Repositories.UserRepository;
 import com.google.common.collect.Lists;
+
+import lombok.extern.slf4j.Slf4j;
+
 import com.example.ChordCalculator.Model.Sound;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,6 +31,7 @@ import java.util.Map;
 @RestController
 @CrossOrigin()
 @RequestMapping("/instrument")
+@Slf4j
 public class InstrumentController {
 
     @Autowired
@@ -35,18 +43,21 @@ public class InstrumentController {
     @Autowired
     RuleRepository ruleRepository;
 
+    private static Logger logger = LoggerFactory.getLogger(InstrumentController.class);
+    
     @RequestMapping(path="/{userToken:.+}", method=RequestMethod.GET)
     public List<InstrumentDTO> getInstrumentByUser(@PathVariable String userToken) {
+    	logger.info("Instrument by user request");
         List<InstrumentDTO> result = Lists.newArrayList();
         User user = userRepository.findByUserToken(userToken);
         
         List<Instrument> publicInstruments = instrumentRepository.findAllByPublc(true);
         if (user != null)
-            publicInstruments.addAll(user.getInstrumentals());
+            publicInstruments.addAll(user.getInstruments());
         for (Instrument instrument : publicInstruments) {
         	InstrumentDTO instrumentDTO = new InstrumentDTO();
             instrumentDTO.setName(instrument.getName());
-            instrumentDTO.setToken(instrument.getInstrumentToken());
+            instrumentDTO.setInstrumentToken(instrument.getInstrumentToken());
             instrumentDTO.setBundNumber(instrument.getBundNumber());
             instrumentDTO.setIsPublic(instrument.isPublc());
             
@@ -71,34 +82,35 @@ public class InstrumentController {
         return result;
     }
     @RequestMapping(path="/new", method= RequestMethod.POST)
-    public boolean addNewInstrumentForUser(@RequestBody LinkedHashMap<String, Object> params ){
+    public boolean addNewInstrumentForUser(@RequestBody InstrumentDTO dto ){
+    	logger.info("Add Instrument request");
         Instrument newInstr = new Instrument();
-        User owner = userRepository.findByUserToken((String) params.get("user"));
+        User owner = userRepository.findByUserToken(dto.getUserToken());
         
-        List<Instrument> ownerInstruments = owner.getInstrumentals();
+        List<Instrument> ownerInstruments = owner.getInstruments();
         ownerInstruments.add(newInstr);
-        owner.setInstrumentals(ownerInstruments);
+        owner.setInstruments(ownerInstruments);
 
         newInstr.setUsers(Lists.newArrayList(owner));
 
 
         List<Rule> rules = new ArrayList<Rule>();
         rules.add(new MinStringsRule(newInstr, 4));
-        rules.add(new MaxBundDifRule(newInstr, Integer.parseInt((String)params.get("maxBundDif"))));
+        rules.add(new MaxBundDifRule(newInstr, dto.getMaxBundDif()));
 //        rules.add(new StringOrderIsConstantRule(newInstr,1));
         rules.add(new NeighborStringDifSoundRule(newInstr));
 
         newInstr.setRules(rules);
-        newInstr.setName((String) params.get("instrumentalName"));
-        newInstr.setBundNumber(Integer.parseInt((String)params.get("bundNumber")));
+        newInstr.setName(dto.getName());
+        newInstr.setBundNumber(dto.getBundNumber());
 
         instrumentRepository.save(newInstr);
 
         int order = 0;
-        for(LinkedHashMap<String, String> mString : (List<LinkedHashMap<String, String>>)params.get("strings")){
+        for(LabeledStringDTO mString : dto.getStrings()){
             try {
                 //TODO in future : octave specialize
-                MString newString = new MString(Sound.valueOf(mString.get("name")), -2, newInstr, order++);
+                MString newString = new MString(Sound.valueOf(mString.getName()), -2, newInstr, order++);
                 mStringRepository.save(newString);
             } catch(InaudibleVoiceException e){
                 e.printStackTrace();
@@ -109,54 +121,59 @@ public class InstrumentController {
     }
 
     @RequestMapping(path="/edit/{instrumentToken}", method= RequestMethod.POST)
-    public String editInstrumentForUser(@RequestBody Map<String, Object> params, @PathVariable String instrumentToken){
+    public boolean editInstrumentForUser(@RequestBody InstrumentDTO dto, @PathVariable String instrumentToken){
+    	logger.info("Edit instrument request.");
         Instrument instrument = instrumentRepository.findByInstrumentToken(instrumentToken);
-        if (instrument == null) return "Instrument doesnt exist.";
-        if (instrument.isPublc()) return "Public instrument cannot be deleted";
+        if (instrument == null) return false;
+        if (instrument.isPublc()) return false;
 
         for (Rule rule : ruleRepository.findAllByInstrument(instrument)){
             if (rule instanceof MaxBundDifRule)
-                rule.setValue(Integer.parseInt((String)params.get("maxBundDif")));
+                rule.setValue(dto.getMaxBundDif());
             ruleRepository.save(rule);
         }
 
-        instrument.setName((String) params.get("instrumentalName"));
-        instrument.setBundNumber(Integer.parseInt((String)params.get("bundNumber")));
+        instrument.setName(dto.getName());
+        instrument.setBundNumber(dto.getBundNumber());
         instrumentRepository.save(instrument);
 
         //not deleted
         mStringRepository.deleteAll(instrument.getMStrings());
 
         int order = 0;
-        for(Map<String, String> mString : (List<Map<String, String>>)params.get("strings")){
+        for(LabeledStringDTO mString : dto.getStrings()){
             try {
                 //TODO in future : octave specialize
-                MString newString = new MString(Sound.valueOf(mString.get("name")), -2, instrument, order++);
+                MString newString = new MString(Sound.valueOf(mString.getName()), -2, instrument, order++);
                 mStringRepository.save(newString);
             } catch(InaudibleVoiceException e){
                 e.printStackTrace();
-                return e.getMessage();
+                logger.error(e.getMessage());
+                return false;
             }
         }
-        return "Instrument edited";
+        return true;
     }
 
 
     @RequestMapping(path="/delete/{instrumentToken}", method= RequestMethod.DELETE)
-    public String deleteInstrument(@PathVariable String instrumentToken){
+    public boolean deleteInstrument(@PathVariable String instrumentToken){
+    	logger.info("Delete Instrument request");
+    	
         Instrument instrument = instrumentRepository.findByInstrumentToken(instrumentToken);
-        if (instrument == null) return "Instrument doesnt exist.";
-        if (instrument.isPublc()) return "Public instrument cannot be deleted";
+        if (instrument == null) return false;
+        if (instrument.isPublc()) return false;
 
         instrumentRepository.delete(instrument);
 
-        return "Instrument deleted.";
+        return true;
     }
 
     @RequestMapping(path="/strings/{instrumentToken}")
     public List<String> getStrings(@PathVariable String instrumentToken){
+    	logger.info("String by instrument request");
         Instrument instrument = instrumentRepository.findByInstrumentToken(instrumentToken);
-        List<String> result = new ArrayList();
+        List<String> result = Lists.newArrayList();
         for(MString mString : instrument.getMStrings()){
             result.add(mString.getName());
         }

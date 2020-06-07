@@ -8,15 +8,10 @@ import com.example.ChordCalculator.Model.CatchPerfection;
 import lombok.Data;
 
 @Data
-public class InstrumentDTO {
+public class ListDTO {
 	
 	String name;
-	String instrumentToken;
-	
-	Boolean isPublic;
-	Integer bundNumber;
-	Integer maxBundDif;
+	String listToken;
 	String userToken;
-	
-	List<LabeledStringDTO> strings;
+	List<CatchDTO> catches;
 }

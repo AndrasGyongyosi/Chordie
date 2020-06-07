@@ -42,8 +42,8 @@ class Instruments extends React.Component {
 
         let newInstrumentURL = myURLs.getURL() + "instrument/new/";
         let passedParameters = {
-            "user": this.ancestor.props.chordChooserList.ancestor.props.token,
-            "instrumentalName": document.getElementById("instrumentName").value,
+            "userToken": this.ancestor.props.chordChooserList.ancestor.props.token,
+            "name": document.getElementById("instrumentName").value,
             "maxBundDif": document.getElementById("maxBundDif").value,
             "strings": this.ancestor.state.newInstrumentalStrings,
             "bundNumber": document.getElementById("bundNumber").value
@@ -75,7 +75,7 @@ class Instruments extends React.Component {
     approveEditInstrument = () => {
         let editInstrumentURL = myURLs.getURL()+"instrument/edit/"+this.state.detailedInstrument.token;
         let passedParameters = {
-            "instrumentalName": document.getElementById("instrumentName").value,
+            "name": document.getElementById("instrumentName").value,
             "maxBundDif": document.getElementById("maxBundDif").value,
             "bundNumber": document.getElementById("bundNumber").value,
             "strings": this.state.newInstrumentalStrings

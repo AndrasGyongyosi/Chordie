@@ -31,7 +31,7 @@ public class Instrument {
     @OneToMany(mappedBy = "instrument", cascade = CascadeType.ALL,fetch=FetchType.EAGER, orphanRemoval=true)
     private List<MString> mStrings;
 
-    @ManyToMany(mappedBy = "instrumentals")
+    @ManyToMany(mappedBy = "instruments")
     @JsonIgnore
     private List<User> users;
 
@@ -59,14 +59,11 @@ public class Instrument {
         this.mStrings = Lists.newArrayList(strings);
     }
     public boolean isValid(List<StringCatch> stringCatches) throws Exception{
-        //System.out.println("strings ok?");
         for (StringCatch sc : stringCatches){
             if (!mStrings.contains(sc.getString())){
                 throw new Exception("Not right strings.");
             }
         }
-        //System.out.println("strings ok!");
-        //System.out.println("Rules: "+rules.size());
         for(Rule rule: rules){
             if (!rule.isValid(stringCatches)) return false;
         }

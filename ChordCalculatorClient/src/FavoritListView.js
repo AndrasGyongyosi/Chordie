@@ -60,10 +60,11 @@ class NewCatchList extends Component{
     }
 
     handleAccept = () => {
-        let newListURL = myURLs.getURL() + "favorit/newlist"; 
+        let newListURL = myURLs.getURL() + "list/new"; 
         let passedParameters = {
           "name": document.getElementById("listName").value,
           "userToken": this.props.userToken,
+          "catches": []
       };
       axios.post(newListURL, passedParameters)
           .then(res=>{
@@ -101,7 +102,7 @@ class CatchList extends Component{
     }
 
     removeList(){
-        let removeListURL = myURLs.getURL() + "favorit/list/"+this.props.list.listToken;
+        let removeListURL = myURLs.getURL() + "list/delete/"+this.props.list.listToken;
         console.log(removeListURL);
         axios.delete(removeListURL).then(
             res=>{
@@ -153,7 +154,7 @@ class CatchList extends Component{
             });
     };
     removeCatch(catcha){
-        let removeCatchURL = myURLs.getURL() + "favorit/catch/"+catcha.catchToken;
+        let removeCatchURL = myURLs.getURL() + "list/deleteCatch/"+catcha.catchToken;
         console.log(removeCatchURL);
         axios.delete(removeCatchURL).then(
             res=>{

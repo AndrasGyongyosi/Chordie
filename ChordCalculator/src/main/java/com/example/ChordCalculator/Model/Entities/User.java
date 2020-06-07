@@ -18,30 +18,30 @@ public class User {
                     CascadeType.PERSIST,
                     CascadeType.MERGE
             })
-    @JoinTable(name = "instrumental_user",
+    @JoinTable(name = "instrument_user",
             joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "instrumental_id")
+            inverseJoinColumns = @JoinColumn(name = "instrument_id")
 
     )
     @JsonIgnore
-    private List<Instrument> instrumentals;
+    private List<Instrument> instruments;
 
     @Column(length=2500)
     private String userToken;
 
     @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL,orphanRemoval=true)
-    private List<FavoritCatchList> favoritCatchLists;
+    private List<StoredCatchList> storedCatchLists;
 
     public User(String email){
         this.email = email;
-        instrumentals = Lists.newArrayList();
+        instruments = Lists.newArrayList();
     }
     private String email;
 
     public User() {
-        instrumentals = Lists.newArrayList();
-        favoritCatchLists = Lists.newArrayList();
+        instruments = Lists.newArrayList();
+        storedCatchLists = Lists.newArrayList();
     }
 
     public int getId() {
@@ -52,12 +52,12 @@ public class User {
         this.id = id;
     }
 
-    public List<Instrument> getInstrumentals() {
-        return instrumentals;
+    public List<Instrument> getInstruments() {
+        return instruments;
     }
 
-    public void setInstrumentals(List<Instrument> instrumentals) {
-        this.instrumentals = instrumentals;
+    public void setInstruments(List<Instrument> instruments) {
+        this.instruments = instruments;
     }
 
     public String getEmail() {
@@ -76,11 +76,11 @@ public class User {
         this.userToken = userToken;
     }
 
-    public List<FavoritCatchList> getFavoritCatchLists() {
-        return favoritCatchLists;
+    public List<StoredCatchList> getStoredCatchLists() {
+        return storedCatchLists;
     }
 
-    public void setFavoritCatchLists(List<FavoritCatchList> favoritCatchLists) {
-        this.favoritCatchLists = favoritCatchLists;
+    public void setStoredCatchLists(List<StoredCatchList> storedCatchLists) {
+        this.storedCatchLists = storedCatchLists;
     }
 }
