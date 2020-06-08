@@ -7,17 +7,24 @@ import com.example.ChordCalculator.DTOs.ChordDTO;
 import com.example.ChordCalculator.DTOs.LabeledStringDTO;
 import com.example.ChordCalculator.DTOs.StringCatchDTO;
 import com.example.ChordCalculator.Exceptions.BadExpressionException;
-import com.example.ChordCalculator.Helper.RandomToken;
+import com.example.ChordCalculator.Helper.DtoConverter;
 import com.example.ChordCalculator.Model.Catch;
 import com.example.ChordCalculator.Model.CatchPerfection;
 import com.example.ChordCalculator.Model.Chord.BaseType;
 import com.example.ChordCalculator.Model.Chord.Chord;
 import com.example.ChordCalculator.Model.Chord.ChordType;
+import com.example.ChordCalculator.Model.Entities.StoredCatchList;
 import com.example.ChordCalculator.Model.Entities.Instrument;
 import com.example.ChordCalculator.Model.Repositories.InstrumentRepository;
 import com.google.common.collect.Lists;
+
+import lombok.extern.slf4j.Slf4j;
+
 import com.example.ChordCalculator.Model.Sound;
 import com.example.ChordCalculator.Model.StringCatch;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,21 +36,21 @@ import java.util.*;
 @RestController
 @CrossOrigin()
 @RequestMapping("/chord")
+@Slf4j
 public class ChordController {
 
     @Autowired
     InstrumentRepository instrumentRepository;
-
+    private static Logger logger = LoggerFactory.getLogger(ChordController.class);
+    
     @RequestMapping(path = "/components/")
     public ChordComponentsDTO getChordComponents(){
+    	logger.info("Chord components list request.");
     	ChordComponentsDTO result = new ChordComponentsDTO();
     	
         List<LabeledStringDTO> sounds = Lists.newArrayList();
         for(Sound sound: Sound.values()){
-        	LabeledStringDTO soundDTO = new LabeledStringDTO();
-        	soundDTO.setLabel(sound.getSoundName());
-        	soundDTO.setName(sound.name());
-            sounds.add(soundDTO);
+            sounds.add(DtoConverter.toLabeledStringDTO(sound));
         }
         result.setBaseSounds(sounds);
 
@@ -68,6 +75,7 @@ public class ChordController {
     }
     @RequestMapping(path="/text/{text}")
     public ChordDTO chordTextAnalyze(@PathVariable String text) throws BadExpressionException{
+    	logger.info("Chord components request by text. [ text="+text+"]");
         text = text.trim().toLowerCase();
         ChordDTO result = new ChordDTO();
         
@@ -128,6 +136,8 @@ public class ChordController {
 
     @RequestMapping(path="/catch/{instrumentToken}/{baseSoundString}/{baseTypeString}/{chordTypeString}/{rootNoteString}/{capo}")
     public CatchResultDTO getChordCatches(@PathVariable String instrumentToken, @PathVariable String baseSoundString, @PathVariable String baseTypeString, @PathVariable String chordTypeString, @PathVariable String rootNoteString, @PathVariable Integer capo) throws BadExpressionException{
+    	logger.info("Chord catches request.");
+    	
     	CatchResultDTO result = new CatchResultDTO();
     	
         Instrument instrument = instrumentRepository.findByInstrumentToken(instrumentToken);
@@ -185,14 +195,22 @@ public class ChordController {
         result.setBundDif(bundDif);
         result.setChord(chord.getFullName());
         result.setCapo(capo);
-        result.setRootNote(rootNoteString);
+        result.setRootNote(rootNote==null ? null : DtoConverter.toLabeledStringDTO(rootNote));
         return result;
     }
     
     @RequestMapping(path="/sound/{baseSoundString}/{baseTypeString}/{chordTypeString}/{capo}")
-    public List<Sound> getSoundsByChordComponents(@PathVariable String baseSoundString, @PathVariable String baseTypeString, @PathVariable String chordTypeString, @PathVariable Integer capo) throws BadExpressionException{
+    public List<LabeledStringDTO> getSoundsByChordComponents(@PathVariable String baseSoundString, @PathVariable String baseTypeString, @PathVariable String chordTypeString, @PathVariable Integer capo) throws BadExpressionException{
+    	logger.info("Sounds by chord components request.");
     	Chord chord = getChord(baseSoundString, baseTypeString, chordTypeString);
-    	return chord.transponeSounds(capo);
+    	List<LabeledStringDTO> result = Lists.newArrayList();
+        for(Sound sound: chord.transponeSounds(capo)){
+        	LabeledStringDTO soundDTO = new LabeledStringDTO();
+        	soundDTO.setLabel(sound.getSoundName());
+        	soundDTO.setName(sound.name());
+        	result.add(soundDTO);
+        }
+        return result;
     }
     private Sound getSoundFromChordText(String text){
         int resultLength = 0;

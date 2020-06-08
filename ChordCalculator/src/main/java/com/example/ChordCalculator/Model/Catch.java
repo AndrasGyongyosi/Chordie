@@ -1,8 +1,9 @@
 package com.example.ChordCalculator.Model;
 
 import com.example.ChordCalculator.Model.Chord.Chord;
-import com.example.ChordCalculator.Model.Entities.FavoritCatch;
+import com.example.ChordCalculator.Model.Entities.StoredCatch;
 import com.example.ChordCalculator.Model.Entities.Instrument;
+import com.google.common.collect.Maps;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,8 +38,6 @@ public class Catch {
             }
         }
 
-        //System.out.println("After: min "+minBund+" max "+maxBund);
-        //System.out.println("Result: "+(maxBund-minBund+1));
         return maxBund-minBund+1;
     }
     public Chord getChord() {
@@ -65,7 +64,7 @@ public class Catch {
         this.stringCatches = stringCatches;
     }
     public Map<Integer, List<StringCatch>> getStringCatchesByBund(){
-        Map<Integer, List<StringCatch>> result = new HashMap();
+        Map<Integer, List<StringCatch>> result = Maps.newHashMap();
         for(int bund=1; bund<=instrument.getBundNumber();bund++){
             List<StringCatch> actualScs = new ArrayList<>();
             for(StringCatch sc: stringCatches){

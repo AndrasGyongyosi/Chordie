@@ -22,11 +22,9 @@ public class StringOrderIsConstantRule extends Rule {
         if (value!=0){
             List<MString> mStrings = instrument.getMStrings();
             for(int i=0; i< stringCatchList.size()-1;i++){
-                //System.out.println("prev: "+mStrings.get(i).getName());
                 double actualStringFrequency = mStrings.get(i).getFrequency();
                 double nextStringFrequency = mStrings.get(i+1).getFrequency();
                 double actualCatchFrequency = stringCatchList.get(i).getFrequency();
-                //System.out.println("next: "+mStrings.get(i+1).getName());
                 double nextCatchFrequency = stringCatchList.get(i+1).getFrequency();
 
                 if ((actualStringFrequency-nextStringFrequency>=0 && actualCatchFrequency-nextCatchFrequency<0)

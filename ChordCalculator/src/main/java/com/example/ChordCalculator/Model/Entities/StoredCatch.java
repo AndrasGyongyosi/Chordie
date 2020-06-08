@@ -13,7 +13,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-public class FavoritCatch {
+public class StoredCatch {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -21,12 +21,12 @@ public class FavoritCatch {
 
     @JsonBackReference
     @ManyToOne
-    private FavoritCatchList catchList;
+    private StoredCatchList catchList;
     
     @JsonProperty("stringCatches")
     @OneToMany(mappedBy = "catcha", cascade = CascadeType.ALL,orphanRemoval=true)
     @JsonManagedReference
-    private List<FavoritStringCatch> favStringCatches;
+    private List<StoredStringCatch> stringCatches;
 
     @Column(length=2500)
     private String catchToken = RandomToken.randomString(32);
@@ -35,8 +35,8 @@ public class FavoritCatch {
 
     private String chord;
 
-    public FavoritCatch(){
-        favStringCatches = Lists.newArrayList();
+    public StoredCatch(){
+        stringCatches = Lists.newArrayList();
     }
 
     public Integer getId() {
@@ -47,22 +47,22 @@ public class FavoritCatch {
         this.id = id;
     }
 
-    public FavoritCatchList getCatchList() {
+    public StoredCatchList getCatchList() {
         return catchList;
     }
 
-    public void setCatchList(FavoritCatchList catchList) {
+    public void setCatchList(StoredCatchList catchList) {
         this.catchList = catchList;
     }
 
-    public List<FavoritStringCatch> getFavStringCatches() {
-        return favStringCatches;
+    public List<StoredStringCatch> getFavStringCatches() {
+        return stringCatches;
     }
-    public void addFavStringCatch(FavoritStringCatch fsc){
-        this.favStringCatches.add(fsc);
+    public void addFavStringCatch(StoredStringCatch fsc){
+        this.stringCatches.add(fsc);
     }
-    public void setFavStringCatches(List<FavoritStringCatch> favStringCatches) {
-        this.favStringCatches = favStringCatches;
+    public void setFavStringCatches(List<StoredStringCatch> favStringCatches) {
+        this.stringCatches = favStringCatches;
     }
 
     public String getInstrument() {

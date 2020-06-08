@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 
 @Entity
-public class FavoritStringCatch {
+public class StoredStringCatch {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -17,7 +17,7 @@ public class FavoritStringCatch {
     
     @ManyToOne
     @JsonBackReference
-    private FavoritCatch catcha;
+    private StoredCatch catcha;
 
     private int finger;
 
@@ -25,7 +25,7 @@ public class FavoritStringCatch {
 
     private String sound;
 
-    public FavoritStringCatch(){
+    public StoredStringCatch(){
     	
     }
 
@@ -37,11 +37,11 @@ public class FavoritStringCatch {
         this.id = id;
     }
 
-    public FavoritCatch getCatcha() {
+    public StoredCatch getCatcha() {
         return catcha;
     }
 
-    public void setCatcha(FavoritCatch catcha) {
+    public void setCatcha(StoredCatch catcha) {
         this.catcha = catcha;
     }
 

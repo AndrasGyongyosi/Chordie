@@ -38,13 +38,13 @@ class ButtonDropDown extends Component {
         let catcha = this.props.catch.props.catcha;
         //let strings = this.props.catch.props.strings;
         let parameters = {
-          "catch" : catcha.stringCatches.reverse(),
+          "stringCatches" : catcha.stringCatches.reverse(),
           "listToken" : list.listToken,
           "instrument": this.props.instrument.name,
           "chord": this.props.catch.props.chord,
         };
         console.log(parameters);
-        let addToListURL = myURLs.getURL() + "favorit/addToList"; 
+        let addToListURL = myURLs.getURL() + "list/addCatch"; 
         
       
         axios.post(addToListURL, parameters)
@@ -101,13 +101,15 @@ class ButtonDropDown extends Component {
 
       handleAccept = () => {
         let catcha = this.props.catch.props.catcha;
-        let newListURL = myURLs.getURL() + "favorit/newlistwithcatch"; 
+        let newListURL = myURLs.getURL() + "list/new"; 
         let passedParameters = {
           "name": document.getElementById("listName").value,
           "userToken": this.props.token,
-          "catch" : catcha.stringCatches.reverse(),
-          "instrument": this.props.instrument.name,
-          "chord": this.props.catch.props.chord,
+          "catches": [{
+              "stringCatches" : catcha.stringCatches.reverse(),
+              "instrument": this.props.instrument.name,
+              "chord": this.props.catch.props.chord,              
+          }]
       };
       console.log(passedParameters);
       axios.post(newListURL, passedParameters)
