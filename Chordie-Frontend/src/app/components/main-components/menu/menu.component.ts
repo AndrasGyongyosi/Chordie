@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
@@ -18,9 +18,7 @@ export class MenuComponent implements OnInit {
     this.setCurrentUser();
     
     this.authenticationService.isLoggedInEvent.subscribe(
-      () => {
-        this.setCurrentUser();
-      });  
+      () => this.setCurrentUser());  
   }  
 
   scrollToAbout() {
@@ -40,9 +38,8 @@ export class MenuComponent implements OnInit {
   }
 
   async login() {
-    await this.authenticationService.login();
-    
-    this.setCurrentUser();
+    await this.authenticationService.login();   
+    this.setCurrentUser(); 
   }
 
   logout() {
@@ -51,7 +48,7 @@ export class MenuComponent implements OnInit {
   }
 
   private setCurrentUser() {
-    this.currentUserName = localStorage.getItem("userFirstName")
+    this.currentUserName = localStorage.getItem("userFirstName");
     this.currentUserPhotoUrl = localStorage.getItem("userPhotoUrl");
     this.currentUserEmail = localStorage.getItem("userEmail");
   }

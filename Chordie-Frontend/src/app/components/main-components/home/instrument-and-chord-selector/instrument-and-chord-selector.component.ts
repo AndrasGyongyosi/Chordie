@@ -21,6 +21,7 @@ export class InstrumentAndChordSelectorComponent implements OnInit, AfterViewIni
   public selectedChordLabel: ChordModel = {};
   public selectedChordName: ChordModel = {};
   public chordText;
+  public randomExample;
 
   public isLoggedIn;
 
@@ -29,7 +30,10 @@ export class InstrumentAndChordSelectorComponent implements OnInit, AfterViewIni
 
   ngOnInit(): void {
     this.chordService.getChordComponents().subscribe(
-      data => this.chordComponent = data
+      data => {
+        this.chordComponent = data
+        this.randomExample = this.generateRandomExample()
+      }
     );
 
     this.instrumentService.getInstrumentsByUser().subscribe(
@@ -46,6 +50,12 @@ export class InstrumentAndChordSelectorComponent implements OnInit, AfterViewIni
     this.authService.isLoggedInEvent.subscribe(
       (isLoggedIn) => this.isLoggedIn = isLoggedIn
     );
+
+    this.instrumentService.instrumentsChanged.subscribe(
+      (instruments) => {
+        this.instruments = instruments
+        this.selectedInstrument = instruments[0]
+      })
   }
 
   ngAfterViewInit(): void {
@@ -82,8 +92,9 @@ export class InstrumentAndChordSelectorComponent implements OnInit, AfterViewIni
   }
 
   fillInputWithExample() {
-    this._inputElement.nativeElement.value = "Cmaj7/C.2"
-    this.chordAnalyze("Cmaj7/C.2");
+    this._inputElement.nativeElement.value = this.randomExample
+    this.chordAnalyze(this.randomExample);
+    this.randomExample = this.generateRandomExample();
   }
 
   login() {
@@ -122,6 +133,13 @@ export class InstrumentAndChordSelectorComponent implements OnInit, AfterViewIni
       console.log(pathVariables);
     this.chordService.changePath(pathVariables);
     document.getElementById("chords").scrollIntoView({behavior: "smooth", block: "start"});
+  }
+
+  private generateRandomExample(): String {
+    let randomIndex = Math.floor(Math.random() * 12)
+
+    return this.chordComponent.baseSounds[randomIndex].label + this.chordComponent.baseTypes[Math.floor(Math.random() * 3)].name + this.chordComponent.chordTypes[randomIndex].label + 
+      "/" + this.chordComponent.baseSounds[randomIndex].label + "." +  Math.floor(Math.random() * 5 + 1)
   }
 
 }

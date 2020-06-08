@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import httpConfig from '../configs/httpConfig.json';
 import { Instrument } from '../models/instrument.model';
@@ -11,6 +11,8 @@ import { ChordProperty } from '../models/chordProperty.model';
 export class InstrumentService {
 
   private controller = "instrument"
+
+  public instrumentsChanged = new EventEmitter();
 
   constructor(private http: HttpClient) { }
 
@@ -31,6 +33,5 @@ export class InstrumentService {
 
   deleteInstrument(instrumentToken): Observable<String> {
     return this.http.delete<String>(httpConfig.baseUrl + this.controller + "/delete/" + instrumentToken);
-
   }
 }

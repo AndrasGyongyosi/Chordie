@@ -4,6 +4,7 @@ import { CatchResult } from 'src/app/models/catchResult.model';
 import { Catch } from 'src/app/models/catch.model';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DialogService } from 'src/app/services/dialog-service';
+import { ResizedEvent } from 'angular-resize-event';
 
 @Component({
   selector: 'app-chords',
@@ -19,6 +20,7 @@ export class ChordsComponent implements OnInit {
   panelOpenState;
   customMainHeight;
   customOtherHeight;
+  pageHeight;
 
   constructor(private chordService: ChordService, private dialogService: DialogService) { }
 
@@ -35,10 +37,16 @@ export class ChordsComponent implements OnInit {
                 console.log(this.chordCatches)
                 this.customMainHeight = this.chordCatches.catches[0].stringCatches.length * 40 + 'px'
                 this.customOtherHeight = this.chordCatches.catches[1].stringCatches.length * 35 + 'px'
+                let pageHeightWithoutAd = this.chordCatches.catches[0].stringCatches.length * 40 + this.chordCatches.catches[1].stringCatches.length * 35 + 615
+                this.pageHeight = pageHeightWithoutAd + 200 + 'px'
               }
           );
         }})
 
+  }
+
+  onResized(event: ResizedEvent) {
+    this.pageHeight = (event.newHeight + 200) + 'px'
   }
 
   openCatchTipDialog() {

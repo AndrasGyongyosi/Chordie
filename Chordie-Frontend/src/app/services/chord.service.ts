@@ -5,6 +5,7 @@ import { ChordComponent } from '../models/chordComponent.model';
 import httpConfig from '../configs/httpConfig.json';
 import { ChordModel } from '../models/chord.model';
 import { CatchResult } from '../models/catchResult.model';
+import { ChordProperty } from '../models/chordProperty.model';
 
 @Injectable({
   providedIn: 'root'
@@ -28,6 +29,10 @@ export class ChordService {
 
   getChordCatches(pathVariables): Observable<CatchResult> {
     return this.http.get<CatchResult>(httpConfig.baseUrl + this.controller + "/catch/" + pathVariables);
+  }
+
+  getSoundsByChordComponents(baseSound, baseType, chordType, capo): Observable<ChordProperty[]> {
+    return this.http.get<ChordProperty[]>(httpConfig.baseUrl + this.controller + "/" + baseSound + "/" + baseType + "/" + chordType + "/" + capo);
   }
 
   changePath(path: string) {

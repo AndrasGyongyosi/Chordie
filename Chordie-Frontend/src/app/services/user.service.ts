@@ -21,7 +21,6 @@ export class UserService {
     console.log(httpConfig.baseUrl + this.controller + "/new");
     console.log(localStorage.getItem("userIdToken"));
     return this.http.post(httpConfig.baseUrl + this.controller + "/new", {
-      token: localStorage.getItem("userIdToken"), email: localStorage.getItem("userEmail")
-    }).subscribe( (data) => console.log(data));
+      token: localStorage.getItem("userIdToken"), email: localStorage.getItem("userEmail")});
   }
 }
