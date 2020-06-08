@@ -46,7 +46,8 @@
             <button *ngIf="selectedChordLabel && selectedChordLabel.rootNote" class="btn btn-outline-secondary" id="dropdownBasic1" ngbDropdownToggle style="width: 150px;">{{selectedChordLabel.rootNote}}</button>
             <button *ngIf="!selectedChordLabel || !selectedChordLabel.rootNote" class="btn btn-outline-secondary" id="dropdownBasic1" ngbDropdownToggle style="width: 150px;">Root Note</button>
             <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                <button *ngFor="let rootNote of chordComponent.baseSounds" ngbDropdownItem (click)="selectRootNote(rootNote.label)">{{rootNote.label}}</button>
+                <button ngbDropdownItem (click)="selectRootNote('')"></button>
+                <button *ngFor="let rootNote of rootNotes" ngbDropdownItem (click)="selectRootNote(rootNote.label)">{{rootNote.label}}</button>
             </div>
         </div>
     </div>

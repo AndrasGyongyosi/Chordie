@@ -6,7 +6,6 @@
             <button mat-button class="btn btn-outline-warning" style="width: 250px; margin-bottom: 25px;"
                 (click)="openNewInstrumentDialog()">Add new</button>
             <div style="width: 400px; margin: 25px; padding-top: 0">
-
                 <mat-accordion>
                     <mat-expansion-panel style="background-color: rgb(173, 144, 82);">
                         <mat-expansion-panel-header style="background-color: var(--yellow);">
@@ -14,7 +13,8 @@
                                 Your instruments
                             </mat-panel-title>
                         </mat-expansion-panel-header>
-                        <cdk-virtual-scroll-viewport itemSize="5" style="height: 300px;">
+                        <cdk-virtual-scroll-viewport itemSize="{{instruments.length}}"
+                            [ngStyle]="{'max-height': '300px', 'min-height': '90px', 'height': instrumentHeight}">
                             <hr>
                             <div *ngFor="let instrument of instruments" style="padding-right: 15px; padding-left: 10px">
                                 <a *ngIf="!instrument.isPublic" (click)="openEditInstrumentDialog(instrument)"><img
@@ -29,10 +29,9 @@
                             </div>
                         </cdk-virtual-scroll-viewport>
                     </mat-expansion-panel>
-                    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                    <mat-expansion-panel (opened)="panelOpenStateInstrument = true" (closed)="panelOpenStateInstrument = false">
                     </mat-expansion-panel>
                 </mat-accordion>
-
             </div>
 
         </div>
@@ -43,7 +42,31 @@
             <h3>List</h3>
             <hr class="hr">
             <button mat-button class="btn btn-outline-warning" style="width: 250px; margin-bottom: 25px;"
-                (click)="openAddNewListDialog()">Add new</button>
+                (click)="openNewListDialog()">Add new</button>
+            <div style="width: 400px; margin: 25px; padding-top: 0">
+                <mat-accordion>
+                    <mat-expansion-panel style="background-color: rgb(173, 144, 82);">
+                        <mat-expansion-panel-header style="background-color: var(--yellow);">
+                            <mat-panel-title style="font-size: 20px;">
+                                Your lists
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <cdk-virtual-scroll-viewport itemSize="{{lists.length}}"
+                            [ngStyle]="{'max-height': '300px', 'min-height': '90px', 'height': listHeight}">
+                            <hr>
+                            <div *ngFor="let list of lists" style="padding-right: 15px; padding-left: 10px">
+                                <a (click)="openEditOrNewListDialog(list)"><img
+                                        src="assets/img/edit.png" class="edit">
+                                    <p class="instrumentlist">{{list.name}}</p>
+                                </a>
+                                <hr>
+                            </div>
+                        </cdk-virtual-scroll-viewport>
+                    </mat-expansion-panel>
+                    <mat-expansion-panel (opened)="panelOpenStateList = true" (closed)="panelOpenStateList = false">
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </div>
         </div>
     </div>
 </div>

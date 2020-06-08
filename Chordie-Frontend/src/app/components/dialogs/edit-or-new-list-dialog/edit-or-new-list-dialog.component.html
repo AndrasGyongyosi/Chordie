@@ -1,0 +1,31 @@
+<div *ngIf="!data.listToken">
+    <h2>Add new list</h2>
+    <div class="form-group">
+        <label for="listname">List Name</label>
+        <input class="form-control" placeholder="E.g a song name" name="listname" [(ngModel)]="data.name">
+    </div>
+
+
+
+    
+
+</div>
+<div *ngIf="data.listToken">
+    <h2>Edit your list</h2>
+
+</div>
+
+
+
+
+
+<mat-dialog-actions align="end">
+    <button class="btn btn-outline-warning" style="margin-right: 10px;" mat-button
+        (click)="onNoClick()">Cancel</button>
+    <button *ngIf="!data.isPublic" class="btn btn-outline-success" mat-button (click)="Accept()"
+        [mat-dialog-close]="data" cdkFocusInitial>Accept</button>
+</mat-dialog-actions>
+
+<mat-dialog-actions align="center">
+<button class="btn btn-outline-danger" mat-button *ngIf="data.listToken" (click)="deleteList()" [mat-dialog-close]="data" cdkFocusInitial>Delete</button>
+</mat-dialog-actions>

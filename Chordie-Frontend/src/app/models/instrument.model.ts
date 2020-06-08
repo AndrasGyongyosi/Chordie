@@ -2,9 +2,9 @@ import { ChordProperty } from './chordProperty.model';
 
 export interface Instrument {
     name: string,
-    token: string,
-    bundNumber: string,
+    instrumentToken: string,
+    bundNumber: number,
     isPublic: boolean,
-    maxBundDif: string,
+    maxBundDif: number,
     strings: ChordProperty[]
 }

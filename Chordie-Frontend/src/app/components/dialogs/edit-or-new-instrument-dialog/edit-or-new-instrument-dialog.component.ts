@@ -1,22 +1,23 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject } from "@angular/core";
 import { ChordComponent } from 'src/app/models/chordComponent.model';
 import { ChordProperty } from 'src/app/models/chordProperty.model';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { InstrumentService } from 'src/app/services/instrument.service';
 import { ChordService } from 'src/app/services/chord.service';
 
+
 @Component({
-    selector: 'edit-insturment-dialog',
-    templateUrl: 'edit-instrument-dialog.component.html',
-    styleUrls: ['./edit-instrument-dialog.component.scss']
+    selector: 'edit-or-new-insturment-dialog',
+    templateUrl: 'edit-or-new-instrument-dialog.component.html',
+    styleUrls: ['./edit-or-new-instrument-dialog.component.scss']
   })
-  export class EditInstrumentDialogComponent implements OnInit {
+  export class EditOrNewInstrumentDialogComponent implements OnInit {
   
     selectedString: string;
     chordComponents: ChordComponent;
     temp_selectedStrings: ChordProperty[];
   
-    constructor(public dialogRef: MatDialogRef<EditInstrumentDialogComponent>,
+    constructor(public dialogRef: MatDialogRef<EditOrNewInstrumentDialogComponent>,
       @Inject(MAT_DIALOG_DATA) public data: any, private instrumentService: InstrumentService, private chordService: ChordService) {}
   
     ngOnInit(): void {
@@ -42,20 +43,18 @@ import { ChordService } from 'src/app/services/chord.service';
   
     Accept() {
       console.log("Accept");
+      this.data.action = "accept";
       this.data.selectedStrings = this.temp_selectedStrings;
     }
   
     onNoClick(): void {
-      console.log("close")
+      console.log("close");
+      this.data.action = "reject";
       this.dialogRef.close();
     }
   
-    deleteInstrument(instrumentToken) {
-      console.log("DELETE" + instrumentToken);
-      this.dialogRef.close();
-      this.instrumentService.deleteInstrument(instrumentToken).subscribe(
-        (data) => console.log(data)
-      );   
+    deleteInstrument() {
+      this.data.action = "delete"    
     }
   
     removeSelectedString(selectedStringIndex: number) { 

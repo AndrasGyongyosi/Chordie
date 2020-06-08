@@ -21,10 +21,12 @@ export class ChordsComponent implements OnInit {
   customMainHeight;
   customOtherHeight;
   pageHeight;
+  otherCatchIndexes = [];
 
   constructor(private chordService: ChordService, private dialogService: DialogService) { }
 
   ngOnInit(): void {
+    this.bundsByCatch = [];
     this.chordService.chordPathVariables.subscribe(
         (path) => {
           this.chordPathVariables = path
@@ -36,8 +38,11 @@ export class ChordsComponent implements OnInit {
                 this.calculateBunds()
                 console.log(this.chordCatches)
                 this.customMainHeight = this.chordCatches.catches[0].stringCatches.length * 40 + 'px'
-                this.customOtherHeight = this.chordCatches.catches[1].stringCatches.length * 35 + 'px'
-                let pageHeightWithoutAd = this.chordCatches.catches[0].stringCatches.length * 40 + this.chordCatches.catches[1].stringCatches.length * 35 + 615
+                if (this.chordCatches.catches.length > 1)
+                  this.customOtherHeight = this.chordCatches.catches[1].stringCatches.length * 35 + 'px'
+
+                let pageHeightWithoutAd = this.chordCatches.catches[0].stringCatches.length * 40 + 
+                ((this.chordCatches.catches.length > 1) ? this.chordCatches.catches[1].stringCatches.length : 0) * 35 + 615
                 this.pageHeight = pageHeightWithoutAd + 200 + 'px'
               }
           );
@@ -83,10 +88,17 @@ export class ChordsComponent implements OnInit {
   }
 
   calculateBunds() {
+    this.bundsByCatch = [[]];
+    this.otherCatchIndexes = [];
     for (let j = 0; j < ((this.chordCatches.catches.length > 4) ? 4 : (this.chordCatches.catches.length)); j++) {
       let minBund = this.calculateMinBundByCatchAndCapo(this.chordCatches.catches[j], this.chordCatches.capo);
       this.bundsByCatch[j] = [minBund, minBund+1, minBund+2, minBund+3, minBund+4];
-    } 
+    }
+    console.log(this.bundsByCatch)
+
+    for (let j = 1; j < (this.bundsByCatch.length > 4 ? 4 : this.bundsByCatch.length); j++) {
+      this.otherCatchIndexes.push(j)
+    }
   }
 
   private calculateMinBundByCatchAndCapo(_catch: Catch, capo: number): number {

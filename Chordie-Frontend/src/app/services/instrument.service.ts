@@ -20,18 +20,19 @@ export class InstrumentService {
     return this.http.get<Instrument[]>(httpConfig.baseUrl + this.controller + "/" + localStorage.getItem("userIdToken"));
   }
 
-  addNewInstrumentForUser(instrumentName: string, maxBundDif: string, bundNumber: string, strings: ChordProperty[]): Observable<boolean> {
+  addNewInstrumentForUser(instrumentName: string, maxBundDif: number, bundNumber: number, strings: ChordProperty[]): Observable<boolean> {
+    console.log(instrumentName, maxBundDif, bundNumber, strings);
     return this.http.post<boolean>(httpConfig.baseUrl + this.controller + "/new", 
-        { user: localStorage.getItem("userIdToken"), instrumentalName: instrumentName, maxBundDif: maxBundDif, bundNumber: bundNumber, strings: strings});  
+        { userToken: localStorage.getItem("userIdToken"), name: instrumentName, maxBundDif: maxBundDif, bundNumber: bundNumber, strings: strings});  
   }
 
-  editInstrumentByUser(instrumentToken: string, instrumentName: string, maxBundDif: string, bundNumber: string, strings: ChordProperty[]): Observable<String> {
+  editInstrumentByUser(instrumentToken: string, instrumentName: string, maxBundDif: number, bundNumber: number, strings: ChordProperty[]): Observable<boolean> {
     console.log(instrumentToken, instrumentName, maxBundDif, bundNumber, strings);
-    return this.http.post<String>(httpConfig.baseUrl + this.controller + "/edit/" + instrumentToken, 
-        { instrumentalName: instrumentName, maxBundDif: maxBundDif, bundNumber: bundNumber, strings: strings});
+    return this.http.post<boolean>(httpConfig.baseUrl + this.controller + "/edit/" + instrumentToken, 
+        { name: instrumentName, maxBundDif: maxBundDif, bundNumber: bundNumber, strings: strings});
   }
 
-  deleteInstrument(instrumentToken): Observable<String> {
-    return this.http.delete<String>(httpConfig.baseUrl + this.controller + "/delete/" + instrumentToken);
+  deleteInstrument(instrumentToken): Observable<boolean> {
+    return this.http.delete<boolean>(httpConfig.baseUrl + this.controller + "/delete/" + instrumentToken);
   }
 }

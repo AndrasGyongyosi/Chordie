@@ -18,10 +18,10 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatDialogModule } from '@angular/material/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CatchTipDialogComponent } from './components/dialogs/catch-tip-dialog/catch-tip-dialog.component';
-import { EditInstrumentDialogComponent } from './components/dialogs/edit-instrument-dialog/edit-instrument-dialog.component';
-import { AddNewListDialogComponent } from './components/dialogs/add-new-list-dialog/add-new-list-dialog.component';
+import { EditOrNewListDialogComponent } from './components/dialogs/edit-or-new-list-dialog/edit-or-new-list-dialog.component';
 import { AngularResizedEventModule } from 'angular-resize-event';
-import {ScrollingModule} from '@angular/cdk/scrolling';
+import { ScrollingModule } from '@angular/cdk/scrolling';
+import { EditOrNewInstrumentDialogComponent } from './components/dialogs/edit-or-new-instrument-dialog/edit-or-new-instrument-dialog.component';
 
 const config = new AuthServiceConfig([
   {
@@ -40,11 +40,11 @@ export function provideConfig() {
     HomeComponent,
     AboutComponent,
     InstrumentsAndListsComponent,
-    EditInstrumentDialogComponent,
+    EditOrNewInstrumentDialogComponent,
     InstrumentAndChordSelectorComponent,
     ChordsComponent,
     CatchTipDialogComponent,
-    AddNewListDialogComponent
+    EditOrNewListDialogComponent
     
   ],
   imports: [
@@ -72,9 +72,9 @@ export function provideConfig() {
   ],
   bootstrap: [AppComponent],
   entryComponents: [
-    EditInstrumentDialogComponent,
+    EditOrNewInstrumentDialogComponent,
     CatchTipDialogComponent,
-    AddNewListDialogComponent
+    EditOrNewListDialogComponent
   ]
 })
 export class AppModule { }

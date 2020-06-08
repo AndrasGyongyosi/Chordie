@@ -50,4 +50,4 @@
     <button *ngIf="!data.isPublic" class="btn btn-outline-success" mat-button (click)="Accept()" [mat-dialog-close]="data" cdkFocusInitial>Accept</button>
 </mat-dialog-actions>
 
-<button class="btn btn-outline-danger" mat-button *ngIf="data.instrumentToken && !data.isPublic" (click)="deleteInstrument(data.instrumentToken)">Delete</button>
+<button class="btn btn-outline-danger" mat-button *ngIf="data.instrumentToken && !data.isPublic" (click)="deleteInstrument()" [mat-dialog-close]="data" cdkFocusInitial>Delete</button>

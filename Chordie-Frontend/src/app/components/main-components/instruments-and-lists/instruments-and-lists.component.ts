@@ -4,6 +4,8 @@ import { Instrument } from 'src/app/models/instrument.model';
 import { ChordService } from 'src/app/services/chord.service';
 import { DialogService } from 'src/app/services/dialog-service';
 import { ChordComponent } from 'src/app/models/chordComponent.model';
+import { List } from 'src/app/models/list.model';
+import { ListService } from 'src/app/services/list.service';
 
 @Component({
   selector: 'app-instruments-and-lists',
@@ -13,19 +15,33 @@ import { ChordComponent } from 'src/app/models/chordComponent.model';
 export class InstrumentsAndListsComponent implements OnInit {
 
   chordComponents: ChordComponent;
-  panelOpenState = false;
+  panelOpenStateInstrument = false;
+  panelOpenStateList = false;
   instruments: Instrument[] = [];
+  instrumentHeight;
+  lists: List[] = [];
+  listHeight;
 
-  constructor(private instrumentService: InstrumentService, private chordService: ChordService, private dialogService: DialogService) { }
+  constructor(private instrumentService: InstrumentService, private chordService: ChordService, private dialogService: DialogService, private listService: ListService) { }
 
   ngOnInit(): void {
     this.instrumentService.getInstrumentsByUser().subscribe(
-      (instruments) => this.instruments = instruments
+      (instruments) => {
+        this.instruments = instruments
+        this.instrumentHeight = instruments.length * 70 + 'px'
+      }
     );
 
     this.chordService.getChordComponents().subscribe(
       (chordComponent) => this.chordComponents = chordComponent
     );
+
+    this.listService.getLists().subscribe(
+      (lists) => {
+        this.lists = lists
+        this.listHeight = lists.length * 70 + 'px'
+      }
+    )
   }
 
   openNewInstrumentDialog() {
@@ -37,7 +53,10 @@ export class InstrumentsAndListsComponent implements OnInit {
           this.instrumentService.addNewInstrumentForUser(data.instrumentName, data.maxBundDif, data.bundNumber, data.selectedStrings).subscribe(
             () => {
               this.instrumentService.getInstrumentsByUser().subscribe(
-              (instruments) => this.instruments = instruments
+              (instruments) => {
+                this.instruments = instruments
+                this.instrumentHeight = instruments.length * 70 + 'px'
+              }
               );
           }
           );  
@@ -50,25 +69,78 @@ export class InstrumentsAndListsComponent implements OnInit {
     console.log(instrument)
     this.dialogService.openEditOrNewInstrumentDialog(instrument, this.chordComponents.baseSounds).subscribe(
       (data) => {
-        console.log(data)
-        console.log()
-
         if (data) {
-          console.log("in IF")
-          this.instrumentService.editInstrumentByUser(instrument.token, data.instrumentName, data.maxBundDif.toString(), data.bundNumber.toString(), data.selectedStrings).subscribe(
-            () => {
-              console.log("in in IF")
-              this.instrumentService.getInstrumentsByUser().subscribe(
-              (instruments) => this.instruments = instruments
-              );
+
+          if (data.action == "accept") {
+            this.instrumentService.editInstrumentByUser(instrument.instrumentToken, data.instrumentName, data.maxBundDif, data.bundNumber, data.selectedStrings).subscribe(
+              () => {
+                this.instrumentService.getInstrumentsByUser().subscribe(
+                  (instruments) => {
+                    this.instruments = instruments
+                    this.instrumentHeight = instruments.length * 70 + 'px'
+                  })
+              });
           }
-          );
+
+          if (data.action == "delete") {
+            this.instrumentService.deleteInstrument(data.instrumentToken).subscribe(
+              () => {
+                this.instrumentService.getInstrumentsByUser().subscribe(
+                  (instruments) => {
+                    this.instruments = instruments
+                    this.instrumentHeight = instruments.length * 70 + 'px'
+                  })
+              })
+          }
+          
         }
       });
   }
 
-  openAddNewListDialog() {
-    this.dialogService.openAddNewListDialog().subscribe();
+  openNewListDialog() {
+    this.dialogService.openEditOrNewListDialog(null).subscribe(
+      (data) => {
+        if (data) {
+          
+          if (data.action == "accept") {
+            console.log(data)
+            this.listService.addNewList(data.name).subscribe(
+              () => {
+                this.listService.getLists().subscribe(
+                  (lists) => {
+                    this.lists = lists;
+                    console.log(this.lists)
+                    this.listHeight = lists.length * 70 + 'px'
+                  })
+              })
+        }
+      }    
+    });
+  }
+
+  openEditOrNewListDialog(list: List) {
+    this.dialogService.openEditOrNewListDialog(list).subscribe(
+      (data) => {
+        if (data) {
+          
+          if (data.action == "accept") {
+            console.log(data)
+            // Edit list 
+        }
+
+        if (data.action == "delete") {
+          this.listService.deleteList(data.listToken).subscribe(
+            () => {
+              this.listService.getLists().subscribe(
+                (lists) => {
+                  this.lists = lists
+                  this.listHeight = lists.length * 70 + 'px'
+                })
+              })
+        }
+
+      }    
+    });
   }
 
 }

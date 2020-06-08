@@ -5,6 +5,7 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 import { Instrument } from 'src/app/models/instrument.model';
 import { InstrumentService } from 'src/app/services/instrument.service';
 import { ChordModel } from 'src/app/models/chord.model';
+import { ChordProperty } from 'src/app/models/chordProperty.model';
 
 @Component({
   selector: 'app-instrument-and-chord-selector',
@@ -22,6 +23,7 @@ export class InstrumentAndChordSelectorComponent implements OnInit, AfterViewIni
   public selectedChordName: ChordModel = {};
   public chordText;
   public randomExample;
+  public rootNotes: ChordProperty[] = [];
 
   public isLoggedIn;
 
@@ -68,7 +70,7 @@ export class InstrumentAndChordSelectorComponent implements OnInit, AfterViewIni
 
   selectBaseSound(baseSoundLabel) {
     this.selectedChordLabel.baseSound = baseSoundLabel;
-    this.selectedChordName.baseSound = this.chordComponent.baseSounds.find(c => c.label == baseSoundLabel).name
+    this.selectedChordName.baseSound = this.chordComponent.baseSounds.find(c => c.label == baseSoundLabel).name;
   }
 
   selectBaseType(baseTypeLabel) {
@@ -87,8 +89,13 @@ export class InstrumentAndChordSelectorComponent implements OnInit, AfterViewIni
   }
 
   selectRootNote(rootNoteLabel) {
-    this.selectedChordLabel.rootNote = rootNoteLabel;
-    this.selectedChordName.rootNote = this.chordComponent.baseSounds.find(c => c.label == rootNoteLabel).name
+    if (rootNoteLabel) {
+      this.selectedChordLabel.rootNote = rootNoteLabel;
+      this.selectedChordName.rootNote = this.chordComponent.baseSounds.find(c => c.label == rootNoteLabel).name
+    } else {
+      this.selectedChordLabel.rootNote = null;
+      this.selectedChordName.rootNote = null;
+    }
   }
 
   fillInputWithExample() {
@@ -121,6 +128,8 @@ export class InstrumentAndChordSelectorComponent implements OnInit, AfterViewIni
           this.selectedChordLabel.chordType = this.chordComponent.chordTypes.find(c => c.name == data.chordType).label;
           this.selectedChordLabel.capo = this.selectedChordName.capo;
           this.selectedChordLabel.rootNote = data.rootNote ? this.chordComponent.baseSounds.find(c => c.name == data.rootNote).label : null;
+          this.chordService.getSoundsByChordComponents(this.selectedChordName.baseSound, this.selectedChordName.baseType, this.selectedChordName.chordType, this.selectedChordName.capo).subscribe(
+            (rootNotes) => this.rootNotes = rootNotes);
         }
       );
      }
@@ -128,7 +137,7 @@ export class InstrumentAndChordSelectorComponent implements OnInit, AfterViewIni
 
   getChordCatches() {
     let rootNote = this.selectedChordName.rootNote !== undefined ? this.selectedChordName.rootNote : null;
-    let pathVariables = this.selectedInstrument.token + "/" + this.selectedChordName.baseSound + "/" + this.selectedChordName.baseType + "/" + 
+    let pathVariables = this.selectedInstrument.instrumentToken + "/" + this.selectedChordName.baseSound + "/" + this.selectedChordName.baseType + "/" + 
       this.selectedChordName.chordType + "/" + rootNote + "/" + this.selectedChordName.capo;
       console.log(pathVariables);
     this.chordService.changePath(pathVariables);

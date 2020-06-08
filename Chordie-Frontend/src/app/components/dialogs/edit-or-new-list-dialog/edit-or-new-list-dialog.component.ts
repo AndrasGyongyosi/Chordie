@@ -1,0 +1,33 @@
+import { Component, OnInit, Inject } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { ListService } from 'src/app/services/list.service';
+
+@Component({
+    selector: 'edit-or-new-list-dialog',
+    templateUrl: 'edit-or-new-list-dialog.component.html',
+    styleUrls: ['./edit-or-new-list-dialog.component.scss']
+})
+export class EditOrNewListDialogComponent implements OnInit {
+
+
+    constructor(public dialogRef: MatDialogRef<EditOrNewListDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any, private listService: ListService) { }
+
+    ngOnInit(): void {
+
+    }
+
+    Accept() {
+        console.log("Accept");
+        this.data.action = "accept";
+      }
+    
+      onNoClick(): void {
+        console.log("close");
+        this.dialogRef.close();
+      }
+
+      deleteList() {
+        this.data.action = "delete";
+      }
+
+}
