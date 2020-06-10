@@ -51,17 +51,20 @@
                                 Your lists
                             </mat-panel-title>
                         </mat-expansion-panel-header>
-                        <cdk-virtual-scroll-viewport itemSize="{{lists.length}}"
+                        <hr>
+                        <cdk-virtual-scroll-viewport *ngIf="lists.length > 0" itemSize="{{lists.length}}"
                             [ngStyle]="{'max-height': '300px', 'min-height': '90px', 'height': listHeight}">
-                            <hr>
                             <div *ngFor="let list of lists" style="padding-right: 15px; padding-left: 10px">
-                                <a (click)="openEditOrNewListDialog(list)"><img
+                                <a (click)="openEditListDialog(list)"><img
                                         src="assets/img/edit.png" class="edit">
                                     <p class="instrumentlist">{{list.name}}</p>
                                 </a>
                                 <hr>
                             </div>
                         </cdk-virtual-scroll-viewport>
+                        <div *ngIf="lists.length == 0">
+                            <p>You don't have any list!</p>
+                        </div>
                     </mat-expansion-panel>
                     <mat-expansion-panel (opened)="panelOpenStateList = true" (closed)="panelOpenStateList = false">
                     </mat-expansion-panel>

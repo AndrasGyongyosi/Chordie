@@ -22,6 +22,7 @@ import { EditOrNewListDialogComponent } from './components/dialogs/edit-or-new-l
 import { AngularResizedEventModule } from 'angular-resize-event';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { EditOrNewInstrumentDialogComponent } from './components/dialogs/edit-or-new-instrument-dialog/edit-or-new-instrument-dialog.component';
+import { MatMenuModule } from '@angular/material/menu';
 
 const config = new AuthServiceConfig([
   {
@@ -59,7 +60,8 @@ export function provideConfig() {
     BrowserAnimationsModule,
     MatDialogModule,
     AngularResizedEventModule,
-    ScrollingModule
+    ScrollingModule,
+    MatMenuModule
   ],
   providers: [
     {

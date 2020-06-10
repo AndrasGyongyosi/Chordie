@@ -2,9 +2,10 @@ import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { ChordService } from 'src/app/services/chord.service';
 import { CatchResult } from 'src/app/models/catchResult.model';
 import { Catch } from 'src/app/models/catch.model';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DialogService } from 'src/app/services/dialog-service';
-import { ResizedEvent } from 'angular-resize-event';
+import { ListService } from 'src/app/services/list.service';
+import { AuthenticationService } from 'src/app/services/authentication.service';
+import { ScrollService } from 'src/app/services/scroll.service';
 
 @Component({
   selector: 'app-chords',
@@ -22,11 +23,17 @@ export class ChordsComponent implements OnInit {
   customOtherHeight;
   pageHeight;
   otherCatchIndexes = [];
+  public isLoggedIn;
 
-  constructor(private chordService: ChordService, private dialogService: DialogService) { }
+  constructor(private chordService: ChordService, private dialogService: DialogService, public listService: ListService, private authService: AuthenticationService, public scrollService: ScrollService) { }
 
   ngOnInit(): void {
+    this.isLoggedIn = localStorage.getItem("userIdToken");
     this.bundsByCatch = [];
+
+    this.authService.isLoggedInEvent.subscribe(
+      (isLoggedIn) => this.isLoggedIn = isLoggedIn)
+
     this.chordService.chordPathVariables.subscribe(
         (path) => {
           this.chordPathVariables = path
@@ -34,6 +41,8 @@ export class ChordsComponent implements OnInit {
           if (this.chordPathVariables) {
             this.chordService.getChordCatches(this.chordPathVariables).subscribe(
               (chordCatches) => {
+                console.log("getChordCatches: ")
+                console.log(chordCatches)
                 this.chordCatches = chordCatches
                 this.calculateBunds()
                 console.log(this.chordCatches)
@@ -46,45 +55,67 @@ export class ChordsComponent implements OnInit {
                 this.pageHeight = pageHeightWithoutAd + 200 + 'px'
               }
           );
-        }})
+        }
+      })
 
   }
-
-  onResized(event: ResizedEvent) {
-    this.pageHeight = (event.newHeight + 200) + 'px'
-  }
-
+  
   openCatchTipDialog() {
     this.dialogService.openCatchTipDialog().subscribe();
   }
 
-  scrollToHome() {
-    document.getElementById("home").scrollIntoView({behavior: "smooth", block: "start"}); 
-  }
-
-
-  changeNoteOnHover(id) {
-    (document.getElementById(id) as HTMLImageElement).src = "assets/img/note_white.png";
-  }
-
-  changeNoteAfterHover(id) {
-    (document.getElementById(id) as HTMLImageElement).src = "assets/img/note.png";
-  }
-
-  changeAddOnHover(id) {
-    (document.getElementById(id) as HTMLImageElement).src = "assets/img/add_white.png";
-  }
-
-  changeAddAfterHover(id) {
-    (document.getElementById(id) as HTMLImageElement).src = "assets/img/add_black.png";
-  }
 
   changeHelpOnHover(id) {
-    (document.getElementById(id) as HTMLImageElement).src = "assets/img/help.png";
+    (document.getElementById(id) as HTMLImageElement).src = "assets/img/help.png";    
   }
 
   changeHelpAfterHover(id) {
     (document.getElementById(id) as HTMLImageElement).src = "assets/img/help2.png";
+  }
+
+  playAudio(_catch: Catch){
+    let audios = [];
+    for (let string = 0; string < _catch.stringCatches.length; string++) {
+      if (_catch.stringCatches[string].bund != -1) {
+        let audio = new Audio();
+        let sound = _catch.stringCatches[string].sound.split('#').join('s');
+        audio.src = "assets/audio/guitar-acoustic/" + sound + "3.mp3";
+        audios.push(audio);
+      }
+    }
+
+    for (let i = 0; i < audios.length; i++) {
+        setTimeout(function() {
+          audios[i].load();
+          audios[i].play();
+        }, 500 + i*500)
+      }  
+  }
+
+  playAudioChord(_catch: Catch){
+    let audios = [];
+    for (let string = 0; string < _catch.stringCatches.length; string++) {
+      if (_catch.stringCatches[string].bund != -1) {
+        let audio = new Audio();
+        let sound = _catch.stringCatches[string].sound.split('#').join('s');
+        audio.src = "assets/audio/guitar-acoustic/" + sound + "3.mp3";
+        audios.push(audio);
+      }
+    }
+
+    for (let i = 0; i < audios.length; i++) {
+          audios[i].load();
+          audios[i].play();
+      }  
+  }
+
+  addCatchToList(catch_: Catch) {
+    catch_.listToken = this.listService.selectedList.listToken;
+    catch_.chord = this.chordCatches.chord;
+    this.listService.addToList(catch_).subscribe(
+      () => console.log(this.listService.selectedList)
+    );
+
   }
 
   calculateBunds() {

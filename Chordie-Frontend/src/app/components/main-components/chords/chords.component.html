@@ -64,6 +64,9 @@
                                                         src="assets/img/view/bund_played_{{string.finger}}.png">
                                                 </ng-template>
                                             </td>
+                                            <td>
+                                                {{string.sound}}
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -72,16 +75,18 @@
                         <hr>
                         <div class="row">
                             <div class="footer" style="margin: 0 auto">
-                                <a><img id="noteMain" (mouseenter)="changeNoteOnHover('noteMain')"
-                                        (mouseleave)="changeNoteAfterHover('noteMain')" src="assets/img/note.png"
-                                        width="30" height="30"></a>
+
+                                    <button class="btn btn-outline-dark" mat-menu-item (click)="playAudio(chordCatches.catches[0])"><img id="notemain"
+                                        src="assets/img/note.png" width="20"
+                                        height="20"></button>
+                                    <button class="btn btn-outline-dark" mat-menu-item (click)="playAudioChord(chordCatches.catches[0])"><img id="notemain" src="assets/img/notes.png" width="20"
+                                        height="20"></button>  
                             </div>
-                            <div style="margin: 0 auto">
-                                <p class="footer" style="margin-right: 15px; font-size: 16px;">Add to the selected list
-                                    (///LIST///): </p>
-                                <a class="footer"><img id="addMain" (mouseenter)="changeAddOnHover('addMain')"
-                                        (mouseleave)="changeAddAfterHover('addMain')" src="assets/img/add_black.png"
-                                        width="30" height="30"></a>
+                            <div *ngIf="isLoggedIn" style="margin: 0 auto">
+                                <button *ngIf="this.listService.selectedList" class="btn btn-outline-dark" type="button" (click)="addCatchToList(chordCatches.catches[0])">Add to: {{this.listService.selectedList.name}}</button>  
+                                <button *ngIf="!this.listService.selectedList" class="btn btn-outline-dark" type="button" (click)="this.scrollService.scrollToHome()">Select a list! 
+                                    <img src="assets/img/arrow_up.png" width="20" height="20">
+                                </button>                                
                             </div>
                         </div>
                     </mat-expansion-panel>
@@ -133,28 +138,32 @@
                                                                 src="assets/img/view/bund_played_{{string.finger}}.png">
                                                         </ng-template>
                                                     </td>
+                                                    <td style="text-align: left;">
+                                                        &nbsp;{{string.sound}}
+                                                    </td>
                                                 </tr>
                                             </tbody>
                                         </table>
                                     </mat-panel-title>
                                 </mat-expansion-panel-header>
                                 <hr>
-                                <div class="row">
+                                 <div class="row">
                                     <div class="footer" style="margin: 0 auto">
-                                        <a><img id="noteOther{{i}}" (mouseenter)="changeNoteOnHover('noteOther' + i)"
-                                                (mouseleave)="changeNoteAfterHover('noteOther' + i)"
-                                                src="assets/img/note.png" width="30" height="30"></a>
+  
+                                            <button class="btn btn-outline-dark" mat-menu-item (click)="playAudio(chordCatches.catches[index])"><img id="noteOther{{i}}"
+                                                src="assets/img/note.png" width="20"
+                                                height="20"></button>
+                                            <button class="btn btn-outline-dark" mat-menu-item (click)="playAudioChord(chordCatches.catches[index])"><img id="noteOthers{{i}}" src="assets/img/notes.png" width="20"
+                                                height="20"></button>  
                                     </div>
-                                    <div style="margin: 0 auto">
-                                        <p class="footer" style="margin-right: 15px; font-size: 14px;">Add to the
-                                            selected list (///LIST///): </p>
-                                        <a class="footer"><img id="addOther{{i}}"
-                                                (mouseenter)="changeAddOnHover('addOther' + i)"
-                                                (mouseleave)="changeAddAfterHover('addOther' + i)"
-                                                src="assets/img/add_black.png" width="30" height="30"></a>
+                                    <div *ngIf="isLoggedIn" style="margin: 0 auto">
+                                        <button *ngIf="this.listService.selectedList" class="btn btn-outline-dark" type="button" (click)="addCatchToList(chordCatches.catches[index])">Add to: {{this.listService.selectedList.name}}</button>  
+                                        <button *ngIf="!this.listService.selectedList" class="btn btn-outline-dark" type="button" (click)="this.scrollService.scrollToHome()">Select a list! 
+                                            <img src="assets/img/arrow_up.png" width="20" height="20">
+                                        </button>                                
                                     </div>
                                 </div>
-                            </mat-expansion-panel>
+                        </mat-expansion-panel>
                             <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
                             </mat-expansion-panel>
                         </mat-accordion> 
@@ -165,6 +174,6 @@
         </div>
     </div>
     <div *ngIf="!chordCatches" class="noContent">
-        <a (click)="scrollToHome()">Select a Chord!</a>
+        <a (click)="this.scrollService.scrollToHome()">Select a Chord!</a>
     </div>
 </div>

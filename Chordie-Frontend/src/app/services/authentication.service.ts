@@ -2,6 +2,7 @@ import { Injectable, EventEmitter } from '@angular/core';
 import { AuthService, GoogleLoginProvider } from 'angularx-social-login';
 import { UserService } from './user.service';
 import { InstrumentService } from './instrument.service';
+import { ListService } from './list.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ export class AuthenticationService {
 
   isLoggedInEvent = new EventEmitter();
 
-  constructor(private authService: AuthService, private userService: UserService, private instrumentService: InstrumentService) { }
+  constructor(private authService: AuthService, private userService: UserService, private instrumentService: InstrumentService, private listService: ListService) { }
 
   async login() {
 
@@ -26,6 +27,9 @@ export class AuthenticationService {
           () => {
             this.instrumentService.getInstrumentsByUser().subscribe(
               (instruments) => this.instrumentService.instrumentsChanged.emit(instruments));
+
+            this.listService.getLists().subscribe(
+              (lists) => this.listService.listsChanged.emit(lists));
           });
         
         this.isLoggedInEvent.emit(localStorage.getItem("userIdToken"));

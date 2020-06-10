@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import httpConfig from '../configs/httpConfig.json';
@@ -10,7 +10,10 @@ import { Catch } from '../models/catch.model';
 })
 export class ListService {
 
-  controller = 'list'
+  private controller = 'list'
+
+  public listsChanged = new EventEmitter();
+  public selectedList: List;
 
   constructor(private http: HttpClient) { }
 
@@ -24,7 +27,8 @@ export class ListService {
   }
 
   addToList(addedCatch: Catch): Observable<boolean> {
-    return this.http.post<boolean>(httpConfig.baseUrl + this.controller + "/addCatch", {addedCatch});
+    return this.http.post<boolean>(httpConfig.baseUrl + this.controller + "/addCatch", 
+      {chord: addedCatch.chord, listToken: addedCatch.listToken, stringCatches: addedCatch.stringCatches, instrument: addedCatch.instrument});
   }
 
   deleteList(listToken: String): Observable<void> {

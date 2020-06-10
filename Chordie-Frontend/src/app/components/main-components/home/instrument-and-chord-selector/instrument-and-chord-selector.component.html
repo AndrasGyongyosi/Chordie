@@ -66,9 +66,18 @@
 </div>
 
 <div class="row list">
-    <div class="col" >
-        <p *ngIf="!isLoggedIn"><a (click)="login()">Log in</a> to manage your lists and create new instruments!</p>
-        <p *ngIf="isLoggedIn" style="display: inline-block; padding-right: 10px;"> Select your list: </p> 
-        <button type="button" *ngIf="isLoggedIn" class="btn btn-outline-secondary btn-sm" style="display: inline-block;">Create list</button>
+    <div class="col" *ngIf="!isLoggedIn">
+        <p><a (click)="login()">Log in</a> to manage your lists and create new instruments!</p>  
     </div>  
+    <div class="col" *ngIf="isLoggedIn">
+        <p style="display: inline-block; padding-right: 10px;"> Select your list: </p> 
+        <button type="button" *ngIf="!lists" class="btn btn-outline-secondary btn-sm" style="display: inline-block;">Create a list</button>
+        <div ngbDropdown class="d-inline-block" *ngIf="lists">
+            <button *ngIf="this.listService.selectedList" class="btn btn-outline-secondary" id="dropdownBasic1" ngbDropdownToggle style="width: 150px;">{{this.listService.selectedList.name}}</button>
+            <button *ngIf="!this.listService.selectedList" class="btn btn-outline-secondary" id="dropdownBasic1" ngbDropdownToggle style="width: 150px;">Select a list</button>
+            <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                <button *ngFor="let list of lists" ngbDropdownItem (click)="selectList(list)">{{list.name}}</button>
+            </div>
+        </div>
+    </div>
 </div>

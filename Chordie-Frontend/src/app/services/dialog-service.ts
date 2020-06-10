@@ -40,8 +40,9 @@ export class DialogService {
   openEditOrNewListDialog(list: List): Observable<any> {
     const dialogRef = this.dialog.open(EditOrNewListDialogComponent, {
       data: {
-        name: '',
+        name: list ? list.name : '',
         listToken: list ? list.listToken : '' ,
+        catches: list ? list.catches : [],
         action: ''
       }
     });

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { ScrollService } from 'src/app/services/scroll.service';
 
 @Component({
   selector: 'app-menu',
@@ -12,7 +13,7 @@ export class MenuComponent implements OnInit {
   currentUserEmail: string;
   currentUserPhotoUrl: string;
 
-  constructor(private authenticationService: AuthenticationService) { }
+  constructor(private authenticationService: AuthenticationService, public scrollService: ScrollService) { }
 
   ngOnInit() {
     this.setCurrentUser();
@@ -20,22 +21,6 @@ export class MenuComponent implements OnInit {
     this.authenticationService.isLoggedInEvent.subscribe(
       () => this.setCurrentUser());  
   }  
-
-  scrollToAbout() {
-    document.getElementById("about").scrollIntoView({behavior: "smooth", block: "start"});
-  }
-
-  scrollToHome() {
-    document.getElementById("home").scrollIntoView({behavior: "smooth", block: "start"});
-  }
-
-  scrollToIstrumentsAndLists() {
-    document.getElementById("instrumentsandlists").scrollIntoView({behavior: "smooth", block: "start"});
-  }
-
-  scrollToChords() {
-    document.getElementById("chords").scrollIntoView({behavior: "smooth", block: "start"});
-  }
 
   async login() {
     await this.authenticationService.login();   
@@ -52,6 +37,5 @@ export class MenuComponent implements OnInit {
     this.currentUserPhotoUrl = localStorage.getItem("userPhotoUrl");
     this.currentUserEmail = localStorage.getItem("userEmail");
   }
-
 
 }

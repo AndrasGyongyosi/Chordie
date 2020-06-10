@@ -42,6 +42,9 @@ export class InstrumentsAndListsComponent implements OnInit {
         this.listHeight = lists.length * 70 + 'px'
       }
     )
+
+    this.listService.listsChanged.subscribe(
+      (lists) => this.lists = lists)
   }
 
   openNewInstrumentDialog() {
@@ -111,6 +114,7 @@ export class InstrumentsAndListsComponent implements OnInit {
                     this.lists = lists;
                     console.log(this.lists)
                     this.listHeight = lists.length * 70 + 'px'
+                    this.listService.listsChanged.emit(lists);
                   })
               })
         }
@@ -118,9 +122,10 @@ export class InstrumentsAndListsComponent implements OnInit {
     });
   }
 
-  openEditOrNewListDialog(list: List) {
+  openEditListDialog(list: List) {
     this.dialogService.openEditOrNewListDialog(list).subscribe(
       (data) => {
+        console.log(data)
         if (data) {
           
           if (data.action == "accept") {
@@ -135,7 +140,8 @@ export class InstrumentsAndListsComponent implements OnInit {
                 (lists) => {
                   this.lists = lists
                   this.listHeight = lists.length * 70 + 'px'
-                })
+                  this.listService.listsChanged.emit(lists);
+                });        
               })
         }
 

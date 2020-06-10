@@ -6,6 +6,9 @@ import { Instrument } from 'src/app/models/instrument.model';
 import { InstrumentService } from 'src/app/services/instrument.service';
 import { ChordModel } from 'src/app/models/chord.model';
 import { ChordProperty } from 'src/app/models/chordProperty.model';
+import { ListService } from 'src/app/services/list.service';
+import { List } from 'src/app/models/list.model';
+import { ScrollService } from 'src/app/services/scroll.service';
 
 @Component({
   selector: 'app-instrument-and-chord-selector',
@@ -24,10 +27,11 @@ export class InstrumentAndChordSelectorComponent implements OnInit, AfterViewIni
   public chordText;
   public randomExample;
   public rootNotes: ChordProperty[] = [];
+  public lists: List[];
 
   public isLoggedIn;
 
-  constructor(private chordService: ChordService, private authService: AuthenticationService, private instrumentService: InstrumentService) { }
+  constructor(private chordService: ChordService, private authService: AuthenticationService, private instrumentService: InstrumentService, public listService: ListService, private scrollService: ScrollService) { }
   @ViewChild("typeChord") private _inputElement: ElementRef;
 
   ngOnInit(): void {
@@ -58,6 +62,12 @@ export class InstrumentAndChordSelectorComponent implements OnInit, AfterViewIni
         this.instruments = instruments
         this.selectedInstrument = instruments[0]
       })
+
+    this.listService.getLists().subscribe(
+      (lists) => this.lists = lists)
+
+    this.listService.listsChanged.subscribe(
+      (lists) => this.lists = lists)
   }
 
   ngAfterViewInit(): void {
@@ -95,6 +105,14 @@ export class InstrumentAndChordSelectorComponent implements OnInit, AfterViewIni
     } else {
       this.selectedChordLabel.rootNote = null;
       this.selectedChordName.rootNote = null;
+    }
+  }
+
+  selectList(list: List) {
+    if (list) {
+      this.listService.selectedList = list;
+    } else {
+      this.listService.selectedList = null;
     }
   }
 
@@ -141,8 +159,9 @@ export class InstrumentAndChordSelectorComponent implements OnInit, AfterViewIni
       this.selectedChordName.chordType + "/" + rootNote + "/" + this.selectedChordName.capo;
       console.log(pathVariables);
     this.chordService.changePath(pathVariables);
-    document.getElementById("chords").scrollIntoView({behavior: "smooth", block: "start"});
+    this.scrollService.scrollToChords();
   }
+
 
   private generateRandomExample(): String {
     let randomIndex = Math.floor(Math.random() * 12)

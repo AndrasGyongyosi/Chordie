@@ -1,10 +1,9 @@
 <div *ngIf="!data.listToken">
     <h2>Add new list</h2>
     <div class="form-group">
-        <label for="listname">List Name</label>
-        <input class="form-control" placeholder="E.g a song name" name="listname" [(ngModel)]="data.name">
+        <label for="listname">List name</label>
+        <input class="form-control" name="listname" [(ngModel)]="data.name">
     </div>
-
 
 
     
@@ -12,7 +11,11 @@
 </div>
 <div *ngIf="data.listToken">
     <h2>Edit your list</h2>
-
+    <div class="form-group">
+        <label for="listname">List name</label>
+        <input class="form-control" name="listname" [(ngModel)]="data.name">
+    </div>
+    <h2 *ngFor="let catch of data.catches">Catch: {{catch.chord}}</h2>
 </div>
 
 
