@@ -25,8 +25,6 @@ public class StoredStringCatch {
 
 	private String sound;
 
-	private int octave;
-
 	public StoredStringCatch() {
 
 	}
@@ -69,13 +67,5 @@ public class StoredStringCatch {
 
 	public void setSound(String sound) {
 		this.sound = sound;
-	}
-
-	public int getOctave() {
-		return octave;
-	}
-
-	public void setOctave(int octave) {
-		this.octave = octave;
 	}
 }

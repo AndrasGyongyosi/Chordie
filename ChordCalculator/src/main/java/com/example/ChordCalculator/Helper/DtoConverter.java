@@ -77,7 +77,6 @@ public class DtoConverter {
 		stringCatch.setBund(fsc.getBund());
 		stringCatch.setFinger(fsc.getFinger());
 		stringCatch.setSound(fsc.getSound());
-		stringCatch.setOctave(fsc.getOctave());
 		return stringCatch;
 	}
 }
