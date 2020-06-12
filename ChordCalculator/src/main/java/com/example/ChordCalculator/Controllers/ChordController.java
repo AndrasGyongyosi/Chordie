@@ -49,28 +49,16 @@ public class ChordController {
 		ChordComponentsDTO result = new ChordComponentsDTO();
 
 		List<LabeledStringDTO> sounds = Lists.newArrayList();
-		for (Sound sound : Sound.values()) {
-			sounds.add(DtoConverter.toLabeledStringDTO(sound));
-		}
+		Lists.newArrayList(Sound.values()).stream().forEach(sound -> sounds.add(DtoConverter.toLabelStringDTO(sound)));
 		result.setBaseSounds(sounds);
 
 		List<LabeledStringDTO> baseTypes = Lists.newArrayList();
-		for (BaseType baseType : BaseType.values()) {
-			LabeledStringDTO baseTypeDTO = new LabeledStringDTO();
-			baseTypeDTO.setLabel(baseType.getName());
-			baseTypeDTO.setName(baseType.name());
-			baseTypes.add(baseTypeDTO);
-		}
-		result.setBaseTypes(baseTypes);
+		Lists.newArrayList(BaseType.values()).stream().forEach(baseType -> baseTypes.add(DtoConverter.toLabelStringDTO(baseType)));
 
 		List<LabeledStringDTO> chordTypes = Lists.newArrayList();
-		for (ChordType chordType : ChordType.values()) {
-			LabeledStringDTO chordTypeDTO = new LabeledStringDTO();
-			chordTypeDTO.setLabel(chordType.getAliases().get(0));
-			chordTypeDTO.setName(chordType.name());
-			chordTypes.add(chordTypeDTO);
-		}
+		Lists.newArrayList(ChordType.values()).stream().forEach(chordType -> chordTypes.add(DtoConverter.toLabelStringDTO(chordType)));
 		result.setChordTypes(chordTypes);
+
 		return result;
 	}
 
@@ -93,12 +81,12 @@ public class ChordController {
 		String chordPart = parts[0];
 		if (parts.length > 1) {
 			String rootNotePart = parts[1];
-			result.setRootNote(getSoundFromChordText(rootNotePart).name());
+			result.setRootNote(DtoConverter.toLabelStringDTO(getSoundFromChordText(rootNotePart)));
 
 		}
 		Sound baseSound = getSoundFromChordText(chordPart);
 
-		result.setBaseSound(baseSound.name());
+		result.setBaseSound(DtoConverter.toLabelStringDTO(baseSound));
 
 		String chordPartWithoutBS = chordPart.substring(baseSound.name().length());
 
@@ -112,7 +100,7 @@ public class ChordController {
 				}
 			}
 		}
-		result.setChordType(chordType.name());
+		result.setChordType(DtoConverter.toLabelStringDTO(chordType));
 
 		String chordPartWithoutBSandCT = chordPartWithoutBS.substring(0, chordPartWithoutBS.length() - chordTypeLength);
 
@@ -129,7 +117,7 @@ public class ChordController {
 		if (baseSound == null || chordType == null || baseType == null) {
 			throw new BadExpressionException("Wrong free text chord: " + text);
 		}
-		result.setBaseType(baseType.name());
+		result.setBaseType(DtoConverter.toLabelStringDTO(baseType));
 
 		return result;
 
@@ -194,9 +182,7 @@ public class ChordController {
 
 		result.setCatches(catchList);
 		result.setBundDif(bundDif);
-		result.setChord(chord.getFullName());
-		result.setCapo(capo);
-		result.setRootNote(rootNote == null ? null : DtoConverter.toLabeledStringDTO(rootNote));
+		result.setChord(DtoConverter.assembleChordDTO(chord.getBaseSound(), chord.getBaseType(), chord.getChordType(), rootNote, capo));
 		return result;
 	}
 
