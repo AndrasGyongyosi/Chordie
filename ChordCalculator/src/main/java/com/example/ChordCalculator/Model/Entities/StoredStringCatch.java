@@ -1,71 +1,71 @@
 package com.example.ChordCalculator.Model.Entities;
 
-import com.example.ChordCalculator.Model.Sound;
-import com.example.ChordCalculator.Model.StringCatch;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
-import javax.persistence.*;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 public class StoredStringCatch {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Integer id;
 
-    
-    @ManyToOne
-    @JsonBackReference
-    private StoredCatch catcha;
+	@ManyToOne
+	@JsonBackReference
+	private StoredCatch catcha;
 
-    private int finger;
+	private int finger;
 
-    private int bund;
+	private int bund;
 
-    private String sound;
+	private String sound;
 
-    public StoredStringCatch(){
-    	
-    }
+	public StoredStringCatch() {
 
-    public Integer getId() {
-        return id;
-    }
+	}
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+	public Integer getId() {
+		return id;
+	}
 
-    public StoredCatch getCatcha() {
-        return catcha;
-    }
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-    public void setCatcha(StoredCatch catcha) {
-        this.catcha = catcha;
-    }
+	public StoredCatch getCatcha() {
+		return catcha;
+	}
 
-    public int getFinger() {
-        return finger;
-    }
+	public void setCatcha(StoredCatch catcha) {
+		this.catcha = catcha;
+	}
 
-    public void setFinger(int finger) {
-        this.finger = finger;
-    }
+	public int getFinger() {
+		return finger;
+	}
 
-    public int getBund() {
-        return bund;
-    }
+	public void setFinger(int finger) {
+		this.finger = finger;
+	}
 
-    public void setBund(int bund) {
-        this.bund = bund;
-    }
+	public int getBund() {
+		return bund;
+	}
 
-    public String getSound() {
-        return sound;
-    }
+	public void setBund(int bund) {
+		this.bund = bund;
+	}
 
-    public void setSound(String sound) {
-        this.sound = sound;
-    }
+	public String getSound() {
+		return sound;
+	}
+
+	public void setSound(String sound) {
+		this.sound = sound;
+	}
 }

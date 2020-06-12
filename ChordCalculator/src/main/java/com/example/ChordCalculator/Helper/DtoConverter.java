@@ -2,9 +2,9 @@ package com.example.ChordCalculator.Helper;
 
 import java.util.List;
 
-import com.example.ChordCalculator.DTOs.CatchDTO;
 import com.example.ChordCalculator.DTOs.LabeledStringDTO;
 import com.example.ChordCalculator.DTOs.ListDTO;
+import com.example.ChordCalculator.DTOs.StoredCatchDTO;
 import com.example.ChordCalculator.DTOs.StringCatchDTO;
 import com.example.ChordCalculator.Model.Sound;
 import com.example.ChordCalculator.Model.Entities.StoredCatch;
@@ -18,14 +18,26 @@ public class DtoConverter {
 
 	public static ListDTO toListDTO(StoredCatchList list) {
 		ListDTO result = new ListDTO();
-		List<CatchDTO> catches = Lists.newArrayList();
-        for(StoredCatch catcha : list.getCatches()){
-            CatchDTO catchDTO = toCatchDTO(catcha);
-            catches.add(catchDTO);
-        }
-        result.setCatches(catches);
-        result.setListToken(list.getToken());
-        result.setName(list.getName());
+		List<StoredCatchDTO> catches = Lists.newArrayList();
+		for (StoredCatch catcha : list.getCatches()) {
+			StoredCatchDTO catchDTO = toStoredCatchDTO(catcha);
+			catches.add(catchDTO);
+		}
+		result.setCatches(catches);
+		result.setListToken(list.getToken());
+		result.setName(list.getName());
+		return result;
+	}
+
+	private static StoredCatchDTO toStoredCatchDTO(StoredCatch catcha) {
+		StoredCatchDTO result = new StoredCatchDTO();
+
+		result.setInstrument(catcha.getInstrument());
+		result.setChord(catcha.getChord());
+		List<StringCatchDTO> stringCatchList = Lists.newArrayList();
+
+		catcha.getFavStringCatches().stream().forEach(stringCatch -> stringCatchList.add(toStringCatchDTO(stringCatch)));
+		result.setStringCatches(stringCatchList);
 		return result;
 	}
 
@@ -39,36 +51,27 @@ public class DtoConverter {
 	public static StoredCatchList toCatchList(ListDTO dto, UserRepository userRepo) {
 		User user = userRepo.findByUserToken(dto.getUserToken());
 
-        StoredCatchList catchList = new StoredCatchList();
-        catchList.setName((String) dto.getName());
-        catchList.setUser(user);
+		StoredCatchList catchList = new StoredCatchList();
+		catchList.setName((String) dto.getName());
+		catchList.setUser(user);
 		return catchList;
 	}
-	
-	 public static StoredCatch toCatch(CatchDTO dto) {
-			StoredCatch favCatch = new StoredCatch();
-	        for(StringCatchDTO stringCatch : dto.getStringCatches()){
-	            StoredStringCatch fsc = new StoredStringCatch();
-	            fsc.setFinger(stringCatch.getFinger());
-	            fsc.setBund(stringCatch.getBund());
-	            fsc.setSound(stringCatch.getSound());
-	            fsc.setCatcha(favCatch);
-	            favCatch.addFavStringCatch(fsc);
-	        }
-	        favCatch.setInstrument(dto.getInstrument());
-	        favCatch.setChord(dto.getChord());
-			return favCatch;
+
+	public static StoredCatch toCatch(StoredCatchDTO dto) {
+		StoredCatch favCatch = new StoredCatch();
+		for (StringCatchDTO stringCatch : dto.getStringCatches()) {
+			StoredStringCatch fsc = new StoredStringCatch();
+			fsc.setFinger(stringCatch.getFinger());
+			fsc.setBund(stringCatch.getBund());
+			fsc.setSound(stringCatch.getSound());
+			fsc.setCatcha(favCatch);
+			favCatch.addFavStringCatch(fsc);
+		}
+		favCatch.setInstrument(dto.getInstrument());
+		favCatch.setChord(dto.getChord());
+		return favCatch;
 	}
-	 private static CatchDTO toCatchDTO(StoredCatch catcha) {
-			CatchDTO result = new CatchDTO();
-			result.setChord(catcha.getChord());
-			result.setInstrument(catcha.getInstrument());
-			List<StringCatchDTO> stringCatchList = Lists.newArrayList();
-			
-			catcha.getFavStringCatches().stream().forEach(stringCatch -> stringCatchList.add(toStringCatchDTO(stringCatch)));
-			result.setStringCatches(stringCatchList);
-			return result;
-	}
+
 	private static StringCatchDTO toStringCatchDTO(StoredStringCatch fsc) {
 		StringCatchDTO stringCatch = new StringCatchDTO();
 		stringCatch.setBund(fsc.getBund());
