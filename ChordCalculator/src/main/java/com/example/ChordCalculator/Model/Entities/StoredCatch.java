@@ -11,7 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import com.example.ChordCalculator.DTOs.ChordDTO;
 import com.example.ChordCalculator.Helper.RandomToken;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -39,7 +38,12 @@ public class StoredCatch {
 
 	private String instrument;
 
-	private ChordDTO chord;
+	private String baseSound;
+	private String baseType;
+	private String chordType;
+
+	private String rootNote;
+	private Integer capo;
 
 	public StoredCatch() {
 		stringCatches = Lists.newArrayList();
@@ -81,14 +85,6 @@ public class StoredCatch {
 		this.instrument = instrument;
 	}
 
-	public ChordDTO getChord() {
-		return chord;
-	}
-
-	public void setChord(ChordDTO chord) {
-		this.chord = chord;
-	}
-
 	public String getCatchToken() {
 		return catchToken;
 	}
@@ -96,4 +92,53 @@ public class StoredCatch {
 	public void setCatchToken(String catchToken) {
 		this.catchToken = catchToken;
 	}
+
+	public List<StoredStringCatch> getStringCatches() {
+		return stringCatches;
+	}
+
+	public void setStringCatches(List<StoredStringCatch> stringCatches) {
+		this.stringCatches = stringCatches;
+	}
+
+	public String getBaseSound() {
+		return baseSound;
+	}
+
+	public void setBaseSound(String baseSound) {
+		this.baseSound = baseSound;
+	}
+
+	public String getBaseType() {
+		return baseType;
+	}
+
+	public void setBaseType(String baseType) {
+		this.baseType = baseType;
+	}
+
+	public String getChordType() {
+		return chordType;
+	}
+
+	public void setChordType(String chordType) {
+		this.chordType = chordType;
+	}
+
+	public String getRootNote() {
+		return rootNote;
+	}
+
+	public void setRootNote(String rootNote) {
+		this.rootNote = rootNote;
+	}
+
+	public Integer getCapo() {
+		return capo;
+	}
+
+	public void setCapo(Integer capo) {
+		this.capo = capo;
+	}
+
 }
