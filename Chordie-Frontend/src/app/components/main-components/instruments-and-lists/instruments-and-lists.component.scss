@@ -60,3 +60,37 @@ a {
     width: 300px;
     background-color: var(--yellow);
 }
+
+.newbutton {
+    width: 250px;
+    margin-bottom: 25px;
+}
+
+.innercontent {
+    width: 400px;
+    margin: 25px;
+    padding-top: 0;
+}
+
+mat-expansion-panel {
+    background-color: rgb(173, 144, 82);
+}
+
+mat-expansion-panel-header {
+    background-color: var(--yellow) !important;
+}
+
+mat-panel-title {
+    font-size: 20px;
+}
+
+cdk-virtual-scroll-viewport {
+    max-height: '300px';
+    min-height: '90px'
+}
+
+.items {
+    padding-right: 15px;
+    padding-left: 10px;
+    padding-bottom: 0px;
+}

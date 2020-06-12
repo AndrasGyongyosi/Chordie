@@ -1,13 +1,36 @@
 .selector {
+    width: 1044px;
+    margin-left: unquote("-webkit-calc((100% - 1044px)/2)");
+    margin-right: unquote("-webkit-calc((100% - 1044px)/2)");
+    background-color: var(--backgroundGrayLighter);
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 10px;
+    margin-top: 25vh;
+}
+
+.chordselector, .listselector {
     background-color: var(--backgroundGray);
     border: 1px solid var(--yellow);
-    width: 1024px;
-    margin-top: 25vh;
-    margin-left: unquote("-webkit-calc((100% - 1024px)/2)");
-    margin-right: unquote("-webkit-calc((100% - 1024px)/2)");
     border-radius: 10px;
 }
 
-.selector:hover {
+.chordselector {      
+    padding-bottom: 25px; 
+    width: 1024px;
+    margin-left: unquote("-webkit-calc((100% - 1024px)/2)");
+    margin-right: unquote("-webkit-calc((100% - 1024px)/2)");
+}
+
+.listselector {
+    padding: 10px;
+    margin-top: 25px;
+    width: 512px;
+    margin-left: unquote("-webkit-calc((100% - 512px)/2)");
+    margin-right: unquote("-webkit-calc((100% - 512px)/2)");
+    border: 1px solid black;
+}
+
+.chordselector:hover, .listselector:hover {
     background-color: var(--backgroundGrayDarker);
 }

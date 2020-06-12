@@ -29,11 +29,10 @@ export class ChordsComponent implements OnInit {
 
   ngOnInit(): void {
     this.isLoggedIn = localStorage.getItem("userIdToken");
-    this.bundsByCatch = [];
-
     this.authService.isLoggedInEvent.subscribe(
       (isLoggedIn) => this.isLoggedIn = isLoggedIn)
 
+    // Call if we requested for new chords by sending the parts of chord in path
     this.chordService.chordPathVariables.subscribe(
         (path) => {
           this.chordPathVariables = path
@@ -44,26 +43,27 @@ export class ChordsComponent implements OnInit {
                 console.log("getChordCatches: ")
                 console.log(chordCatches)
                 this.chordCatches = chordCatches
-                this.calculateBunds()
-                console.log(this.chordCatches)
-                this.customMainHeight = this.chordCatches.catches[0].stringCatches.length * 40 + 'px'
-                if (this.chordCatches.catches.length > 1)
-                  this.customOtherHeight = this.chordCatches.catches[1].stringCatches.length * 35 + 'px'
+                this.bundsByCatch = this.chordService.calculateBunds(chordCatches)
+                console.log(this.bundsByCatch)
 
-                let pageHeightWithoutAd = this.chordCatches.catches[0].stringCatches.length * 40 + 
-                ((this.chordCatches.catches.length > 1) ? this.chordCatches.catches[1].stringCatches.length : 0) * 35 + 615
-                this.pageHeight = pageHeightWithoutAd + 200 + 'px'
+                this.otherCatchIndexes = [];
+                for (let j = 1; j < (this.bundsByCatch.length > 4 ? 4 : this.bundsByCatch.length); j++) {
+                  this.otherCatchIndexes.push(j)
+                }
+
+                this.setHeight();
               }
           );
         }
       })
 
   }
+
+  
   
   openCatchTipDialog() {
     this.dialogService.openCatchTipDialog().subscribe();
   }
-
 
   changeHelpOnHover(id) {
     (document.getElementById(id) as HTMLImageElement).src = "assets/img/help.png";    
@@ -118,49 +118,19 @@ export class ChordsComponent implements OnInit {
 
   }
 
-  calculateBunds() {
-    this.bundsByCatch = [[]];
-    this.otherCatchIndexes = [];
-    for (let j = 0; j < ((this.chordCatches.catches.length > 4) ? 4 : (this.chordCatches.catches.length)); j++) {
-      let minBund = this.calculateMinBundByCatchAndCapo(this.chordCatches.catches[j], this.chordCatches.capo);
-      this.bundsByCatch[j] = [minBund, minBund+1, minBund+2, minBund+3, minBund+4];
-    }
-    console.log(this.bundsByCatch)
+  private setHeight() {
+    if (this.chordCatches) {
+      this.customMainHeight = this.chordCatches.catches[0].stringCatches.length * 40 + 'px';
 
-    for (let j = 1; j < (this.bundsByCatch.length > 4 ? 4 : this.bundsByCatch.length); j++) {
-      this.otherCatchIndexes.push(j)
-    }
-  }
-
-  private calculateMinBundByCatchAndCapo(_catch: Catch, capo: number): number {
-    if (this.checkShowCapo(_catch, capo)) {
-        return capo;
-    }
-
-    let minBund: number = 20;
-    for (let stringIndex = 0; stringIndex < _catch.stringCatches.length; stringIndex++) {
-      if (_catch.stringCatches[stringIndex].bund != -1 &&
-        _catch.stringCatches[stringIndex].bund != 0 &&
-        _catch.stringCatches[stringIndex].bund < minBund) {
-        minBund = _catch.stringCatches[stringIndex].bund;
-      }
-    }
-
-    return minBund;
-  }
-
-  private checkShowCapo(_catch: Catch, capo: number): boolean {
-    if (capo != 0 ) {
-      let showCapo: boolean = true;
-      for (let stringIndex = 0; stringIndex < _catch.stringCatches.length; stringIndex++) {
-        if (_catch.stringCatches[stringIndex].bund - capo >= 5) {
-          return showCapo = false;
-        }
+      if (this.chordCatches.catches.length > 1) {
+        this.customOtherHeight = this.chordCatches.catches[1].stringCatches.length * 35 + 'px';
       }
 
-      return true;
+      let pageHeightWithoutAd = this.chordCatches.catches[0].stringCatches.length * 40 +
+        ((this.chordCatches.catches.length > 1) ? this.chordCatches.catches[1].stringCatches.length : 0) * 35 + 615;
+      this.pageHeight = pageHeightWithoutAd + 200 + 'px';
     }
-
-    return false;
   }
+
+  
 }

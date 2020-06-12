@@ -29,7 +29,7 @@
                 </div>
             </div>
         </div>
-        <div *ngIf="chordCatches && bundsByCatch" class="main-catch">
+        <div *ngIf="chordCatches.catches[0]" class="main-catch">
             <div style="width: 50%; margin: 0 30%;">
                 <mat-accordion>
                     <mat-expansion-panel style="background-color: rgb(173, 144, 82); width: 500px">
@@ -84,7 +84,7 @@
                             </div>
                             <div *ngIf="isLoggedIn" style="margin: 0 auto">
                                 <button *ngIf="this.listService.selectedList" class="btn btn-outline-dark" type="button" (click)="addCatchToList(chordCatches.catches[0])">Add to: {{this.listService.selectedList.name}}</button>  
-                                <button *ngIf="!this.listService.selectedList" class="btn btn-outline-dark" type="button" (click)="this.scrollService.scrollToHome()">Select a list! 
+                                <button *ngIf="!this.listService.selectedList" class="btn btn-outline-dark" type="button" (click)="this.scrollService.scrollToListSelector()">Select a list! 
                                     <img src="assets/img/arrow_up.png" width="20" height="20">
                                 </button>                                
                             </div>
@@ -94,6 +94,10 @@
                     </mat-expansion-panel>
                 </mat-accordion>
             </div>
+        </div>
+        <div *ngIf="!chordCatches.catches[0]" class="col">
+            <h2>There are no chord options.</h2>
+            <h5>Sorry! :(</h5>
         </div>
         <hr>
 
@@ -158,7 +162,7 @@
                                     </div>
                                     <div *ngIf="isLoggedIn" style="margin: 0 auto">
                                         <button *ngIf="this.listService.selectedList" class="btn btn-outline-dark" type="button" (click)="addCatchToList(chordCatches.catches[index])">Add to: {{this.listService.selectedList.name}}</button>  
-                                        <button *ngIf="!this.listService.selectedList" class="btn btn-outline-dark" type="button" (click)="this.scrollService.scrollToHome()">Select a list! 
+                                        <button *ngIf="!this.listService.selectedList" class="btn btn-outline-dark" type="button" (click)="this.scrollService.scrollToListSelector()">Select a list! 
                                             <img src="assets/img/arrow_up.png" width="20" height="20">
                                         </button>                                
                                     </div>

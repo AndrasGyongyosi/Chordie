@@ -6,6 +6,7 @@ import httpConfig from '../configs/httpConfig.json';
 import { ChordModel } from '../models/chord.model';
 import { CatchResult } from '../models/catchResult.model';
 import { ChordProperty } from '../models/chordProperty.model';
+import { Catch } from '../models/catch.model';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +19,10 @@ export class ChordService {
   chordPathVariables = this.messageSource.asObservable();
 
   constructor(private http: HttpClient) { }
+
+  changePath(path: string) {
+    this.messageSource.next(path);
+  }
 
   getChordComponents(): Observable<ChordComponent> {
     return this.http.get<ChordComponent>(httpConfig.baseUrl + this.controller + "/components/");
@@ -35,8 +40,52 @@ export class ChordService {
     return this.http.get<ChordProperty[]>(httpConfig.baseUrl + this.controller + "/sound/" + baseSound + "/" + baseType + "/" + chordType + "/" + capo);
   }
 
-  changePath(path: string) {
-    this.messageSource.next(path);
+
+
+
+
+
+
+  calculateBunds(chordCatches) : any {
+    let bundsByCatch = [[]];
+    for (let j = 0; j < ((chordCatches.catches.length > 4) ? 4 : (chordCatches.catches.length)); j++) {
+        let minBund = this.calculateMinBundByCatchAndCapo(chordCatches.catches[j], chordCatches.capo);
+        bundsByCatch[j] = [minBund, minBund+1, minBund+2, minBund+3, minBund+4];
+    }
+    return bundsByCatch;
+    
+  }
+
+  private calculateMinBundByCatchAndCapo(_catch: Catch, capo: number): number {
+    if (this.checkShowCapo(_catch, capo)) {
+        return capo;
+    }
+
+    let minBund: number = 20;
+    for (let stringIndex = 0; stringIndex < _catch.stringCatches.length; stringIndex++) {
+      if (_catch.stringCatches[stringIndex].bund != -1 &&
+        _catch.stringCatches[stringIndex].bund != 0 &&
+        _catch.stringCatches[stringIndex].bund < minBund) {
+        minBund = _catch.stringCatches[stringIndex].bund;
+      }
+    }
+
+    return minBund;
+  }
+
+  private checkShowCapo(_catch: Catch, capo: number): boolean {
+    if (capo != 0 ) {
+      let showCapo: boolean = true;
+      for (let stringIndex = 0; stringIndex < _catch.stringCatches.length; stringIndex++) {
+        if (_catch.stringCatches[stringIndex].bund - capo >= 5) {
+          return showCapo = false;
+        }
+      }
+
+      return true;
+    }
+
+    return false;
   }
 
 }

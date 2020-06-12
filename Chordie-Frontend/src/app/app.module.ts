@@ -23,6 +23,7 @@ import { AngularResizedEventModule } from 'angular-resize-event';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { EditOrNewInstrumentDialogComponent } from './components/dialogs/edit-or-new-instrument-dialog/edit-or-new-instrument-dialog.component';
 import { MatMenuModule } from '@angular/material/menu';
+import { ListSelectorComponent } from './components/main-components/home/list-selector/list-selector.component';
 
 const config = new AuthServiceConfig([
   {
@@ -45,7 +46,8 @@ export function provideConfig() {
     InstrumentAndChordSelectorComponent,
     ChordsComponent,
     CatchTipDialogComponent,
-    EditOrNewListDialogComponent
+    EditOrNewListDialogComponent,
+    ListSelectorComponent
     
   ],
   imports: [

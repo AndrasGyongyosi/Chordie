@@ -22,4 +22,8 @@ export class ScrollService {
   scrollToChords() {
     document.getElementById("chords").scrollIntoView({behavior: "smooth", block: "start"});
   }
+
+  scrollToListSelector() {
+    document.getElementById("chordselector").scrollIntoView({behavior: "smooth", block: "start"});
+  }
 }

@@ -43,8 +43,21 @@ export class InstrumentsAndListsComponent implements OnInit {
       }
     )
 
-    this.listService.listsChanged.subscribe(
-      (lists) => this.lists = lists)
+    if (localStorage.getItem("userIdToken")) {
+
+      this.listService.listsChanged.subscribe(
+        (lists) => {
+          this.lists = lists
+          this.listHeight = lists.length * 70 + 'px'
+        })
+
+      this.instrumentService.instrumentsChanged.subscribe(
+        (instruments) => {
+          this.instruments = instruments
+          this.instrumentHeight = instruments.length * 70 + 'px'
+        })
+
+    }
   }
 
   openNewInstrumentDialog() {
