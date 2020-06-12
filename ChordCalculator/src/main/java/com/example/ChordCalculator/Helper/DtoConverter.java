@@ -65,7 +65,7 @@ public class DtoConverter {
 			StoredStringCatch fsc = new StoredStringCatch();
 			fsc.setFinger(stringCatch.getFinger());
 			fsc.setBund(stringCatch.getBund());
-			fsc.setSound(stringCatch.getSound());
+			fsc.setSound(stringCatch.getSound().getName());
 			fsc.setCatcha(catchEntity);
 			catchEntity.addFavStringCatch(fsc);
 		}
@@ -82,7 +82,7 @@ public class DtoConverter {
 		StringCatchDTO stringCatch = new StringCatchDTO();
 		stringCatch.setBund(fsc.getBund());
 		stringCatch.setFinger(fsc.getFinger());
-		stringCatch.setSound(fsc.getSound());
+		stringCatch.setSound(toLabelStringDTO(Sound.valueOf(fsc.getSound())));
 		return stringCatch;
 	}
 

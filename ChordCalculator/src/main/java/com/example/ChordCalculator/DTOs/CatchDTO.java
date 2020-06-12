@@ -11,5 +11,5 @@ public class CatchDTO {
 
 	CatchPerfection perfection;
 	List<StringCatchDTO> stringCatches;
-	public String listToken;
+	String listToken;
 }

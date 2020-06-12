@@ -159,7 +159,7 @@ public class ChordController {
 				stringCatchDTO.setFinger(stringCatch.getFinger());
 
 				if (sound != null) {
-					stringCatchDTO.setSound(sound.getSoundName());
+					stringCatchDTO.setSound(DtoConverter.toLabelStringDTO(sound));
 					int octave = stringCatch.getString().getOctave(stringCatch.getBund() + capo);
 					stringCatchDTO.setOctave(octave);
 					stringCatchDTO.setMidiCode(sound.getMIDICodeAtOctave(octave));
