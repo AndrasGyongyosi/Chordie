@@ -6,7 +6,7 @@ import lombok.Data;
 public class StringCatchDTO {
 
 	int bund;
-	String sound;
+	LabeledStringDTO sound;
 	int octave;
 	int finger;
 	int midiCode;

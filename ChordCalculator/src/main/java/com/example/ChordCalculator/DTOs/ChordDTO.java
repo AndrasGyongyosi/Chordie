@@ -1,16 +1,15 @@
 package com.example.ChordCalculator.DTOs;
 
-
 import lombok.Data;
 
 @Data
 public class ChordDTO {
-	
-	String baseSound;
-	String baseType;	
-	String chordType;
-	
-	String rootNote;
+
+	LabeledStringDTO baseSound;
+	LabeledStringDTO baseType;
+	LabeledStringDTO chordType;
+
+	LabeledStringDTO rootNote;
 	Integer capo;
 
 	public ChordDTO() {

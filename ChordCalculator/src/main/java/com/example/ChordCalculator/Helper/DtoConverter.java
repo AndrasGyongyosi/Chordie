@@ -2,11 +2,14 @@ package com.example.ChordCalculator.Helper;
 
 import java.util.List;
 
+import com.example.ChordCalculator.DTOs.ChordDTO;
 import com.example.ChordCalculator.DTOs.LabeledStringDTO;
 import com.example.ChordCalculator.DTOs.ListDTO;
 import com.example.ChordCalculator.DTOs.StoredCatchDTO;
 import com.example.ChordCalculator.DTOs.StringCatchDTO;
 import com.example.ChordCalculator.Model.Sound;
+import com.example.ChordCalculator.Model.Chord.BaseType;
+import com.example.ChordCalculator.Model.Chord.ChordType;
 import com.example.ChordCalculator.Model.Entities.StoredCatch;
 import com.example.ChordCalculator.Model.Entities.StoredCatchList;
 import com.example.ChordCalculator.Model.Entities.StoredStringCatch;
@@ -33,18 +36,17 @@ public class DtoConverter {
 		StoredCatchDTO result = new StoredCatchDTO();
 
 		result.setInstrument(catcha.getInstrument());
-		result.setChord(catcha.getChord());
+		ChordDTO chord = new ChordDTO();
+		chord.setBaseType(toLabelStringDTO(BaseType.valueOf(catcha.getBaseType())));
+		chord.setBaseSound(toLabelStringDTO(Sound.valueOf(catcha.getBaseSound())));
+		chord.setCapo(catcha.getCapo());
+		chord.setChordType(toLabelStringDTO(ChordType.valueOf(catcha.getChordType())));
+		chord.setRootNote(toLabelStringDTO(Sound.valueOf(catcha.getRootNote())));
+		result.setChord(chord);
 		List<StringCatchDTO> stringCatchList = Lists.newArrayList();
 
 		catcha.getFavStringCatches().stream().forEach(stringCatch -> stringCatchList.add(toStringCatchDTO(stringCatch)));
 		result.setStringCatches(stringCatchList);
-		return result;
-	}
-
-	public static LabeledStringDTO toLabeledStringDTO(Sound sound) {
-		LabeledStringDTO result = new LabeledStringDTO();
-		result.setLabel(sound.getSoundName());
-		result.setName(sound.name());
 		return result;
 	}
 
@@ -58,25 +60,66 @@ public class DtoConverter {
 	}
 
 	public static StoredCatch toCatch(StoredCatchDTO dto) {
-		StoredCatch favCatch = new StoredCatch();
+		StoredCatch catchEntity = new StoredCatch();
 		for (StringCatchDTO stringCatch : dto.getStringCatches()) {
 			StoredStringCatch fsc = new StoredStringCatch();
 			fsc.setFinger(stringCatch.getFinger());
 			fsc.setBund(stringCatch.getBund());
-			fsc.setSound(stringCatch.getSound());
-			fsc.setCatcha(favCatch);
-			favCatch.addFavStringCatch(fsc);
+			fsc.setSound(stringCatch.getSound().getName());
+			fsc.setCatcha(catchEntity);
+			catchEntity.addFavStringCatch(fsc);
 		}
-		favCatch.setInstrument(dto.getInstrument());
-		favCatch.setChord(dto.getChord());
-		return favCatch;
+		catchEntity.setInstrument(dto.getInstrument());
+		catchEntity.setBaseSound(dto.getChord().getBaseSound().getName());
+		catchEntity.setBaseType(dto.getChord().getBaseType().getName());
+		catchEntity.setChordType(dto.getChord().getChordType().getName());
+		catchEntity.setCapo(dto.getChord().getCapo());
+		catchEntity.setRootNote(dto.getChord().getRootNote().getName());
+		return catchEntity;
 	}
 
 	private static StringCatchDTO toStringCatchDTO(StoredStringCatch fsc) {
 		StringCatchDTO stringCatch = new StringCatchDTO();
 		stringCatch.setBund(fsc.getBund());
 		stringCatch.setFinger(fsc.getFinger());
-		stringCatch.setSound(fsc.getSound());
+		stringCatch.setSound(toLabelStringDTO(Sound.valueOf(fsc.getSound())));
 		return stringCatch;
+	}
+
+	public static LabeledStringDTO toLabelStringDTO(Sound sound) {
+		if (sound == null)
+			return null;
+		LabeledStringDTO res = new LabeledStringDTO();
+		res.setLabel(sound.getSoundName());
+		res.setName(sound.name());
+		return res;
+	}
+
+	public static LabeledStringDTO toLabelStringDTO(BaseType baseType) {
+		if (baseType == null)
+			return null;
+		LabeledStringDTO res = new LabeledStringDTO();
+		res.setLabel(baseType.getName());
+		res.setName(baseType.name());
+		return res;
+	}
+
+	public static LabeledStringDTO toLabelStringDTO(ChordType chordType) {
+		if (chordType == null)
+			return null;
+		LabeledStringDTO res = new LabeledStringDTO();
+		res.setLabel(chordType.getAliases().get(0));
+		res.setName(chordType.name());
+		return res;
+	}
+
+	public static ChordDTO assembleChordDTO(Sound sound, BaseType baseType, ChordType chordType, Sound rootNote, Integer capo) {
+		ChordDTO res = new ChordDTO();
+		res.setBaseSound(toLabelStringDTO(sound));
+		res.setBaseType(toLabelStringDTO(baseType));
+		res.setChordType(toLabelStringDTO(chordType));
+		res.setRootNote(toLabelStringDTO(rootNote));
+		res.setCapo(capo);
+		return res;
 	}
 }
