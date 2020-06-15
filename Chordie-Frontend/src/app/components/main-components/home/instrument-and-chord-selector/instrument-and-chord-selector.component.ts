@@ -31,7 +31,7 @@ export class InstrumentAndChordSelectorComponent implements OnInit, AfterViewIni
 
   public isLoggedIn;
 
-  constructor(private chordService: ChordService, private authService: AuthenticationService, private instrumentService: InstrumentService, public listService: ListService, private scrollService: ScrollService) { }
+  constructor(private chordService: ChordService, private authService: AuthenticationService, private instrumentService: InstrumentService, private listService: ListService, private scrollService: ScrollService) { }
   @ViewChild("typeChord") private _inputElement: ElementRef;
 
   ngOnInit(): void {
@@ -108,14 +108,6 @@ export class InstrumentAndChordSelectorComponent implements OnInit, AfterViewIni
     }
   }
 
-  selectList(list: List) {
-    if (list) {
-      this.listService.selectedList = list;
-    } else {
-      this.listService.selectedList = null;
-    }
-  }
-
   fillInputWithExample() {
     this._inputElement.nativeElement.value = this.randomExample
     this.chordAnalyze(this.randomExample);
@@ -146,7 +138,7 @@ export class InstrumentAndChordSelectorComponent implements OnInit, AfterViewIni
           this.selectedChordLabel.chordType = this.chordComponent.chordTypes.find(c => c.name == data.chordType).label;
           this.selectedChordLabel.capo = this.selectedChordName.capo;
           this.selectedChordLabel.rootNote = data.rootNote ? this.chordComponent.baseSounds.find(c => c.name == data.rootNote).label : null;
-          this.chordService.getSoundsByChordComponents(this.selectedChordName.baseSound, this.selectedChordName.baseType, this.selectedChordName.chordType, this.selectedChordName.capo).subscribe(
+          this.chordService.getSoundsByChordComponents(this.selectedChordName.baseSound, this.selectedChordName.baseType, this.selectedChordName.chordType).subscribe(
             (rootNotes) => this.rootNotes = rootNotes);
         }
       );

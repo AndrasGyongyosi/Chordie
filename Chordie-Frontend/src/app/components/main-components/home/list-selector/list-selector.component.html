@@ -5,8 +5,8 @@
     <div class="col" *ngIf="isLoggedIn" style="margin-top: -10px">
         <button type="button" *ngIf="!lists" class="btn btn-outline-secondary listbutton">Create a list</button>
         <div ngbDropdown class="d-inline-block" style="margin: auto" *ngIf="lists">
-            <button *ngIf="this.listService.selectedList" class="btn btn-outline-secondary listbutton" id="dropdownBasic1" ngbDropdownToggle>{{this.listService.selectedList.name}}</button>
-            <button *ngIf="!this.listService.selectedList" class="btn btn-outline-secondary listbutton" id="dropdownBasic1" ngbDropdownToggle>Select a list</button>
+            <button *ngIf="selectedList" class="btn btn-outline-secondary listbutton" id="dropdownBasic1" ngbDropdownToggle>{{selectedList}}</button>
+            <button *ngIf="selectedList" class="btn btn-outline-secondary listbutton" id="dropdownBasic1" ngbDropdownToggle>Select a list</button>
             <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
                 <button *ngFor="let list of lists" ngbDropdownItem (click)="selectList(list)">{{list.name}}</button>
             </div>

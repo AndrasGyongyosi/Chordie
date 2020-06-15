@@ -4,31 +4,60 @@
         <label for="listname">List name</label>
         <input class="form-control" name="listname" [(ngModel)]="data.name">
     </div>
-
-
-    
-
 </div>
+
 <div *ngIf="data.listToken">
     <h2>Edit your list</h2>
     <div class="form-group">
         <label for="listname">List name</label>
         <input class="form-control" name="listname" [(ngModel)]="data.name">
     </div>
-    <h2 *ngFor="let catch of data.catches">Catch: {{catch.chord}}</h2>
+    <div *ngFor="let catch of data.catches; let i = index;" class="other-catches">
+        <h2>Chord: {{catch.chord.baseSound}}</h2>
+        <hr>
+        <table style="margin-bottom: 10px;">
+            <thead>
+                <tr>
+                    <td></td>
+                    <td *ngFor="let bund of bundsByCatch[i]" style="text-align: center;">
+                        {{bund}}</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let string of catch.stringCatches">
+                    <td *ngIf="string.bund == 0">
+                        <img class="catch-img" src="assets/img/view/nut_open.png"></td>
+                    <td *ngIf="string.bund == -1">
+                        <img class="catch-img" src="assets/img/view/nut_unplayed.png"></td>
+                    <td *ngIf="string.bund != 0 && string.bund != -1">
+                        <img class="catch-img" src="assets/img/view/nut_default.png"></td>
+
+                    <td *ngFor="let bund of bundsByCatch[i]">
+                        <img *ngIf="bund == catch.capo; else elseBlock" class="catch-img"
+                            src="assets/img/view/bund_capo.png">
+                        <ng-template #elseBlock>
+                            <img *ngIf="bund != string.bund" class="catch-img" src="assets/img/view/bund_unplayed.png">
+                            <img *ngIf="bund == string.bund" class="catch-img"
+                                src="assets/img/view/bund_played_{{string.finger}}.png">
+                        </ng-template>
+                    </td>
+                    <td>
+                        {{string.sound}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <button class="btn btn-outline-danger btn-sm" (click)="deleteCatch(catch)">Delete</button>
+    </div>
 </div>
 
-
-
-
-
 <mat-dialog-actions align="end">
-    <button class="btn btn-outline-warning" style="margin-right: 10px;" mat-button
-        (click)="onNoClick()">Cancel</button>
+    <button class="btn btn-outline-warning" style="margin-right: 10px;" mat-button (click)="onNoClick()">Cancel</button>
     <button *ngIf="!data.isPublic" class="btn btn-outline-success" mat-button (click)="Accept()"
         [mat-dialog-close]="data" cdkFocusInitial>Accept</button>
 </mat-dialog-actions>
 
 <mat-dialog-actions align="center">
-<button class="btn btn-outline-danger" mat-button *ngIf="data.listToken" (click)="deleteList()" [mat-dialog-close]="data" cdkFocusInitial>Delete</button>
+    <button class="btn btn-outline-danger" mat-button *ngIf="data.listToken" (click)="deleteList()"
+        [mat-dialog-close]="data" cdkFocusInitial>Delete</button>
 </mat-dialog-actions>

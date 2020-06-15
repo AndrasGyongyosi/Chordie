@@ -83,8 +83,8 @@
                                         height="20"></button>  
                             </div>
                             <div *ngIf="isLoggedIn" style="margin: 0 auto">
-                                <button *ngIf="this.listService.selectedList" class="btn btn-outline-dark" type="button" (click)="addCatchToList(chordCatches.catches[0])">Add to: {{this.listService.selectedList.name}}</button>  
-                                <button *ngIf="!this.listService.selectedList" class="btn btn-outline-dark" type="button" (click)="this.scrollService.scrollToListSelector()">Select a list! 
+                                <button *ngIf="selectedList" class="btn btn-outline-dark" type="button" (click)="addCatchToList(chordCatches.catches[0])">Add to: {{selectedList.name}}</button>  
+                                <button *ngIf="!selectedList" class="btn btn-outline-dark" type="button" (click)="this.scrollService.scrollToListSelector()">Select a list! 
                                     <img src="assets/img/arrow_up.png" width="20" height="20">
                                 </button>                                
                             </div>
@@ -161,8 +161,8 @@
                                                 height="20"></button>  
                                     </div>
                                     <div *ngIf="isLoggedIn" style="margin: 0 auto">
-                                        <button *ngIf="this.listService.selectedList" class="btn btn-outline-dark" type="button" (click)="addCatchToList(chordCatches.catches[index])">Add to: {{this.listService.selectedList.name}}</button>  
-                                        <button *ngIf="!this.listService.selectedList" class="btn btn-outline-dark" type="button" (click)="this.scrollService.scrollToListSelector()">Select a list! 
+                                        <button *ngIf="selectedList" class="btn btn-outline-dark" type="button" (click)="addCatchToList(chordCatches.catches[index])">Add to: {{selectedList.name}}</button>  
+                                        <button *ngIf="!selectedList" class="btn btn-outline-dark" type="button" (click)="this.scrollService.scrollToListSelector()">Select a list! 
                                             <img src="assets/img/arrow_up.png" width="20" height="20">
                                         </button>                                
                                     </div>

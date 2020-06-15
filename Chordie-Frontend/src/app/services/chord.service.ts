@@ -36,8 +36,8 @@ export class ChordService {
     return this.http.get<CatchResult>(httpConfig.baseUrl + this.controller + "/catch/" + pathVariables);
   }
 
-  getSoundsByChordComponents(baseSound, baseType, chordType, capo): Observable<ChordProperty[]> {
-    return this.http.get<ChordProperty[]>(httpConfig.baseUrl + this.controller + "/sound/" + baseSound + "/" + baseType + "/" + chordType + "/" + capo);
+  getSoundsByChordComponents(baseSound, baseType, chordType): Observable<ChordProperty[]> {
+    return this.http.get<ChordProperty[]>(httpConfig.baseUrl + this.controller + "/sound/" + baseSound + "/" + baseType + "/" + chordType);
   }
 
 

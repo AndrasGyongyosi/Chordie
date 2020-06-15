@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ChordService } from 'src/app/services/chord.service';
 import { CatchResult } from 'src/app/models/catchResult.model';
 import { Catch } from 'src/app/models/catch.model';
@@ -6,6 +6,7 @@ import { DialogService } from 'src/app/services/dialog-service';
 import { ListService } from 'src/app/services/list.service';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { ScrollService } from 'src/app/services/scroll.service';
+import { StoredCatch } from 'src/app/models/stored-catch.model';
 
 @Component({
   selector: 'app-chords',
@@ -24,13 +25,16 @@ export class ChordsComponent implements OnInit {
   pageHeight;
   otherCatchIndexes = [];
   public isLoggedIn;
+  public selectedList;
 
-  constructor(private chordService: ChordService, private dialogService: DialogService, public listService: ListService, private authService: AuthenticationService, public scrollService: ScrollService) { }
+  constructor(private chordService: ChordService, private dialogService: DialogService, private listService: ListService, private authService: AuthenticationService, public scrollService: ScrollService) { }
 
   ngOnInit(): void {
     this.isLoggedIn = localStorage.getItem("userIdToken");
     this.authService.isLoggedInEvent.subscribe(
       (isLoggedIn) => this.isLoggedIn = isLoggedIn)
+
+    this.getSelectedList();
 
     // Call if we requested for new chords by sending the parts of chord in path
     this.chordService.chordPathVariables.subscribe(
@@ -58,8 +62,6 @@ export class ChordsComponent implements OnInit {
       })
 
   }
-
-  
   
   openCatchTipDialog() {
     this.dialogService.openCatchTipDialog().subscribe();
@@ -110,11 +112,21 @@ export class ChordsComponent implements OnInit {
   }
 
   addCatchToList(catch_: Catch) {
-    catch_.listToken = this.listService.selectedList.listToken;
-    catch_.chord = this.chordCatches.chord;
-    this.listService.addToList(catch_).subscribe(
-      () => console.log(this.listService.selectedList)
-    );
+    let storedCatch: StoredCatch;
+    storedCatch.instrument = this.chordCatches.instrument;
+    storedCatch.chord.capo = this.chordCatches.capo;
+    storedCatch.chord.rootNote = this.chordCatches.rootNote.label;
+
+    // REWORK!!!!!!!!!
+    storedCatch.chord.chordType = null;
+    storedCatch.chord.baseType = null;
+    storedCatch.chord.baseSound = this.chordCatches.chord;
+    // !!!!!!!!!!!!!!!!!!!
+    
+    storedCatch.listToken = catch_.listToken;
+    storedCatch.stringCatches = catch_.stringCatches;
+
+    this.listService.addToList(storedCatch).subscribe();
 
   }
 
@@ -129,6 +141,13 @@ export class ChordsComponent implements OnInit {
       let pageHeightWithoutAd = this.chordCatches.catches[0].stringCatches.length * 40 +
         ((this.chordCatches.catches.length > 1) ? this.chordCatches.catches[1].stringCatches.length : 0) * 35 + 615;
       this.pageHeight = pageHeightWithoutAd + 200 + 'px';
+    }
+  }
+
+  private getSelectedList() {
+    if (localStorage.getItem("listToken")) {
+      this.listService.getListByToken(localStorage.getItem("listToken")).subscribe(
+        (list) => this.selectedList = list)
     }
   }
 

@@ -12,8 +12,9 @@ export class ListSelectorComponent implements OnInit {
 
   public lists: List[];
   public isLoggedIn;
+  public selectedList;
   
-  constructor(public listService: ListService, private authService: AuthenticationService) { }
+  constructor(private listService: ListService, private authService: AuthenticationService) { }
 
   ngOnInit(): void {
     this.listService.getLists().subscribe(
@@ -26,13 +27,23 @@ export class ListSelectorComponent implements OnInit {
     this.authService.isLoggedInEvent.subscribe(
       (isLoggedIn) => this.isLoggedIn = isLoggedIn
     );
+
+    this.getSelectedList();
   }
 
   selectList(list: List) {
     if (list) {
-      this.listService.selectedList = list;
+      localStorage.setItem("listToken", list.listToken);
+      this.getSelectedList();
     } else {
-      this.listService.selectedList = null;
+      localStorage.removeItem("listToken");
+    }
+  }
+
+  private getSelectedList() {
+    if (localStorage.getItem("listToken")) {
+      this.listService.getListByToken(localStorage.getItem("listToken")).subscribe(
+        (list) => this.selectedList = list)
     }
   }
 }
