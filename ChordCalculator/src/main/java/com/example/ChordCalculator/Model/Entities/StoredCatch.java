@@ -12,6 +12,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.example.ChordCalculator.Helper.RandomToken;
+import com.example.ChordCalculator.Model.Sound;
+import com.example.ChordCalculator.Model.Chord.BaseType;
+import com.example.ChordCalculator.Model.Chord.ChordType;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -38,11 +41,11 @@ public class StoredCatch {
 
 	private String instrument;
 
-	private String baseSound;
-	private String baseType;
-	private String chordType;
+	private Sound baseSound;
+	private BaseType baseType;
+	private ChordType chordType;
 
-	private String rootNote;
+	private Sound rootNote;
 	private Integer capo;
 
 	public StoredCatch() {
@@ -101,35 +104,35 @@ public class StoredCatch {
 		this.stringCatches = stringCatches;
 	}
 
-	public String getBaseSound() {
+	public Sound getBaseSound() {
 		return baseSound;
 	}
 
-	public void setBaseSound(String baseSound) {
+	public void setBaseSound(Sound baseSound) {
 		this.baseSound = baseSound;
 	}
 
-	public String getBaseType() {
+	public BaseType getBaseType() {
 		return baseType;
 	}
 
-	public void setBaseType(String baseType) {
+	public void setBaseType(BaseType baseType) {
 		this.baseType = baseType;
 	}
 
-	public String getChordType() {
+	public ChordType getChordType() {
 		return chordType;
 	}
 
-	public void setChordType(String chordType) {
+	public void setChordType(ChordType chordType) {
 		this.chordType = chordType;
 	}
 
-	public String getRootNote() {
+	public Sound getRootNote() {
 		return rootNote;
 	}
 
-	public void setRootNote(String rootNote) {
+	public void setRootNote(Sound rootNote) {
 		this.rootNote = rootNote;
 	}
 

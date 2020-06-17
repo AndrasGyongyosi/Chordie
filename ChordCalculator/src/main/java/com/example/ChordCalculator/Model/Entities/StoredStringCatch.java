@@ -6,6 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import com.example.ChordCalculator.Model.Sound;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
@@ -23,7 +24,7 @@ public class StoredStringCatch {
 
 	private int bund;
 
-	private String sound;
+	private Sound sound;
 
 	public StoredStringCatch() {
 
@@ -61,11 +62,11 @@ public class StoredStringCatch {
 		this.bund = bund;
 	}
 
-	public String getSound() {
+	public Sound getSound() {
 		return sound;
 	}
 
-	public void setSound(String sound) {
+	public void setSound(Sound sound) {
 		this.sound = sound;
 	}
 }
