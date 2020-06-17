@@ -14,6 +14,7 @@ export class ListService {
   private controller = 'list'
 
   public listsChanged = new EventEmitter();
+  public selectedListChanged = new EventEmitter();
 
   constructor(private http: HttpClient) { }
 
@@ -22,21 +23,18 @@ export class ListService {
   }
 
   getLists(): Observable<List[]> {
-    return this.http.get<List[]>(httpConfig.baseUrl + this.controller + "byuser/" + localStorage.getItem("userIdToken"));
+    console.log( localStorage.getItem("userIdToken"))
+    return this.http.get<List[]>(httpConfig.baseUrl + this.controller + "/byuser/" + localStorage.getItem("userIdToken"));
   }
 
   getListByToken(listToken: string): Observable<List> {
-    return this.http.get<List>(httpConfig.baseUrl + this.controller + "bytoken/" + listToken)
+    return this.http.get<List>(httpConfig.baseUrl + this.controller + "/bytoken/" + listToken)
   }
 
   addToList(addedCatch: StoredCatch): Observable<boolean> {
+    console.log(addedCatch)
     return this.http.post<boolean>(httpConfig.baseUrl + this.controller + "/addCatch", 
-      {chord: {
-        baseSound: addedCatch.chord.baseSound, 
-        baseType: addedCatch.chord.baseType, 
-        chordType: addedCatch.chord.chordType, 
-        rootNote: addedCatch.chord.rootNote, 
-        capo: addedCatch.chord.capo}, instrument: addedCatch.instrument});
+      {chord: addedCatch.chord, instrument: addedCatch.instrument, listToken: addedCatch.listToken, stringCatches: addedCatch.stringCatches});
   }
 
   deleteList(listToken: String): Observable<void> {

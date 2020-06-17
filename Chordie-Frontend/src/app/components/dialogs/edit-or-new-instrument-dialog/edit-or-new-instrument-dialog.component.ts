@@ -50,6 +50,11 @@ import { ChordService } from 'src/app/services/chord.service';
     onNoClick(): void {
       console.log("close");
       this.data.action = "reject";
+      
+      // Need to do this, because without page refresh the dialog shows inconsistence data
+      this.instrumentService.getInstrumentsByUser().subscribe(
+        (instrument) => this.instrumentService.instrumentsChanged.emit(instrument))
+      
       this.dialogRef.close();
     }
   

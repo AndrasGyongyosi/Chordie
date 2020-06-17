@@ -12,17 +12,17 @@
                     </a>
                 </div>
                 <div style="display:block">
-                    <h5 style="display:inline-block;">( {{chordCatches.chord}} )</h5>
-                    <h5 *ngIf="chordCatches.rootNote != null" style="display:inline-block">&nbsp;/ Root Note:
-                        {{chordCatches.rootNote.label}}</h5>
-                    <h5 *ngIf="chordCatches.capo != 0" style="display:inline-block">&nbsp;/ Capo: {{chordCatches.capo}}
+                    <h5 style="display:inline-block;">( {{chordCatches.chord.baseSound.label}}{{chordCatches.chord.baseType.label}}{{chordCatches.chord.chordType.label}} )</h5>
+                    <h5 *ngIf="chordCatches.chord.rootNote != null" style="display:inline-block">&nbsp;/ Root Note:
+                        {{chordCatches.chord.rootNote.label}}</h5>
+                    <h5 *ngIf="chordCatches.chord.capo != 0" style="display:inline-block">&nbsp;/ Capo: {{chordCatches.chord.capo}}
                     </h5>
                 </div>
             </div>
             <div class="col">
-                <div *ngIf="chordCatches.capo != 0" class="alert alert-warning alert-dismissible fade show"
+                <div *ngIf="chordCatches.chord.capo != 0" class="alert alert-warning alert-dismissible fade show"
                     style="width:250px; margin-bottom: -100px; margin-right: auto; margin-left: auto; padding: 5px;">
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <button type="button" class="close" data-dismiss="alert" (click)="dik()">&times;</button>
                     <p style="font-size: 20px;">INFO</p>
                     <hr>
                     <p>If the capo is too far from the catches, we will not show it.</p>
@@ -55,7 +55,7 @@
                                                 <img class="main-catch-img" src="assets/img/view/nut_default.png"></td>
 
                                             <td *ngFor="let bund of bundsByCatch[0]">
-                                                <img *ngIf="bund == chordCatches.capo; else elseBlock"
+                                                <img *ngIf="bund == chordCatches.chord.capo; else elseBlock"
                                                     class="main-catch-img" src="assets/img/view/bund_capo.png">
                                                 <ng-template #elseBlock>
                                                     <img *ngIf="bund != string.bund" class="main-catch-img"
@@ -64,8 +64,8 @@
                                                         src="assets/img/view/bund_played_{{string.finger}}.png">
                                                 </ng-template>
                                             </td>
-                                            <td>
-                                                {{string.sound}}
+                                            <td *ngIf="string.sound">
+                                                {{string.sound.label}}
                                             </td>
                                         </tr>
                                     </tbody>
@@ -133,7 +133,7 @@
                                                             src="assets/img/view/nut_default.png"></td>
 
                                                     <td *ngFor="let bund of bundsByCatch[index]">
-                                                        <img *ngIf="bund == chordCatches.capo; else elseBlock"
+                                                        <img *ngIf="bund == chordCatches.chord.capo; else elseBlock"
                                                             class="other-catch-img" src="assets/img/view/bund_capo.png">
                                                         <ng-template #elseBlock>
                                                             <img *ngIf="bund != string.bund" class="other-catch-img"
@@ -142,8 +142,8 @@
                                                                 src="assets/img/view/bund_played_{{string.finger}}.png">
                                                         </ng-template>
                                                     </td>
-                                                    <td style="text-align: left;">
-                                                        &nbsp;{{string.sound}}
+                                                    <td style="text-align: left;" *ngIf="string.sound">
+                                                        &nbsp;{{string.sound.label}}
                                                     </td>
                                                 </tr>
                                             </tbody>

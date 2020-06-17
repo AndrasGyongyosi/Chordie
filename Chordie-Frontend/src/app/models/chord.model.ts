@@ -1,9 +1,9 @@
 import { ChordProperty } from './chordProperty.model';
 
-export interface ChordModel {
-    baseSound?: string,
-    baseType?: string,
-    chordType?: string,
-    rootNote?: string,
+export interface Chord {
+    baseSound?: ChordProperty,
+    baseType?: ChordProperty,
+    chordType?: ChordProperty,
+    rootNote?: ChordProperty,
     capo?: number
 }

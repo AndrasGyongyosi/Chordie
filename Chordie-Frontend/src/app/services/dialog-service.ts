@@ -15,7 +15,6 @@ export class DialogService {
   constructor(public dialog: MatDialog) { }
 
   openEditOrNewInstrumentDialog(instrument: Instrument, baseSounds): Observable<any> {
-
     const dialogRef = this.dialog.open(EditOrNewInstrumentDialogComponent, {
       data: {
         baseSounds: baseSounds,
@@ -43,6 +42,7 @@ export class DialogService {
         name: list ? list.name : '',
         listToken: list ? list.listToken : '' ,
         catches: list ? list.catches : [],
+        deletedCatches: [],
         action: ''
       }
     });

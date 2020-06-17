@@ -78,7 +78,11 @@ table {
     width: 1180px;
     margin-left: unquote("-webkit-calc((100% - 1180px)/2)");
     margin-right: unquote("-webkit-calc((100% - 1180px)/2)");
-    background-color: rgb(172, 152, 111);
+    background-image: url("/assets/img/brown.gif");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
     border: 2px solid black;
     border-radius: 10px;
     padding-bottom: 20px;

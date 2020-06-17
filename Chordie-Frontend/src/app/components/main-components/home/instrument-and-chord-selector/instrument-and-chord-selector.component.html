@@ -3,7 +3,7 @@
         <div ngbDropdown class="d-inline-block">
             <button *ngIf="selectedInstrument" class="btn btn-outline-warning" id="dropdownBasic1" ngbDropdownToggle style="width: 200px; font-size: 16px; height:50px;">{{selectedInstrument.name}}</button>
             <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                <button *ngFor="let instrument of instruments" ngbDropdownItem (click)="selectInstrument(instrument)">{{instrument.name}}</button>
+                <button *ngFor="let instrument of instruments" ngbDropdownItem (click)="selectComponent(instrument, 'instrument')">{{instrument.name}}</button>
             </div>
         </div>
     </div>
@@ -16,47 +16,47 @@
 <div *ngIf="chordComponent" class="row row2">
     <div class="col">
         <div ngbDropdown class="d-inline-block">
-            <button *ngIf="selectedChordLabel && selectedChordLabel.baseSound" class="btn btn-outline-warning" id="dropdownBasic1" ngbDropdownToggle style="width: 150px;">{{selectedChordLabel.baseSound}}</button>
-            <button *ngIf="!selectedChordLabel || !selectedChordLabel.baseSound" class="btn btn-outline-warning" id="dropdownBasic1" ngbDropdownToggle style="width: 150px;">Base Sound</button>
+            <button *ngIf="selectedChord && selectedChord.baseSound" class="btn btn-outline-warning" id="dropdownBasic1" ngbDropdownToggle style="width: 150px;">{{selectedChord.baseSound.label}}</button>
+            <button *ngIf="!selectedChord || !selectedChord.baseSound" class="btn btn-outline-warning" id="dropdownBasic1" ngbDropdownToggle style="width: 150px;">Base Sound</button>
             <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                <button *ngFor="let baseSound of chordComponent.baseSounds" ngbDropdownItem (click)="selectBaseSound(baseSound.label)">{{baseSound.label}}</button>
+                <button *ngFor="let baseSound of chordComponent.baseSounds" ngbDropdownItem (click)="selectComponent(baseSound, 'baseSound')">{{baseSound.label}}</button>
             </div>
         </div>
     </div>
     <div class="col">
         <div ngbDropdown class="d-inline-block">
-            <button *ngIf="selectedChordLabel && selectedChordLabel.baseType" class="btn btn-outline-warning" id="dropdownBasic1" ngbDropdownToggle style="width: 150px;">{{selectedChordLabel.baseType}}</button>
-            <button *ngIf="!selectedChordLabel || !selectedChordLabel.baseType" class="btn btn-outline-warning" id="dropdownBasic1" ngbDropdownToggle style="width: 150px;">Base Type</button>
+            <button *ngIf="selectedChord && selectedChord.baseType" class="btn btn-outline-warning" id="dropdownBasic1" ngbDropdownToggle style="width: 150px;">{{selectedChord.baseType.label}}</button>
+            <button *ngIf="!selectedChord || !selectedChord.baseType" class="btn btn-outline-warning" id="dropdownBasic1" ngbDropdownToggle style="width: 150px;">Base Type</button>
             <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                <button *ngFor="let baseType of chordComponent.baseTypes" ngbDropdownItem (click)="selectBaseType(baseType.label)">{{baseType.label}}</button>
+                <button *ngFor="let baseType of chordComponent.baseTypes" ngbDropdownItem (click)="selectComponent(baseType, 'baseType')">{{baseType.label}}</button>
             </div>
         </div>
     </div>
     <div class="col">
         <div ngbDropdown class="d-inline-block">
-            <button *ngIf="selectedChordLabel && selectedChordLabel.chordType" class="btn btn-outline-warning" id="dropdownBasic1" ngbDropdownToggle style="width: 150px;">{{selectedChordLabel.chordType}}</button>
-            <button *ngIf="!selectedChordLabel || !selectedChordLabel.chordType" class="btn btn-outline-warning" id="dropdownBasic1" ngbDropdownToggle style="width: 150px;">Chord Type</button>
+            <button *ngIf="selectedChord && selectedChord.chordType" class="btn btn-outline-warning" id="dropdownBasic1" ngbDropdownToggle style="width: 150px;">{{selectedChord.chordType.label}}</button>
+            <button *ngIf="!selectedChord || !selectedChord.chordType" class="btn btn-outline-warning" id="dropdownBasic1" ngbDropdownToggle style="width: 150px;">Chord Type</button>
             <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                <button *ngFor="let chordType of chordComponent.chordTypes" ngbDropdownItem (click)="selectChordType(chordType.label)">{{chordType.label}}</button>
+                <button *ngFor="let chordType of chordComponent.chordTypes" ngbDropdownItem (click)="selectComponent(chordType, 'chordType')">{{chordType.label}}</button>
             </div>
         </div>
     </div>
     <div class="col">
         <div ngbDropdown class="d-inline-block">
-            <button *ngIf="selectedChordLabel && selectedChordLabel.rootNote" class="btn btn-outline-secondary" id="dropdownBasic1" ngbDropdownToggle style="width: 150px;">{{selectedChordLabel.rootNote}}</button>
-            <button *ngIf="!selectedChordLabel || !selectedChordLabel.rootNote" class="btn btn-outline-secondary" id="dropdownBasic1" ngbDropdownToggle style="width: 150px;">Root Note</button>
+            <button *ngIf="selectedChord && selectedChord.rootNote" class="btn btn-outline-secondary" id="dropdownBasic1" ngbDropdownToggle style="width: 150px;">{{selectedChord.rootNote.label}}</button>
+            <button *ngIf="!selectedChord || !selectedChord.rootNote" class="btn btn-outline-secondary" id="dropdownBasic1" ngbDropdownToggle style="width: 150px;">Root Note</button>
             <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                <button ngbDropdownItem (click)="selectRootNote('')"></button>
-                <button *ngFor="let rootNote of rootNotes" ngbDropdownItem (click)="selectRootNote(rootNote.label)">{{rootNote.label}}</button>
+                <button ngbDropdownItem (click)="selectComponent(null, 'rootNote')"></button>
+                <button *ngFor="let rootNote of rootNotes" ngbDropdownItem (click)="selectComponent(rootNote, 'rootNote')">{{rootNote.label}}</button>
             </div>
         </div>
     </div>
     <div class="col">
         <div ngbDropdown class="d-inline-block">
-            <button *ngIf="selectedChordLabel" class="btn btn-outline-secondary" id="dropdownBasic1" ngbDropdownToggle style="width: 150px;"><i>Capo:</i> {{selectedChordLabel.capo}}</button>
-            <button *ngIf="!selectedChordLabel" class="btn btn-outline-secondary" id="dropdownBasic1" ngbDropdownToggle style="width: 150px;"><i>Capo</i></button>
+            <button *ngIf="selectedChord" class="btn btn-outline-secondary" id="dropdownBasic1" ngbDropdownToggle style="width: 150px;"><i>Capo:</i> {{selectedChord.capo}}</button>
+            <button *ngIf="!selectedChord" class="btn btn-outline-secondary" id="dropdownBasic1" ngbDropdownToggle style="width: 150px;"><i>Capo</i></button>
             <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                <button *ngFor="let capo of capos" ngbDropdownItem (click)="selectCapo(capo)">{{capo}}</button>
+                <button *ngFor="let capo of capos" ngbDropdownItem (click)="selectComponent(capo, 'capo')">{{capo}}</button>
             </div>
         </div>
     </div> 

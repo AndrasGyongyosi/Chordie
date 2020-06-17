@@ -7,6 +7,7 @@ import { ListService } from 'src/app/services/list.service';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { ScrollService } from 'src/app/services/scroll.service';
 import { StoredCatch } from 'src/app/models/stored-catch.model';
+import { List } from 'src/app/models/list.model';
 
 @Component({
   selector: 'app-chords',
@@ -25,7 +26,7 @@ export class ChordsComponent implements OnInit {
   pageHeight;
   otherCatchIndexes = [];
   public isLoggedIn;
-  public selectedList;
+  public selectedList: List;
 
   constructor(private chordService: ChordService, private dialogService: DialogService, private listService: ListService, private authService: AuthenticationService, public scrollService: ScrollService) { }
 
@@ -35,6 +36,9 @@ export class ChordsComponent implements OnInit {
       (isLoggedIn) => this.isLoggedIn = isLoggedIn)
 
     this.getSelectedList();
+
+    this.listService.selectedListChanged.subscribe(
+      (list) => this.selectedList = list)
 
     // Call if we requested for new chords by sending the parts of chord in path
     this.chordService.chordPathVariables.subscribe(
@@ -80,7 +84,7 @@ export class ChordsComponent implements OnInit {
     for (let string = 0; string < _catch.stringCatches.length; string++) {
       if (_catch.stringCatches[string].bund != -1) {
         let audio = new Audio();
-        let sound = _catch.stringCatches[string].sound.split('#').join('s');
+        let sound = _catch.stringCatches[string].sound.label.split('#').join('s');
         audio.src = "assets/audio/guitar-acoustic/" + sound + "3.mp3";
         audios.push(audio);
       }
@@ -99,7 +103,7 @@ export class ChordsComponent implements OnInit {
     for (let string = 0; string < _catch.stringCatches.length; string++) {
       if (_catch.stringCatches[string].bund != -1) {
         let audio = new Audio();
-        let sound = _catch.stringCatches[string].sound.split('#').join('s');
+        let sound = _catch.stringCatches[string].sound.label.split('#').join('s');
         audio.src = "assets/audio/guitar-acoustic/" + sound + "3.mp3";
         audios.push(audio);
       }
@@ -112,26 +116,29 @@ export class ChordsComponent implements OnInit {
   }
 
   addCatchToList(catch_: Catch) {
-    let storedCatch: StoredCatch;
-    storedCatch.instrument = this.chordCatches.instrument;
-    storedCatch.chord.capo = this.chordCatches.capo;
-    storedCatch.chord.rootNote = this.chordCatches.rootNote.label;
-
-    // REWORK!!!!!!!!!
-    storedCatch.chord.chordType = null;
-    storedCatch.chord.baseType = null;
-    storedCatch.chord.baseSound = this.chordCatches.chord;
-    // !!!!!!!!!!!!!!!!!!!
+    console.log(this.chordCatches.chord.rootNote)
+    let storedCatch: StoredCatch = {};
     
-    storedCatch.listToken = catch_.listToken;
+    storedCatch.instrument = "Gitár";
+    storedCatch.chord = this.chordCatches.chord;
+    storedCatch.chord.rootNote = this.chordCatches.chord.rootNote;
+    storedCatch.listToken = this.selectedList.listToken;
     storedCatch.stringCatches = catch_.stringCatches;
+    console.log(storedCatch.stringCatches)
+    console.log(catch_.stringCatches)
 
-    this.listService.addToList(storedCatch).subscribe();
-
+    this.listService.addToList(storedCatch).subscribe(
+      (data) => {
+        if (data) {
+          console.log("catch added: "+ data)
+        }
+        this.listService.getLists().subscribe(
+          (lists) => this.listService.listsChanged.emit(lists));
+      });  
   }
 
   private setHeight() {
-    if (this.chordCatches) {
+    if (this.chordCatches.catches.length > 0) {
       this.customMainHeight = this.chordCatches.catches[0].stringCatches.length * 40 + 'px';
 
       if (this.chordCatches.catches.length > 1) {
@@ -151,5 +158,10 @@ export class ChordsComponent implements OnInit {
     }
   }
 
+  async dik() {
+    let audio = new Audio();
+    audio.src = "assets/audio/7.wav"
+    audio.play();
+  }
   
 }

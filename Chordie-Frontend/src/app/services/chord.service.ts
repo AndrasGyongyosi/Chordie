@@ -3,10 +3,11 @@ import { HttpClient } from '@angular/common/http'
 import { Observable, BehaviorSubject } from 'rxjs';
 import { ChordComponent } from '../models/chordComponent.model';
 import httpConfig from '../configs/httpConfig.json';
-import { ChordModel } from '../models/chord.model';
+import { Chord } from '../models/chord.model';
 import { CatchResult } from '../models/catchResult.model';
 import { ChordProperty } from '../models/chordProperty.model';
 import { Catch } from '../models/catch.model';
+import { StoredCatch } from '../models/stored-catch.model';
 
 @Injectable({
   providedIn: 'root'
@@ -28,8 +29,8 @@ export class ChordService {
     return this.http.get<ChordComponent>(httpConfig.baseUrl + this.controller + "/components/");
   }
 
-  chordTextAnalyze(text): Observable<ChordModel> {
-    return this.http.get<ChordModel>(httpConfig.baseUrl + this.controller + "/text/" + encodeURIComponent(text));
+  chordTextAnalyze(text): Observable<Chord> {
+    return this.http.get<Chord>(httpConfig.baseUrl + this.controller + "/text/" + encodeURIComponent(text));
   }
 
   getChordCatches(pathVariables): Observable<CatchResult> {
@@ -49,7 +50,17 @@ export class ChordService {
   calculateBunds(chordCatches) : any {
     let bundsByCatch = [[]];
     for (let j = 0; j < ((chordCatches.catches.length > 4) ? 4 : (chordCatches.catches.length)); j++) {
-        let minBund = this.calculateMinBundByCatchAndCapo(chordCatches.catches[j], chordCatches.capo);
+        let minBund = this.calculateMinBundByCatchAndCapo(chordCatches.catches[j], chordCatches.chord.capo);
+        bundsByCatch[j] = [minBund, minBund+1, minBund+2, minBund+3, minBund+4];
+    }
+    return bundsByCatch;
+    
+  }
+
+  calculateBunds2(chordCatches: StoredCatch[]) : any {
+    let bundsByCatch = [[]];
+    for (let j = 0; j < chordCatches.length; j++) {
+        let minBund = this.calculateMinBundByCatchAndCapo(chordCatches[j], chordCatches[j].chord.capo);
         bundsByCatch[j] = [minBund, minBund+1, minBund+2, minBund+3, minBund+4];
     }
     return bundsByCatch;

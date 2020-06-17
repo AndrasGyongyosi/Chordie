@@ -1,7 +1,8 @@
 import { Catch } from './catch.model';
-import { ChordModel } from './chord.model';
+import { Chord } from './chord.model';
 
 export interface StoredCatch extends Catch {
-    chord: ChordModel,
-    instrument: string
+    chord?: Chord,
+    instrument?: string,
+    token?: string
 }

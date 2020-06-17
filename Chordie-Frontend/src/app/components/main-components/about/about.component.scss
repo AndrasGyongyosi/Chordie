@@ -1,4 +1,27 @@
-.aboutTitle {
-    text-align: center;
-    padding-top: 5%;
+.aboutcontent {
+    width: 1024px;
+    margin-left: unquote("-webkit-calc((100% - 1024px)/2)");
+    margin-right: unquote("-webkit-calc((100% - 1024px)/2)");
+    background-image: url("/assets/img/brown.gif");
+    border: 2px solid black;
+    border-radius: 10px;
+    padding-bottom: 20px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    margin-top: 80px;
+}
+
+.introduction {
+    height: 60vh;
+    min-height: 500px;
+}
+
+.profileimg img {
+    transition: transform .5s ease;
+  }
+
+.profileimg:hover img {
+    transform: scale(1.3); 
 }

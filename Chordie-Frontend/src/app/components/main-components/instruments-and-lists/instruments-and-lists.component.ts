@@ -36,17 +36,16 @@ export class InstrumentsAndListsComponent implements OnInit {
       (chordComponent) => this.chordComponents = chordComponent
     );
 
-    this.listService.getLists().subscribe(
-      (lists) => {
-        this.lists = lists
-        this.listHeight = lists.length * 70 + 'px'
-      }
-    )
-
     if (localStorage.getItem("userIdToken")) {
+      this.listService.getLists().subscribe(
+        (lists) => {
+          this.lists = lists
+          this.listHeight = lists.length * 70 + 'px'
+        })
 
       this.listService.listsChanged.subscribe(
         (lists) => {
+          console.log("lists changed")
           this.lists = lists
           this.listHeight = lists.length * 70 + 'px'
         })
@@ -143,6 +142,9 @@ export class InstrumentsAndListsComponent implements OnInit {
           
           if (data.action == "accept") {
             console.log(data)
+            data.deletedCatches.forEach(catch_ => {
+              this.listService.deleteCatch(catch_.token).subscribe(() => console.log("Catch deleted: " + catch_))
+            });
             // Edit list 
         }
 
@@ -156,6 +158,10 @@ export class InstrumentsAndListsComponent implements OnInit {
                   this.listService.listsChanged.emit(lists);
                 });        
               })
+
+            if (data.listToken == localStorage.getItem("listToken")) {
+              this.listService.selectedListChanged.emit(null);
+            }
         }
 
       }    

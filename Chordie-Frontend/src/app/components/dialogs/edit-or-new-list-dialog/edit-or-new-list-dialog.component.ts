@@ -12,12 +12,21 @@ import { ListService } from 'src/app/services/list.service';
 export class EditOrNewListDialogComponent implements OnInit {
 
   public bundsByCatch: [number?, number?, number?, number?, number?][] = [[]];
+  public customHeight = '250px';
 
 
   constructor(public dialogRef: MatDialogRef<EditOrNewListDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any, private chordService: ChordService, private listService: ListService) { }
 
   ngOnInit(): void {
-    this.bundsByCatch = this.chordService.calculateBunds(this.data.catches);
+    console.log(this.data.catches)
+    if (this.data.catches.length != 0) {
+      console.log(this.data.catches.length)
+      this.bundsByCatch = this.chordService.calculateBunds2(this.data.catches);
+      console.log(this.bundsByCatch)
+      if (this.data.catches.length > 1) {
+        this.customHeight = '455px';
+      }
+    }
   }
 
   Accept() {
@@ -27,15 +36,28 @@ export class EditOrNewListDialogComponent implements OnInit {
 
   onNoClick(): void {
     console.log("close");
+    this.data.deletedCatches = [];
+    this.listService.getLists().subscribe(
+      (lists) => this.listService.listsChanged.emit(lists))
     this.dialogRef.close();
   }
 
   deleteList() {
-    this.data.action = "delete";
+    if (confirm("Are you sure to want to delete?"))
+      this.data.action = "delete";
   }
 
   deleteCatch(storedCatch: StoredCatch) {
-    this.listService.deleteCatch(storedCatch.listToken).subscribe();
-  }
+    console.log(storedCatch)
 
+    const index: number = this.data.catches.indexOf(storedCatch);
+    if (index !== -1) {
+        this.data.catches.splice(index, 1);
+        this.bundsByCatch.splice(index, 1);
+    }  
+
+    console.log(index)
+
+    this.data.deletedCatches.push(storedCatch)
+  }
 }

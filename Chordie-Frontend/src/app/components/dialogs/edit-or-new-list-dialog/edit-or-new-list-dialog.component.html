@@ -12,52 +12,68 @@
         <label for="listname">List name</label>
         <input class="form-control" name="listname" [(ngModel)]="data.name">
     </div>
-    <div *ngFor="let catch of data.catches; let i = index;" class="other-catches">
-        <h2>Chord: {{catch.chord.baseSound}}</h2>
-        <hr>
-        <table style="margin-bottom: 10px;">
-            <thead>
-                <tr>
-                    <td></td>
-                    <td *ngFor="let bund of bundsByCatch[i]" style="text-align: center;">
-                        {{bund}}</td>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let string of catch.stringCatches">
-                    <td *ngIf="string.bund == 0">
-                        <img class="catch-img" src="assets/img/view/nut_open.png"></td>
-                    <td *ngIf="string.bund == -1">
-                        <img class="catch-img" src="assets/img/view/nut_unplayed.png"></td>
-                    <td *ngIf="string.bund != 0 && string.bund != -1">
-                        <img class="catch-img" src="assets/img/view/nut_default.png"></td>
+    <hr>
+    <div *ngIf="data.catches.length != 0">
+        <h5>You saved the following catches:</h5>
+        <cdk-virtual-scroll-viewport itemSize="{{data.catches.length}}"
+            [ngStyle]="{'min-height': '250px', 'height': customHeight, 'width': '450px'}">
+            <div *ngFor="let catch of data.catches; let i = index;">
+                <div style="display: block; margin-left: 10px">
+                    <h2 style="display: inline-block;">{{catch.chord.baseSound.label}}{{catch.chord.baseType.name}}{{catch.chord.chordType.label}}</h2>
+                    <h5 style="display: inline-block;" *ngIf="catch.chord.rootNote">&nbsp;/&nbsp;rootnote: {{catch.chord.rootNote.label}}</h5>
+                    <h5 style="display: inline-block;" *ngIf="catch.chord.capo != 0">&nbsp;/&nbsp;capo: {{catch.chord.capo}}</h5>
+                    <button class="btn btn-outline-danger btn-sm" style="float: right;" (click)="deleteCatch(catch)">Delete</button>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <td></td>
+                            <td *ngFor="let bund of bundsByCatch[i]" style="text-align: center;">
+                                {{bund}}</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let string of catch.stringCatches">
+                            <td *ngIf="string.bund == 0">
+                                <img class="catch-img" src="assets/img/view/nut_open.png"></td>
+                            <td *ngIf="string.bund == -1">
+                                <img class="catch-img" src="assets/img/view/nut_unplayed.png"></td>
+                            <td *ngIf="string.bund != 0 && string.bund != -1">
+                                <img class="catch-img" src="assets/img/view/nut_default.png"></td>
 
-                    <td *ngFor="let bund of bundsByCatch[i]">
-                        <img *ngIf="bund == catch.capo; else elseBlock" class="catch-img"
-                            src="assets/img/view/bund_capo.png">
-                        <ng-template #elseBlock>
-                            <img *ngIf="bund != string.bund" class="catch-img" src="assets/img/view/bund_unplayed.png">
-                            <img *ngIf="bund == string.bund" class="catch-img"
-                                src="assets/img/view/bund_played_{{string.finger}}.png">
-                        </ng-template>
-                    </td>
-                    <td>
-                        {{string.sound}}
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <button class="btn btn-outline-danger btn-sm" (click)="deleteCatch(catch)">Delete</button>
+                            <td *ngFor="let bund of bundsByCatch[i]">
+                                <img *ngIf="bund == catch.chord.capo; else elseBlock" class="catch-img"
+                                    src="assets/img/view/bund_capo.png">
+                                <ng-template #elseBlock>
+                                    <img *ngIf="bund != string.bund" class="catch-img"
+                                        src="assets/img/view/bund_unplayed.png">
+                                    <img *ngIf="bund == string.bund" class="catch-img"
+                                        src="assets/img/view/bund_played_{{string.finger}}.png">
+                                </ng-template>
+                            </td>
+                            <td>
+                                <p *ngIf="string.sound" style="margin: 0; padding: 0">&nbsp;{{string.sound.label}}</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <hr style="width: 250px">
+            </div>
+        </cdk-virtual-scroll-viewport>
     </div>
+    <div *ngIf="data.catches.length == 0">
+        <h5 style="text-align: center;">You haven't saved any catches!</h5>
+    </div>
+    <hr>
 </div>
 
-<mat-dialog-actions align="end">
+<mat-dialog-actions align="center">
     <button class="btn btn-outline-warning" style="margin-right: 10px;" mat-button (click)="onNoClick()">Cancel</button>
     <button *ngIf="!data.isPublic" class="btn btn-outline-success" mat-button (click)="Accept()"
         [mat-dialog-close]="data" cdkFocusInitial>Accept</button>
 </mat-dialog-actions>
 
-<mat-dialog-actions align="center">
-    <button class="btn btn-outline-danger" mat-button *ngIf="data.listToken" (click)="deleteList()"
-        [mat-dialog-close]="data" cdkFocusInitial>Delete</button>
+<mat-dialog-actions align="center" style="margin-top: 20px">
+    <button class="btn btn-outline-danger btn-sm" mat-button *ngIf="data.listToken" (click)="deleteList()"
+        [mat-dialog-close]="data" cdkFocusInitial>Delete list</button>
 </mat-dialog-actions>
