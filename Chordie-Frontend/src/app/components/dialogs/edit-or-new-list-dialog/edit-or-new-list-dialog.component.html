@@ -68,7 +68,8 @@
 </div>
 
 <mat-dialog-actions align="center">
-    <button class="btn btn-outline-warning" style="margin-right: 10px;" mat-button (click)="onNoClick()">Cancel</button>
+    <button class="btn btn-outline-warning" style="margin-right: 10px;" mat-button (click)="onNoClick()"
+        [mat-dialog-close]="data" cdkFocusInitial>Cancel</button>
     <button *ngIf="!data.isPublic" class="btn btn-outline-success" mat-button (click)="Accept()"
         [mat-dialog-close]="data" cdkFocusInitial>Accept</button>
 </mat-dialog-actions>

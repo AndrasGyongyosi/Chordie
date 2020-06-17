@@ -3,8 +3,8 @@
         <p>Log in to manage your lists and create new instruments!</p>  
     </div>  
     <div class="col" *ngIf="isLoggedIn" style="margin-top: -10px">
-        <button type="button" *ngIf="lists.length == 0" class="btn btn-outline-secondary listbutton" (click)="openNewListDialog()">Create a list</button>
-        <div ngbDropdown class="d-inline-block" style="margin: auto" *ngIf="lists.length != 0">
+        <button type="button" *ngIf="!lists || lists.length == 0" class="btn btn-outline-secondary listbutton" (click)="openNewListDialog()">Create a list</button>
+        <div ngbDropdown class="d-inline-block" style="margin: auto" *ngIf="lists && lists.length != 0">
             <button *ngIf="selectedList" class="btn btn-outline-secondary listbutton" id="dropdownBasic1" ngbDropdownToggle>{{selectedList.name}}</button>
             <button *ngIf="!selectedList" class="btn btn-outline-secondary listbutton" id="dropdownBasic1" ngbDropdownToggle>Select a list</button>
             <div ngbDropdownMenu aria-labelledby="dropdownBasic1">

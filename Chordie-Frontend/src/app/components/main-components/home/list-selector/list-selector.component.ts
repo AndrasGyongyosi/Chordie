@@ -31,6 +31,9 @@ export class ListSelectorComponent implements OnInit {
         (lists) => this.lists = lists)
     }
 
+    this.listService.selectedListChanged.subscribe(
+      (list) => this.selectedList = list)
+
     this.getSelectedList();
   }
 

@@ -47,7 +47,7 @@ export class ChordService {
 
 
 
-  calculateBunds(chordCatches) : any {
+  calculateBundsForCatch(chordCatches: CatchResult) : any {
     let bundsByCatch = [[]];
     for (let j = 0; j < ((chordCatches.catches.length > 4) ? 4 : (chordCatches.catches.length)); j++) {
         let minBund = this.calculateMinBundByCatchAndCapo(chordCatches.catches[j], chordCatches.chord.capo);
@@ -57,7 +57,7 @@ export class ChordService {
     
   }
 
-  calculateBunds2(chordCatches: StoredCatch[]) : any {
+  calculateBundsForStoredCatch(chordCatches: StoredCatch[]) : any {
     let bundsByCatch = [[]];
     for (let j = 0; j < chordCatches.length; j++) {
         let minBund = this.calculateMinBundByCatchAndCapo(chordCatches[j], chordCatches[j].chord.capo);

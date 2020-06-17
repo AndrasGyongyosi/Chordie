@@ -46,8 +46,11 @@
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
-    <button class="btn btn-outline-warning" style="margin-right: 10px;" mat-button (click)="onNoClick()">Cancel</button>
-    <button *ngIf="!data.isPublic" class="btn btn-outline-success" mat-button (click)="Accept()" [mat-dialog-close]="data" cdkFocusInitial>Accept</button>
+    <button class="btn btn-outline-warning" style="margin-right: 10px;" mat-button (click)="onNoClick()" 
+        [mat-dialog-close]="data" cdkFocusInitial>Cancel</button>
+    <button *ngIf="!data.isPublic" class="btn btn-outline-success" mat-button (click)="Accept()" 
+        [mat-dialog-close]="data" cdkFocusInitial>Accept</button>
 </mat-dialog-actions>
 
-<button class="btn btn-outline-danger" mat-button *ngIf="data.instrumentToken && !data.isPublic" (click)="deleteInstrument()" [mat-dialog-close]="data" cdkFocusInitial>Delete</button>
+<button class="btn btn-outline-danger" mat-button *ngIf="data.instrumentToken && !data.isPublic" (click)="deleteInstrument()" 
+    [mat-dialog-close]="data" cdkFocusInitial>Delete</button>

@@ -76,10 +76,10 @@
                         <div class="row">
                             <div class="footer" style="margin: 0 auto">
 
-                                    <button class="btn btn-outline-dark" mat-menu-item (click)="playAudio(chordCatches.catches[0])"><img id="notemain"
+                                    <button class="btn btn-outline-dark" mat-menu-item (click)="playAudio(chordCatches.catches[0], false)"><img id="notemain"
                                         src="assets/img/note.png" width="20"
                                         height="20"></button>
-                                    <button class="btn btn-outline-dark" mat-menu-item (click)="playAudioChord(chordCatches.catches[0])"><img id="notemain" src="assets/img/notes.png" width="20"
+                                    <button class="btn btn-outline-dark" mat-menu-item (click)="playAudio(chordCatches.catches[0], true)"><img id="notemain" src="assets/img/notes.png" width="20"
                                         height="20"></button>  
                             </div>
                             <div *ngIf="isLoggedIn" style="margin: 0 auto">
@@ -154,10 +154,10 @@
                                  <div class="row">
                                     <div class="footer" style="margin: 0 auto">
   
-                                            <button class="btn btn-outline-dark" mat-menu-item (click)="playAudio(chordCatches.catches[index])"><img id="noteOther{{i}}"
+                                            <button class="btn btn-outline-dark" mat-menu-item (click)="playAudio(chordCatches.catches[index], false)"><img id="noteOther{{i}}"
                                                 src="assets/img/note.png" width="20"
                                                 height="20"></button>
-                                            <button class="btn btn-outline-dark" mat-menu-item (click)="playAudioChord(chordCatches.catches[index])"><img id="noteOthers{{i}}" src="assets/img/notes.png" width="20"
+                                            <button class="btn btn-outline-dark" mat-menu-item (click)="playAudio(chordCatches.catches[index], true)"><img id="noteOthers{{i}}" src="assets/img/notes.png" width="20"
                                                 height="20"></button>  
                                     </div>
                                     <div *ngIf="isLoggedIn" style="margin: 0 auto">

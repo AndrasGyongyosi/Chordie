@@ -108,6 +108,11 @@ export class InstrumentsAndListsComponent implements OnInit {
               })
           }
           
+        } 
+        else {
+          // Call this, when user click outside the dialog for avoid inconsistence data
+          this.instrumentService.getInstrumentsByUser().subscribe(
+            (instrument) => this.instrumentService.instrumentsChanged.emit(instrument))
         }
       });
   }
@@ -163,8 +168,12 @@ export class InstrumentsAndListsComponent implements OnInit {
               this.listService.selectedListChanged.emit(null);
             }
         }
-
-      }    
+      } 
+      // Call this, when user click outside the dialog for avoid inconsistence data
+      else {
+        this.listService.getLists().subscribe(
+          (lists) => this.listService.listsChanged.emit(lists))
+      } 
     });
   }
 

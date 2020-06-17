@@ -49,7 +49,7 @@ import { ChordService } from 'src/app/services/chord.service';
   
     onNoClick(): void {
       console.log("close");
-      this.data.action = "reject";
+      this.data.action = "noclick";
       
       // Need to do this, because without page refresh the dialog shows inconsistence data
       this.instrumentService.getInstrumentsByUser().subscribe(

@@ -51,7 +51,7 @@ export class ChordsComponent implements OnInit {
                 console.log("getChordCatches: ")
                 console.log(chordCatches)
                 this.chordCatches = chordCatches
-                this.bundsByCatch = this.chordService.calculateBunds(chordCatches)
+                this.bundsByCatch = this.chordService.calculateBundsForCatch(chordCatches)
                 console.log(this.bundsByCatch)
 
                 this.otherCatchIndexes = [];
@@ -79,40 +79,30 @@ export class ChordsComponent implements OnInit {
     (document.getElementById(id) as HTMLImageElement).src = "assets/img/help2.png";
   }
 
-  playAudio(_catch: Catch){
+  playAudio(catch_: Catch, playTogether: boolean) {
     let audios = [];
-    for (let string = 0; string < _catch.stringCatches.length; string++) {
-      if (_catch.stringCatches[string].bund != -1) {
+    for (let string = 0; string < catch_.stringCatches.length; string++) {
+      if (catch_.stringCatches[string].bund != -1) {
         let audio = new Audio();
-        let sound = _catch.stringCatches[string].sound.label.split('#').join('s');
-        audio.src = "assets/audio/guitar-acoustic/" + sound + "3.mp3";
+        let sound = catch_.stringCatches[string].sound.label.split('#').join('s');
+        audio.src = "assets/audio/guitar-acoustic/" + sound + (catch_.stringCatches[string].octave+3) + ".mp3";
         audios.push(audio);
       }
     }
 
-    for (let i = 0; i < audios.length; i++) {
+    if (playTogether) {
+      for (let i = 0; i < audios.length; i++) {
+          audios[i].load();
+          audios[i].play();
+      }
+    } else {
+      for (let i = 0; i < audios.length; i++) {
         setTimeout(function() {
           audios[i].load();
           audios[i].play();
         }, 500 + i*500)
-      }  
-  }
-
-  playAudioChord(_catch: Catch){
-    let audios = [];
-    for (let string = 0; string < _catch.stringCatches.length; string++) {
-      if (_catch.stringCatches[string].bund != -1) {
-        let audio = new Audio();
-        let sound = _catch.stringCatches[string].sound.label.split('#').join('s');
-        audio.src = "assets/audio/guitar-acoustic/" + sound + "3.mp3";
-        audios.push(audio);
-      }
-    }
-
-    for (let i = 0; i < audios.length; i++) {
-          audios[i].load();
-          audios[i].play();
-      }  
+      } 
+    }    
   }
 
   addCatchToList(catch_: Catch) {

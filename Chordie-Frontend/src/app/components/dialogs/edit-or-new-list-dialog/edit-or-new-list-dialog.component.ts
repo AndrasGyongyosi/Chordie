@@ -15,13 +15,14 @@ export class EditOrNewListDialogComponent implements OnInit {
   public customHeight = '250px';
 
 
-  constructor(public dialogRef: MatDialogRef<EditOrNewListDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any, private chordService: ChordService, private listService: ListService) { }
+  constructor(public dialogRef: MatDialogRef<EditOrNewListDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any, 
+    private chordService: ChordService, private listService: ListService) { }
 
   ngOnInit(): void {
     console.log(this.data.catches)
     if (this.data.catches.length != 0) {
       console.log(this.data.catches.length)
-      this.bundsByCatch = this.chordService.calculateBunds2(this.data.catches);
+      this.bundsByCatch = this.chordService.calculateBundsForStoredCatch(this.data.catches);
       console.log(this.bundsByCatch)
       if (this.data.catches.length > 1) {
         this.customHeight = '455px';
@@ -37,9 +38,9 @@ export class EditOrNewListDialogComponent implements OnInit {
   onNoClick(): void {
     console.log("close");
     this.data.deletedCatches = [];
+    this.data.action = "noclick";
     this.listService.getLists().subscribe(
       (lists) => this.listService.listsChanged.emit(lists))
-    this.dialogRef.close();
   }
 
   deleteList() {
