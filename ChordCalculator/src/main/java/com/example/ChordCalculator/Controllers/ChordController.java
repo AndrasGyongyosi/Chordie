@@ -54,6 +54,7 @@ public class ChordController {
 
 		List<LabeledStringDTO> baseTypes = Lists.newArrayList();
 		Lists.newArrayList(BaseType.values()).stream().forEach(baseType -> baseTypes.add(DtoConverter.toLabelStringDTO(baseType)));
+		result.setBaseTypes(baseTypes);
 
 		List<LabeledStringDTO> chordTypes = Lists.newArrayList();
 		Lists.newArrayList(ChordType.values()).stream().forEach(chordType -> chordTypes.add(DtoConverter.toLabelStringDTO(chordType)));

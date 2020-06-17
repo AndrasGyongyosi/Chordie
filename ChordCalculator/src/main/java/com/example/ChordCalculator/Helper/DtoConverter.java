@@ -36,12 +36,8 @@ public class DtoConverter {
 		StoredCatchDTO result = new StoredCatchDTO();
 
 		result.setInstrument(catcha.getInstrument());
-		ChordDTO chord = new ChordDTO();
-		chord.setBaseType(toLabelStringDTO(BaseType.valueOf(catcha.getBaseType())));
-		chord.setBaseSound(toLabelStringDTO(Sound.valueOf(catcha.getBaseSound())));
-		chord.setCapo(catcha.getCapo());
-		chord.setChordType(toLabelStringDTO(ChordType.valueOf(catcha.getChordType())));
-		chord.setRootNote(toLabelStringDTO(Sound.valueOf(catcha.getRootNote())));
+		result.setToken(catcha.getCatchToken());
+		ChordDTO chord = assembleChordDTO(catcha.getBaseSound(), catcha.getBaseType(), catcha.getChordType(), catcha.getRootNote(), catcha.getCapo());
 		result.setChord(chord);
 		List<StringCatchDTO> stringCatchList = Lists.newArrayList();
 
@@ -54,7 +50,7 @@ public class DtoConverter {
 		User user = userRepo.findByUserToken(dto.getUserToken());
 
 		StoredCatchList catchList = new StoredCatchList();
-		catchList.setName((String) dto.getName());
+		catchList.setName(dto.getName());
 		catchList.setUser(user);
 		return catchList;
 	}
@@ -65,16 +61,16 @@ public class DtoConverter {
 			StoredStringCatch fsc = new StoredStringCatch();
 			fsc.setFinger(stringCatch.getFinger());
 			fsc.setBund(stringCatch.getBund());
-			fsc.setSound(stringCatch.getSound().getName());
+			fsc.setSound(toSound(stringCatch.getSound()));
 			fsc.setCatcha(catchEntity);
 			catchEntity.addFavStringCatch(fsc);
 		}
 		catchEntity.setInstrument(dto.getInstrument());
-		catchEntity.setBaseSound(dto.getChord().getBaseSound().getName());
-		catchEntity.setBaseType(dto.getChord().getBaseType().getName());
-		catchEntity.setChordType(dto.getChord().getChordType().getName());
+		catchEntity.setBaseSound(toSound(dto.getChord().getBaseSound()));
+		catchEntity.setBaseType(toBaseType(dto.getChord().getBaseType()));
+		catchEntity.setChordType(toChordType(dto.getChord().getChordType()));
 		catchEntity.setCapo(dto.getChord().getCapo());
-		catchEntity.setRootNote(dto.getChord().getRootNote().getName());
+		catchEntity.setRootNote(toSound(dto.getChord().getRootNote()));
 		return catchEntity;
 	}
 
@@ -82,7 +78,7 @@ public class DtoConverter {
 		StringCatchDTO stringCatch = new StringCatchDTO();
 		stringCatch.setBund(fsc.getBund());
 		stringCatch.setFinger(fsc.getFinger());
-		stringCatch.setSound(toLabelStringDTO(Sound.valueOf(fsc.getSound())));
+		stringCatch.setSound(toLabelStringDTO(fsc.getSound()));
 		return stringCatch;
 	}
 
@@ -111,6 +107,24 @@ public class DtoConverter {
 		res.setLabel(chordType.getAliases().get(0));
 		res.setName(chordType.name());
 		return res;
+	}
+
+	private static Sound toSound(LabeledStringDTO dto) {
+		if (dto == null || dto.getName() == null)
+			return null;
+		return Sound.valueOf(dto.getName());
+	}
+
+	private static BaseType toBaseType(LabeledStringDTO dto) {
+		if (dto == null || dto.getName() == null)
+			return null;
+		return BaseType.valueOf(dto.getName());
+	}
+
+	private static ChordType toChordType(LabeledStringDTO dto) {
+		if (dto == null || dto.getName() == null)
+			return null;
+		return ChordType.valueOf(dto.getName());
 	}
 
 	public static ChordDTO assembleChordDTO(Sound sound, BaseType baseType, ChordType chordType, Sound rootNote, Integer capo) {
