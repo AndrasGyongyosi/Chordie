@@ -41,12 +41,14 @@ class CatchView extends React.Component{
         return arr;
     }
 
-    getBunds(min, string, capo, max){
+    getBunds(min, string, max){
         var resultArray = [];
+        let capo = (this.props.chord!=undefined ? this.props.chord.capo : this.props.catcha.chord.capo);
         for(var i=min; i<=max;i++){
             if (i==capo){
                 resultArray.push(-1);
-            } else if (i==string){
+            }
+            else if (i==string.bund){
                 resultArray.push(1);
             }
             else{
@@ -57,6 +59,11 @@ class CatchView extends React.Component{
         return resultArray;
     }
 
+    getChordName(chord){
+        if (chord!=null)
+        return chord.baseSound.label + chord.baseType.label + chord.chordType.label + (chord.rooNote!=null ? "/"+chord.rootNote.label : "") + (chord.capo!=0 ? "."+chord.capo : "");
+        return "";
+    }
     render(){
         // view -> page, list or print
         const{catcha, favoritLists, token, instrument, view} = this.props;
@@ -68,9 +75,9 @@ class CatchView extends React.Component{
         let imgWidth = (this.props.view=="print" ? "40" : "60");
         return(
             <React.Fragment>
-                <div className={"catchView "+gridSize} onClick={()=>this.props.click(catcha)} >
+                <div className={"catchView "+gridSize} onClick={()=>(this.props.click==undefined ? console.log('clicked') :this.props.click(catcha))} >
                 <div className="row">
-                    <p className="col-lg-11 inline" hidden={view=="page"}>{catcha.chord+" on "+catcha.instrument}</p>
+                    <p className="col-lg-11 inline" hidden={view=="page"}>{this.getChordName(catcha.chord)+" on "+catcha.instrument}</p>
                     
                     <button className="col-lg-1 btn" onClick={this.props.removeCatch} hidden={view!="list"}><i class="fa fa-close"></i></button>
                 </div>
@@ -104,7 +111,7 @@ class CatchView extends React.Component{
                                 }
                                 </td>
                                 {
-                                    this.getBunds(min, string.bund, catcha.capo, max).map(bund => {
+                                    this.getBunds(min, string, max).map(bund => {
                                         var playedBundSrc = "view/bund_played_"+string.finger+".png";
                                         return (<td>
                                                     {
@@ -118,7 +125,7 @@ class CatchView extends React.Component{
                                                 </td>);
                                     })
                                 }
-                                <td>{string.sound}</td>
+                                <td>{string.sound == null ? "" : string.sound.label}</td>
                             </tr>
                         )
                     })}

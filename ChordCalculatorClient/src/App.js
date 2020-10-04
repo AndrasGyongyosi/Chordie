@@ -15,7 +15,7 @@ class App extends React.Component {
     };
     getFavoritLists = (token) => {
         if (token!=null){
-            let listURL = myURLs.getURL() + "list/"+token;
+            let listURL = myURLs.getURL() + "list/byuser/"+token;
             console.log(listURL);
                     axios.get(encodeURI(listURL))
                         .then(res => {

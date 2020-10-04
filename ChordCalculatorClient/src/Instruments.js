@@ -73,7 +73,7 @@ class Instruments extends React.Component {
         console.log("Modal cancelled.");
     };
     approveEditInstrument = () => {
-        let editInstrumentURL = myURLs.getURL()+"instrument/edit/"+this.state.detailedInstrument.token;
+        let editInstrumentURL = myURLs.getURL()+"instrument/edit/"+this.state.detailedInstrument.instrumentToken;
         let passedParameters = {
             "name": document.getElementById("instrumentName").value,
             "maxBundDif": document.getElementById("maxBundDif").value,
@@ -97,7 +97,7 @@ class Instruments extends React.Component {
 
     removeInstrument=()=>{
         console.log(this);
-        let deleteInstrumentURL = myURLs.getURL()+"instrument/delete/"+this.state.detailedInstrument.token;
+        let deleteInstrumentURL = myURLs.getURL()+"instrument/delete/"+this.state.detailedInstrument.instrumentToken;
         axios.delete(deleteInstrumentURL).then(res=>{
             window.location.reload();
         });

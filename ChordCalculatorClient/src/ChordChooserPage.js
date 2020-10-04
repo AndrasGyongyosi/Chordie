@@ -100,12 +100,12 @@ class ChordChooserList extends React.Component{
                 .then(res => {
                     console.log(this.freeTextChordURL);
                     console.log(res);
-                    document.getElementById('baseSoundSelect').value=res.data.baseSound;
-                    document.getElementById('baseTypeSelect').value=res.data.baseType;
-                    document.getElementById('chordTypeSelect').value=res.data.chordType;
-                    this.ancestor.setState({baseSound: res.data.baseSound,
-                                            baseType: res.data.baseType,
-                                            chordType: res.data.chordType,
+                    document.getElementById('baseSoundSelect').value=res.data.baseSound.name;
+                    document.getElementById('baseTypeSelect').value=res.data.baseType.name;
+                    document.getElementById('chordTypeSelect').value=res.data.chordType.name;
+                    this.ancestor.setState({baseSound: res.data.baseSound.name,
+                                            baseType: res.data.baseType.name,
+                                            chordType: res.data.chordType.name,
                                             rootNote: res.data.rootNote,
                                             capo: res.data.capo
                                         });
@@ -198,13 +198,13 @@ class ChordChooserPage extends React.Component {
 
     isValid() {
         console.log(this);
-        console.log((this.state.instrumental && this.state.instrumental.token != null && this.state.baseSound != null && this.state.baseType != null && this.state.chordType != null));
-        return (this.state.instrumental && this.state.instrumental.token != null && this.state.baseSound != null && this.state.baseType != null && this.state.chordType != null);
+        console.log((this.state.instrumental && this.state.instrumental.instrumentToken != null && this.state.baseSound != null && this.state.baseType != null && this.state.chordType != null));
+        return (this.state.instrumental && this.state.instrumental.instrumentToken != null && this.state.baseSound != null && this.state.baseType != null && this.state.chordType != null);
     }
 
     catchQuery(){
             if (this.isValid()) {
-            let catchURL = myURLs.getURL() + "chord/catch/" + this.state.instrumental.token + "/" + this.state.baseSound + "/" + this.state.baseType + "/" + this.state.chordType+"/"+this.state.rootNote+"/"+this.state.capo;
+            let catchURL = myURLs.getURL() + "chord/catch/" + this.state.instrumental.instrumentToken + "/" + this.state.baseSound + "/" + this.state.baseType + "/" + this.state.chordType+"/"+this.state.rootNote+"/"+this.state.capo;
             axios.get(catchURL)
                     .then(res => {
                         console.log(res.data);
