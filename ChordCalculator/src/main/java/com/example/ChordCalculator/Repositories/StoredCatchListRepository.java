@@ -1,4 +1,4 @@
-package com.example.ChordCalculator.Model.Repositories;
+package com.example.ChordCalculator.Repositories;
 
 import com.example.ChordCalculator.Model.Entities.StoredCatchList;
 import com.example.ChordCalculator.Model.Entities.Instrument;
