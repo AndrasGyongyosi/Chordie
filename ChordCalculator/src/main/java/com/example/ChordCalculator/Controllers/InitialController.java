@@ -2,12 +2,12 @@ package com.example.ChordCalculator.Controllers;
 
 import com.example.ChordCalculator.Exceptions.InaudibleVoiceException;
 import com.example.ChordCalculator.Model.Entities.Rule.*;
+import com.example.ChordCalculator.Repositories.InstrumentRepository;
+import com.example.ChordCalculator.Repositories.MStringRepository;
+import com.example.ChordCalculator.Repositories.RuleRepository;
+import com.example.ChordCalculator.Repositories.UserRepository;
 import com.example.ChordCalculator.Model.Entities.Instrument;
 import com.example.ChordCalculator.Model.Entities.MString;
-import com.example.ChordCalculator.Model.Repositories.InstrumentRepository;
-import com.example.ChordCalculator.Model.Repositories.MStringRepository;
-import com.example.ChordCalculator.Model.Repositories.RuleRepository;
-import com.example.ChordCalculator.Model.Repositories.UserRepository;
 
 import lombok.extern.slf4j.Slf4j;
 

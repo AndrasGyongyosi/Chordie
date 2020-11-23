@@ -14,7 +14,7 @@ import com.example.ChordCalculator.Model.Entities.StoredCatch;
 import com.example.ChordCalculator.Model.Entities.StoredCatchList;
 import com.example.ChordCalculator.Model.Entities.StoredStringCatch;
 import com.example.ChordCalculator.Model.Entities.User;
-import com.example.ChordCalculator.Model.Repositories.UserRepository;
+import com.example.ChordCalculator.Repositories.UserRepository;
 import com.google.api.client.util.Lists;
 
 public class DtoConverter {

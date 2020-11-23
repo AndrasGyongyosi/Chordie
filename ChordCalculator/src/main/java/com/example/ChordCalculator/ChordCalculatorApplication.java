@@ -12,8 +12,6 @@ public class ChordCalculatorApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(ChordCalculatorApplication.class, args);
-
-
 	}
 //	@SuppressWarnings("deprecation")
 //	@Bean

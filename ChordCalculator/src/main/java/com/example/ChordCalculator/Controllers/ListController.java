@@ -20,9 +20,9 @@ import com.example.ChordCalculator.Helper.DtoConverter;
 import com.example.ChordCalculator.Model.Entities.StoredCatch;
 import com.example.ChordCalculator.Model.Entities.StoredCatchList;
 import com.example.ChordCalculator.Model.Entities.User;
-import com.example.ChordCalculator.Model.Repositories.StoredCatchListRepository;
-import com.example.ChordCalculator.Model.Repositories.StoredCatchRepository;
-import com.example.ChordCalculator.Model.Repositories.UserRepository;
+import com.example.ChordCalculator.Repositories.StoredCatchListRepository;
+import com.example.ChordCalculator.Repositories.StoredCatchRepository;
+import com.example.ChordCalculator.Repositories.UserRepository;
 import com.google.api.client.util.Lists;
 
 import lombok.extern.slf4j.Slf4j;

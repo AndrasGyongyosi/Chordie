@@ -28,7 +28,7 @@ import com.example.ChordCalculator.Model.Chord.BaseType;
 import com.example.ChordCalculator.Model.Chord.Chord;
 import com.example.ChordCalculator.Model.Chord.ChordType;
 import com.example.ChordCalculator.Model.Entities.Instrument;
-import com.example.ChordCalculator.Model.Repositories.InstrumentRepository;
+import com.example.ChordCalculator.Repositories.InstrumentRepository;
 import com.google.common.collect.Lists;
 
 import lombok.extern.slf4j.Slf4j;
@@ -63,14 +63,14 @@ public class ChordController {
 		return result;
 	}
 
-	@RequestMapping(path = "/text/{text}")
-	public ChordDTO chordTextAnalyze(@PathVariable String text) throws BadExpressionException {
-		logger.info("Chord components request by text. [ text=" + text + "]");
-		text = text.trim().toLowerCase();
+	@RequestMapping(path = "/text/{chordString}")
+	public ChordDTO chordTextAnalyze(@PathVariable String chordString) throws BadExpressionException {
+		logger.info("Chord components request by text. [ text=" + chordString + "]");
+		chordString = chordString.trim().toLowerCase();
 		ChordDTO result = new ChordDTO();
-
-		String[] parts = text.split("<");
-		text = parts[0];
+		try {
+		String[] parts = chordString.split("<");
+		chordString = parts[0];
 		if (parts.length > 1) {
 			String capoPart = parts[1];
 
@@ -78,24 +78,24 @@ public class ChordController {
 			result.setCapo(Integer.parseInt(capoPart));
 		}
 
-		parts = text.split(">");
-		String chordPart = parts[0];
+		parts = chordString.split(">");
+		chordString = parts[0];
 		if (parts.length > 1) {
 			String rootNotePart = parts[1];
 			result.setRootNote(DtoConverter.toLabelStringDTO(getSoundFromChordText(rootNotePart)));
 
 		}
-		Sound baseSound = getSoundFromChordText(chordPart);
+		Sound baseSound = getSoundFromChordText(chordString);
 
 		result.setBaseSound(DtoConverter.toLabelStringDTO(baseSound));
 
-		String chordPartWithoutBS = chordPart.substring(baseSound.name().length());
+		chordString = chordString.substring(baseSound.name().length());
 
 		int chordTypeLength = 0;
 		ChordType chordType = null;
 		for (ChordType ct : ChordType.values()) {
 			for (String alias : ct.getAliases()) {
-				if (chordPartWithoutBS.endsWith(alias.toLowerCase()) && chordTypeLength <= alias.length()) {
+				if (chordString.endsWith(alias.toLowerCase()) && chordTypeLength <= alias.length()) {
 					chordType = ct;
 					chordTypeLength = alias.length();
 				}
@@ -103,22 +103,27 @@ public class ChordController {
 		}
 		result.setChordType(DtoConverter.toLabelStringDTO(chordType));
 
-		String chordPartWithoutBSandCT = chordPartWithoutBS.substring(0, chordPartWithoutBS.length() - chordTypeLength);
+		chordString = chordString.substring(0, chordString.length() - chordTypeLength);
 
 		int baseTypeLength = 0;
 		BaseType baseType = null;
 		for (BaseType bt : BaseType.values()) {
 			for (String alias : bt.getAliases()) {
-				if (chordPartWithoutBSandCT.contains(alias.toLowerCase()) && baseTypeLength <= alias.length()) {
+				if (chordString.contains(alias.toLowerCase()) && baseTypeLength <= alias.length()) {
 					baseType = bt;
 					baseTypeLength = alias.length();
 				}
 			}
 		}
-		if (baseSound == null || chordType == null || baseType == null) {
-			throw new BadExpressionException("Wrong free text chord: " + text);
-		}
 		result.setBaseType(DtoConverter.toLabelStringDTO(baseType));
+		
+		if (baseSound == null || chordType == null || baseType == null) {
+			throw new BadExpressionException("Wrong free text chord: " + chordString);
+		}
+		} catch(Exception e) {
+			throw new BadExpressionException(e.getMessage());
+		}
+		
 
 		return result;
 
