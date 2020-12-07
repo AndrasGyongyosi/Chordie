@@ -1,4 +1,4 @@
-package hu.chordie.ChordCalculator.Model.Entities;
+package hu.chordie.chordCalculator.model.entities;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,7 +8,7 @@ import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
-import hu.chordie.ChordCalculator.Model.Sound;
+import hu.chordie.chordCalculator.model.Sound;
 
 @Entity
 public class StoredStringCatch {

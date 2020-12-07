@@ -1,9 +1,10 @@
-package hu.chordie.ChordCalculator.Model.Entities.Rule;
-
-import hu.chordie.ChordCalculator.Model.StringCatch;
-import hu.chordie.ChordCalculator.Model.Entities.Instrument;
+package hu.chordie.chordCalculator.model.entities.rule;
 
 import javax.persistence.Entity;
+
+import hu.chordie.chordCalculator.model.StringCatch;
+import hu.chordie.chordCalculator.model.entities.Instrument;
+
 import java.util.List;
 
 @Entity

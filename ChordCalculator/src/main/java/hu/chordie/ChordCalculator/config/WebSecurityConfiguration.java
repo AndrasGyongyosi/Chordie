@@ -1,4 +1,4 @@
-package hu.chordie.ChordCalculator.Config;
+package hu.chordie.chordCalculator.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

@@ -1,9 +1,9 @@
-package hu.chordie.ChordCalculator.DTOs;
+package hu.chordie.chordCalculator.dtos;
 
 
 import java.util.List;
 
-import hu.chordie.ChordCalculator.Model.CatchPerfection;
+import hu.chordie.chordCalculator.model.CatchPerfection;
 import lombok.Data;
 
 @Data

@@ -1,4 +1,4 @@
-package hu.chordie.ChordCalculator.Model;
+package hu.chordie.chordCalculator.model;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;

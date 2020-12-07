@@ -1,22 +1,22 @@
-package hu.chordie.ChordCalculator.Helper;
+package hu.chordie.chordCalculator.helper;
 
 import java.util.List;
 
 import com.google.api.client.util.Lists;
 
-import hu.chordie.ChordCalculator.DTOs.ChordDTO;
-import hu.chordie.ChordCalculator.DTOs.LabeledStringDTO;
-import hu.chordie.ChordCalculator.DTOs.ListDTO;
-import hu.chordie.ChordCalculator.DTOs.StoredCatchDTO;
-import hu.chordie.ChordCalculator.DTOs.StringCatchDTO;
-import hu.chordie.ChordCalculator.Model.Sound;
-import hu.chordie.ChordCalculator.Model.Chord.BaseType;
-import hu.chordie.ChordCalculator.Model.Chord.ChordType;
-import hu.chordie.ChordCalculator.Model.Entities.StoredCatch;
-import hu.chordie.ChordCalculator.Model.Entities.StoredCatchList;
-import hu.chordie.ChordCalculator.Model.Entities.StoredStringCatch;
-import hu.chordie.ChordCalculator.Model.Entities.User;
-import hu.chordie.ChordCalculator.Repositories.UserRepository;
+import hu.chordie.chordCalculator.dtos.ChordDTO;
+import hu.chordie.chordCalculator.dtos.LabeledStringDTO;
+import hu.chordie.chordCalculator.dtos.ListDTO;
+import hu.chordie.chordCalculator.dtos.StoredCatchDTO;
+import hu.chordie.chordCalculator.dtos.StringCatchDTO;
+import hu.chordie.chordCalculator.model.Sound;
+import hu.chordie.chordCalculator.model.chord.BaseType;
+import hu.chordie.chordCalculator.model.chord.ChordType;
+import hu.chordie.chordCalculator.model.entities.StoredCatch;
+import hu.chordie.chordCalculator.model.entities.StoredCatchList;
+import hu.chordie.chordCalculator.model.entities.StoredStringCatch;
+import hu.chordie.chordCalculator.model.entities.User;
+import hu.chordie.chordCalculator.repositories.UserRepository;
 
 public class DtoConverter {
 

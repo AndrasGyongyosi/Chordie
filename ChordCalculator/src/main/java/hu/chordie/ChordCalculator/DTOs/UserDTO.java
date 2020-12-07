@@ -1,4 +1,4 @@
-package hu.chordie.ChordCalculator.DTOs;
+package hu.chordie.chordCalculator.dtos;
 
 import lombok.Data;
 

@@ -1,10 +1,10 @@
-package hu.chordie.ChordCalculator.Model.Entities;
+package hu.chordie.chordCalculator.model.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.google.common.collect.Lists;
 
-import hu.chordie.ChordCalculator.Helper.RandomToken;
+import hu.chordie.chordCalculator.helper.RandomToken;
 
 import javax.persistence.*;
 import java.util.List;

@@ -1,4 +1,4 @@
-package hu.chordie.ChordCalculator.Model.Entities;
+package hu.chordie.chordCalculator.model.entities;
 
 import java.util.List;
 
@@ -16,10 +16,10 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.api.client.util.Lists;
 
-import hu.chordie.ChordCalculator.Helper.RandomToken;
-import hu.chordie.ChordCalculator.Model.Sound;
-import hu.chordie.ChordCalculator.Model.Chord.BaseType;
-import hu.chordie.ChordCalculator.Model.Chord.ChordType;
+import hu.chordie.chordCalculator.helper.RandomToken;
+import hu.chordie.chordCalculator.model.Sound;
+import hu.chordie.chordCalculator.model.chord.BaseType;
+import hu.chordie.chordCalculator.model.chord.ChordType;
 
 @Entity
 public class StoredCatch {

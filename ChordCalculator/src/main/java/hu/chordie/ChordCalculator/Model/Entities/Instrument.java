@@ -1,15 +1,15 @@
-package hu.chordie.ChordCalculator.Model.Entities;
+package hu.chordie.chordCalculator.model.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Lists;
 
-import hu.chordie.ChordCalculator.Helper.RandomToken;
-import hu.chordie.ChordCalculator.Model.Catch;
-import hu.chordie.ChordCalculator.Model.Sound;
-import hu.chordie.ChordCalculator.Model.StringCatch;
-import hu.chordie.ChordCalculator.Model.Entities.MString;
-import hu.chordie.ChordCalculator.Model.Entities.User;
-import hu.chordie.ChordCalculator.Model.Entities.Rule.Rule;
+import hu.chordie.chordCalculator.helper.RandomToken;
+import hu.chordie.chordCalculator.model.Catch;
+import hu.chordie.chordCalculator.model.Sound;
+import hu.chordie.chordCalculator.model.StringCatch;
+import hu.chordie.chordCalculator.model.entities.MString;
+import hu.chordie.chordCalculator.model.entities.User;
+import hu.chordie.chordCalculator.model.entities.rule.Rule;
 
 import javax.persistence.*;
 import java.util.ArrayList;

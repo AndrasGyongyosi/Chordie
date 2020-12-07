@@ -1,4 +1,4 @@
-package hu.chordie.ChordCalculator.Helper;
+package hu.chordie.chordCalculator.helper;
 
 import java.security.SecureRandom;
 

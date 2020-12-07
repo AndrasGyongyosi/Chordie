@@ -1,5 +1,4 @@
-
-package hu.chordie.ChordCalculator.Controllers;
+package hu.chordie.chordCalculator.controllers;
 
 import java.util.Comparator;
 import java.util.List;
@@ -14,23 +13,23 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.google.common.collect.Lists;
 
-import hu.chordie.ChordCalculator.DTOs.CatchDTO;
-import hu.chordie.ChordCalculator.DTOs.CatchResultDTO;
-import hu.chordie.ChordCalculator.DTOs.ChordComponentsDTO;
-import hu.chordie.ChordCalculator.DTOs.ChordDTO;
-import hu.chordie.ChordCalculator.DTOs.LabeledStringDTO;
-import hu.chordie.ChordCalculator.DTOs.StringCatchDTO;
-import hu.chordie.ChordCalculator.Exceptions.BadExpressionException;
-import hu.chordie.ChordCalculator.Helper.DtoConverter;
-import hu.chordie.ChordCalculator.Model.Catch;
-import hu.chordie.ChordCalculator.Model.CatchPerfection;
-import hu.chordie.ChordCalculator.Model.Sound;
-import hu.chordie.ChordCalculator.Model.StringCatch;
-import hu.chordie.ChordCalculator.Model.Chord.BaseType;
-import hu.chordie.ChordCalculator.Model.Chord.Chord;
-import hu.chordie.ChordCalculator.Model.Chord.ChordType;
-import hu.chordie.ChordCalculator.Model.Entities.Instrument;
-import hu.chordie.ChordCalculator.Repositories.InstrumentRepository;
+import hu.chordie.chordCalculator.dtos.CatchDTO;
+import hu.chordie.chordCalculator.dtos.CatchResultDTO;
+import hu.chordie.chordCalculator.dtos.ChordComponentsDTO;
+import hu.chordie.chordCalculator.dtos.ChordDTO;
+import hu.chordie.chordCalculator.dtos.LabeledStringDTO;
+import hu.chordie.chordCalculator.dtos.StringCatchDTO;
+import hu.chordie.chordCalculator.exceptions.BadExpressionException;
+import hu.chordie.chordCalculator.helper.DtoConverter;
+import hu.chordie.chordCalculator.model.Catch;
+import hu.chordie.chordCalculator.model.CatchPerfection;
+import hu.chordie.chordCalculator.model.Sound;
+import hu.chordie.chordCalculator.model.StringCatch;
+import hu.chordie.chordCalculator.model.chord.BaseType;
+import hu.chordie.chordCalculator.model.chord.Chord;
+import hu.chordie.chordCalculator.model.chord.ChordType;
+import hu.chordie.chordCalculator.model.entities.Instrument;
+import hu.chordie.chordCalculator.repositories.InstrumentRepository;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
@@ -69,61 +68,60 @@ public class ChordController {
 		chordString = chordString.trim().toLowerCase();
 		ChordDTO result = new ChordDTO();
 		try {
-		String[] parts = chordString.split("<");
-		chordString = parts[0];
-		if (parts.length > 1) {
-			String capoPart = parts[1];
+			String[] parts = chordString.split("<");
+			chordString = parts[0];
+			if (parts.length > 1) {
+				String capoPart = parts[1];
 
-			// TODO: validation
-			result.setCapo(Integer.parseInt(capoPart));
-		}
+				// TODO: validation
+				result.setCapo(Integer.parseInt(capoPart));
+			}
 
-		parts = chordString.split(">");
-		chordString = parts[0];
-		if (parts.length > 1) {
-			String rootNotePart = parts[1];
-			result.setRootNote(DtoConverter.toLabelStringDTO(getSoundFromChordText(rootNotePart)));
+			parts = chordString.split(">");
+			chordString = parts[0];
+			if (parts.length > 1) {
+				String rootNotePart = parts[1];
+				result.setRootNote(DtoConverter.toLabelStringDTO(getSoundFromChordText(rootNotePart)));
 
-		}
-		Sound baseSound = getSoundFromChordText(chordString);
+			}
+			Sound baseSound = getSoundFromChordText(chordString);
 
-		result.setBaseSound(DtoConverter.toLabelStringDTO(baseSound));
+			result.setBaseSound(DtoConverter.toLabelStringDTO(baseSound));
 
-		chordString = chordString.substring(baseSound.name().length());
+			chordString = chordString.substring(baseSound.name().length());
 
-		int chordTypeLength = 0;
-		ChordType chordType = null;
-		for (ChordType ct : ChordType.values()) {
-			for (String alias : ct.getAliases()) {
-				if (chordString.endsWith(alias.toLowerCase()) && chordTypeLength <= alias.length()) {
-					chordType = ct;
-					chordTypeLength = alias.length();
+			int chordTypeLength = 0;
+			ChordType chordType = null;
+			for (ChordType ct : ChordType.values()) {
+				for (String alias : ct.getAliases()) {
+					if (chordString.endsWith(alias.toLowerCase()) && chordTypeLength <= alias.length()) {
+						chordType = ct;
+						chordTypeLength = alias.length();
+					}
 				}
 			}
-		}
-		result.setChordType(DtoConverter.toLabelStringDTO(chordType));
+			result.setChordType(DtoConverter.toLabelStringDTO(chordType));
 
-		chordString = chordString.substring(0, chordString.length() - chordTypeLength);
+			chordString = chordString.substring(0, chordString.length() - chordTypeLength);
 
-		int baseTypeLength = 0;
-		BaseType baseType = null;
-		for (BaseType bt : BaseType.values()) {
-			for (String alias : bt.getAliases()) {
-				if (chordString.contains(alias.toLowerCase()) && baseTypeLength <= alias.length()) {
-					baseType = bt;
-					baseTypeLength = alias.length();
+			int baseTypeLength = 0;
+			BaseType baseType = null;
+			for (BaseType bt : BaseType.values()) {
+				for (String alias : bt.getAliases()) {
+					if (chordString.contains(alias.toLowerCase()) && baseTypeLength <= alias.length()) {
+						baseType = bt;
+						baseTypeLength = alias.length();
+					}
 				}
 			}
-		}
-		result.setBaseType(DtoConverter.toLabelStringDTO(baseType));
-		
-		if (baseSound == null || chordType == null || baseType == null) {
-			throw new BadExpressionException("Wrong free text chord: " + chordString);
-		}
-		} catch(Exception e) {
+			result.setBaseType(DtoConverter.toLabelStringDTO(baseType));
+
+			if (baseSound == null || chordType == null || baseType == null) {
+				throw new BadExpressionException("Wrong free text chord: " + chordString);
+			}
+		} catch (Exception e) {
 			throw new BadExpressionException(e.getMessage());
 		}
-		
 
 		return result;
 

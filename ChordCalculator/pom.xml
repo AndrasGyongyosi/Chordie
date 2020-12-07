@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>hu.chordie</groupId>
-	<artifactId>ChordCalculator</artifactId>
+	<artifactId>chordCalculator</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>ChordCalculator</name>
 	<description>Helper program for instrumentals with strings.</description>

@@ -1,4 +1,4 @@
-package hu.chordie.ChordCalculator.Controllers;
+package hu.chordie.chordCalculator.controllers;
 
 import java.util.List;
 
@@ -16,15 +16,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.google.api.client.util.Lists;
 
-import hu.chordie.ChordCalculator.DTOs.ListDTO;
-import hu.chordie.ChordCalculator.DTOs.StoredCatchDTO;
-import hu.chordie.ChordCalculator.Helper.DtoConverter;
-import hu.chordie.ChordCalculator.Model.Entities.StoredCatch;
-import hu.chordie.ChordCalculator.Model.Entities.StoredCatchList;
-import hu.chordie.ChordCalculator.Model.Entities.User;
-import hu.chordie.ChordCalculator.Repositories.StoredCatchListRepository;
-import hu.chordie.ChordCalculator.Repositories.StoredCatchRepository;
-import hu.chordie.ChordCalculator.Repositories.UserRepository;
+import hu.chordie.chordCalculator.dtos.ListDTO;
+import hu.chordie.chordCalculator.dtos.StoredCatchDTO;
+import hu.chordie.chordCalculator.helper.DtoConverter;
+import hu.chordie.chordCalculator.model.entities.StoredCatch;
+import hu.chordie.chordCalculator.model.entities.StoredCatchList;
+import hu.chordie.chordCalculator.model.entities.User;
+import hu.chordie.chordCalculator.repositories.StoredCatchListRepository;
+import hu.chordie.chordCalculator.repositories.StoredCatchRepository;
+import hu.chordie.chordCalculator.repositories.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController

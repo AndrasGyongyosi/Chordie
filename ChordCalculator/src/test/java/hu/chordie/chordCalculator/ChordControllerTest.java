@@ -1,4 +1,4 @@
-package hu.chordie.ChordCalculator;
+package hu.chordie.chordCalculator;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -16,14 +16,14 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import hu.chordie.ChordCalculator.Controllers.ChordController;
-import hu.chordie.ChordCalculator.DTOs.ChordComponentsDTO;
-import hu.chordie.ChordCalculator.DTOs.ChordDTO;
-import hu.chordie.ChordCalculator.Exceptions.BadExpressionException;
-import hu.chordie.ChordCalculator.Model.Sound;
-import hu.chordie.ChordCalculator.Model.Chord.BaseType;
-import hu.chordie.ChordCalculator.Model.Chord.ChordType;
-import hu.chordie.ChordCalculator.Repositories.InstrumentRepository;
+import hu.chordie.chordCalculator.controllers.ChordController;
+import hu.chordie.chordCalculator.dtos.ChordComponentsDTO;
+import hu.chordie.chordCalculator.dtos.ChordDTO;
+import hu.chordie.chordCalculator.exceptions.BadExpressionException;
+import hu.chordie.chordCalculator.model.Sound;
+import hu.chordie.chordCalculator.model.chord.BaseType;
+import hu.chordie.chordCalculator.model.chord.ChordType;
+import hu.chordie.chordCalculator.repositories.InstrumentRepository;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 public class ChordControllerTest {

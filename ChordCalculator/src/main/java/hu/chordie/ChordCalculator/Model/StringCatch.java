@@ -1,6 +1,6 @@
-package hu.chordie.ChordCalculator.Model;
+package hu.chordie.chordCalculator.model;
 
-import hu.chordie.ChordCalculator.Model.Entities.MString;
+import hu.chordie.chordCalculator.model.entities.MString;
 
 public class StringCatch {
     private MString string;

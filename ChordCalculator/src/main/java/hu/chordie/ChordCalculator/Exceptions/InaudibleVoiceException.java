@@ -1,4 +1,4 @@
-package hu.chordie.ChordCalculator.Exceptions;
+package hu.chordie.chordCalculator.exceptions;
 
 public class InaudibleVoiceException extends Exception {
 

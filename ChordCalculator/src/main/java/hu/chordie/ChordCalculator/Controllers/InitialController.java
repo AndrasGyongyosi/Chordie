@@ -1,14 +1,5 @@
-package hu.chordie.ChordCalculator.Controllers;
+package hu.chordie.chordCalculator.controllers;
 
-import hu.chordie.ChordCalculator.Exceptions.InaudibleVoiceException;
-import hu.chordie.ChordCalculator.Model.Sound;
-import hu.chordie.ChordCalculator.Model.Entities.Instrument;
-import hu.chordie.ChordCalculator.Model.Entities.MString;
-import hu.chordie.ChordCalculator.Model.Entities.Rule.*;
-import hu.chordie.ChordCalculator.Repositories.InstrumentRepository;
-import hu.chordie.ChordCalculator.Repositories.MStringRepository;
-import hu.chordie.ChordCalculator.Repositories.RuleRepository;
-import hu.chordie.ChordCalculator.Repositories.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 
 import org.slf4j.Logger;
@@ -16,6 +7,16 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import hu.chordie.chordCalculator.exceptions.InaudibleVoiceException;
+import hu.chordie.chordCalculator.model.Sound;
+import hu.chordie.chordCalculator.model.entities.Instrument;
+import hu.chordie.chordCalculator.model.entities.MString;
+import hu.chordie.chordCalculator.model.entities.rule.*;
+import hu.chordie.chordCalculator.repositories.InstrumentRepository;
+import hu.chordie.chordCalculator.repositories.MStringRepository;
+import hu.chordie.chordCalculator.repositories.RuleRepository;
+import hu.chordie.chordCalculator.repositories.UserRepository;
 
 import java.util.ArrayList;
 import java.util.List;
