@@ -1,5 +1,5 @@
 # ChordCalculator
-
+ 
 Konfiguráció:
   - "//localhost:3306/" url-en MySQL szerver futtatása
   - "chord_cal_db" néven adatbázis létrehozása

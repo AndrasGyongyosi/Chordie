@@ -3,8 +3,8 @@
 /bin/
 !.mvn/wrapper/maven-wrapper.jar
 
-.log
-.gz
+
+*.log*
 
 ### STS ###
 .apt_generated

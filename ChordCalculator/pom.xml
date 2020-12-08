@@ -8,8 +8,8 @@
 		<version>2.1.2.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.example</groupId>
-	<artifactId>ChordCalculator</artifactId>
+	<groupId>hu.chordie</groupId>
+	<artifactId>chordCalculator</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>ChordCalculator</name>
 	<description>Helper program for instrumentals with strings.</description>
