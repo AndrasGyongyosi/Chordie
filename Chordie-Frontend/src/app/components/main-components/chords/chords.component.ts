@@ -148,10 +148,4 @@ export class ChordsComponent implements OnInit {
     }
   }
 
-  async dik() {
-    let audio = new Audio();
-    audio.src = "assets/audio/7.wav"
-    audio.play();
-  }
-  
 }
