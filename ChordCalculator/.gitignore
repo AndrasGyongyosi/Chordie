@@ -3,6 +3,7 @@
 /bin/
 !.mvn/wrapper/maven-wrapper.jar
 
+
 *.log*
 
 ### STS ###

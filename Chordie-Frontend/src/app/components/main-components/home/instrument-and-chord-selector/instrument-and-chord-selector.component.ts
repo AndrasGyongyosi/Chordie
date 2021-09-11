@@ -129,7 +129,7 @@ export class InstrumentAndChordSelectorComponent implements OnInit, AfterViewIni
   }
 
   getChordCatches() {
-    let rootNote = this.selectedChord.rootNote !== null ? this.selectedChord.rootNote.name : undefined;
+    let rootNote = this.selectedChord.rootNote ? this.selectedChord.rootNote.name : undefined;
     let pathVariables = this.selectedInstrument.instrumentToken + "/" + this.selectedChord.baseSound.name + "/" + this.selectedChord.baseType.name + "/" + 
       this.selectedChord.chordType.name + "/" + rootNote + "/" + this.selectedChord.capo;
     console.log(pathVariables);
