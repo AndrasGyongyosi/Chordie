@@ -1,10 +1,10 @@
-package hu.chordie.chordCalculator.repositories;
+package hu.chordie.ChordCalculator.Repositories;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import hu.chordie.chordCalculator.model.entities.Instrument;
-import hu.chordie.chordCalculator.model.entities.rule.Rule;
+import hu.chordie.ChordCalculator.Model.Entities.Instrument;
+import hu.chordie.ChordCalculator.Model.Entities.Rule.Rule;
 
 import java.util.List;
 

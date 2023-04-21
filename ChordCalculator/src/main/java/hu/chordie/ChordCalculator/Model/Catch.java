@@ -1,10 +1,10 @@
-package hu.chordie.chordCalculator.model;
+package hu.chordie.ChordCalculator.Model;
 
 import com.google.common.collect.Maps;
 
-import hu.chordie.chordCalculator.model.chord.Chord;
-import hu.chordie.chordCalculator.model.entities.Instrument;
-import hu.chordie.chordCalculator.model.entities.StoredCatch;
+import hu.chordie.ChordCalculator.Model.Chord.Chord;
+import hu.chordie.ChordCalculator.Model.Entities.Instrument;
+import hu.chordie.ChordCalculator.Model.Entities.StoredCatch;
 
 import java.util.ArrayList;
 import java.util.HashMap;

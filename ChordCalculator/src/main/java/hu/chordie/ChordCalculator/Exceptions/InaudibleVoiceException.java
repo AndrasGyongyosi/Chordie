@@ -1,8 +1,13 @@
-package hu.chordie.chordCalculator.exceptions;
+package hu.chordie.ChordCalculator.Exceptions;
 
 public class InaudibleVoiceException extends Exception {
 
-    public InaudibleVoiceException(String message) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 7377008208850378759L;
+
+	public InaudibleVoiceException(String message) {
         super(message);
     }
 }

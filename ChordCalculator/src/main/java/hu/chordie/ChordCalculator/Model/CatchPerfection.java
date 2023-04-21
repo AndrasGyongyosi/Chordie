@@ -1,4 +1,4 @@
-package hu.chordie.chordCalculator.model;
+package hu.chordie.ChordCalculator.Model;
 
 public enum CatchPerfection {
     LOW(1),    // Not all notes.

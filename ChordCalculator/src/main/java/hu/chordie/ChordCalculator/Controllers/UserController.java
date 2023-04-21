@@ -1,4 +1,4 @@
-package hu.chordie.chordCalculator.controllers;
+package hu.chordie.ChordCalculator.Controllers;
 
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken.Payload;
@@ -6,21 +6,12 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
 
-import hu.chordie.chordCalculator.dtos.UserDTO;
-import hu.chordie.chordCalculator.exceptions.InaudibleVoiceException;
-import hu.chordie.chordCalculator.model.*;
-import hu.chordie.chordCalculator.model.chord.BaseType;
-import hu.chordie.chordCalculator.model.chord.Chord;
-import hu.chordie.chordCalculator.model.chord.ChordType;
-import hu.chordie.chordCalculator.model.entities.Instrument;
-import hu.chordie.chordCalculator.model.entities.MString;
-import hu.chordie.chordCalculator.model.entities.StoredCatchList;
-import hu.chordie.chordCalculator.model.entities.User;
-import hu.chordie.chordCalculator.model.entities.rule.*;
-import hu.chordie.chordCalculator.repositories.InstrumentRepository;
-import hu.chordie.chordCalculator.repositories.MStringRepository;
-import hu.chordie.chordCalculator.repositories.RuleRepository;
-import hu.chordie.chordCalculator.repositories.UserRepository;
+import hu.chordie.ChordCalculator.DTOs.UserDTO;
+import hu.chordie.ChordCalculator.Model.Entities.User;
+import hu.chordie.ChordCalculator.Repositories.InstrumentRepository;
+import hu.chordie.ChordCalculator.Repositories.MStringRepository;
+import hu.chordie.ChordCalculator.Repositories.RuleRepository;
+import hu.chordie.ChordCalculator.Repositories.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 
 import org.slf4j.Logger;
@@ -28,8 +19,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.*;
-import java.security.GeneralSecurityException;
 import java.util.*;
 
 @RestController

@@ -1,4 +1,4 @@
-package hu.chordie.chordCalculator.model.entities;
+package hu.chordie.ChordCalculator.Model.Entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.api.client.util.Lists;

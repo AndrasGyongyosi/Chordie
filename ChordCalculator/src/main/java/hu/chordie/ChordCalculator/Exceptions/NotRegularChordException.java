@@ -1,8 +1,13 @@
-package hu.chordie.chordCalculator.exceptions;
+package hu.chordie.ChordCalculator.Exceptions;
 
 public class NotRegularChordException extends Exception {
 
-    public NotRegularChordException(String message) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 718836588331885476L;
+
+	public NotRegularChordException(String message) {
         super(message);
     }
 }

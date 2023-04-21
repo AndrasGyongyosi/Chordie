@@ -1,10 +1,13 @@
-package hu.chordie.chordCalculator.model.chord;
+package hu.chordie.ChordCalculator.Model.Chord;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("serial")
 public enum BaseType {
+	
 	maj("major", new ArrayList<Integer>() {
+
 		{
 			add(0);
 			add(4);

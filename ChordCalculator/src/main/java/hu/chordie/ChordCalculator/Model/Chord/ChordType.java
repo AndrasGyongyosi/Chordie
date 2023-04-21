@@ -1,4 +1,4 @@
-package hu.chordie.chordCalculator.model.chord;
+package hu.chordie.ChordCalculator.Model.Chord;
 
 
 import java.util.ArrayList;

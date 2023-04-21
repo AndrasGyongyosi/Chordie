@@ -1,9 +1,9 @@
-package hu.chordie.chordCalculator.model.entities;
+package hu.chordie.ChordCalculator.Model.Entities;
 
 import javax.persistence.*;
 
-import hu.chordie.chordCalculator.exceptions.InaudibleVoiceException;
-import hu.chordie.chordCalculator.model.Sound;
+import hu.chordie.ChordCalculator.Exceptions.InaudibleVoiceException;
+import hu.chordie.ChordCalculator.Model.Sound;
 
 import java.util.ArrayList;
 

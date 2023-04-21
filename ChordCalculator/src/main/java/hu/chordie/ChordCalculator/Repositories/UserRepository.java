@@ -1,8 +1,8 @@
-package hu.chordie.chordCalculator.repositories;
+package hu.chordie.ChordCalculator.Repositories;
 
 import org.springframework.data.repository.CrudRepository;
 
-import hu.chordie.chordCalculator.model.entities.User;
+import hu.chordie.ChordCalculator.Model.Entities.User;
 
 public interface UserRepository extends CrudRepository<User, Integer> {
     User findByUserToken(String userToken);

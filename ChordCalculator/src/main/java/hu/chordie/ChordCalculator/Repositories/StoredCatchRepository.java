@@ -1,9 +1,9 @@
-package hu.chordie.chordCalculator.repositories;
+package hu.chordie.ChordCalculator.Repositories;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import hu.chordie.chordCalculator.model.entities.StoredCatch;
+import hu.chordie.ChordCalculator.Model.Entities.StoredCatch;
 
 @Repository
 public interface StoredCatchRepository extends CrudRepository<StoredCatch, Integer> {

@@ -1,4 +1,4 @@
-package hu.chordie.chordCalculator;
+package hu.chordie.ChordCalculator;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -1,4 +1,4 @@
-package hu.chordie.chordCalculator.controllers;
+package hu.chordie.ChordCalculator.Controllers;
 
 import java.util.Comparator;
 import java.util.List;
@@ -13,23 +13,23 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.google.common.collect.Lists;
 
-import hu.chordie.chordCalculator.dtos.CatchDTO;
-import hu.chordie.chordCalculator.dtos.CatchResultDTO;
-import hu.chordie.chordCalculator.dtos.ChordComponentsDTO;
-import hu.chordie.chordCalculator.dtos.ChordDTO;
-import hu.chordie.chordCalculator.dtos.LabeledStringDTO;
-import hu.chordie.chordCalculator.dtos.StringCatchDTO;
-import hu.chordie.chordCalculator.exceptions.BadExpressionException;
-import hu.chordie.chordCalculator.helper.DtoConverter;
-import hu.chordie.chordCalculator.model.Catch;
-import hu.chordie.chordCalculator.model.CatchPerfection;
-import hu.chordie.chordCalculator.model.Sound;
-import hu.chordie.chordCalculator.model.StringCatch;
-import hu.chordie.chordCalculator.model.chord.BaseType;
-import hu.chordie.chordCalculator.model.chord.Chord;
-import hu.chordie.chordCalculator.model.chord.ChordType;
-import hu.chordie.chordCalculator.model.entities.Instrument;
-import hu.chordie.chordCalculator.repositories.InstrumentRepository;
+import hu.chordie.ChordCalculator.DTOs.CatchDTO;
+import hu.chordie.ChordCalculator.DTOs.CatchResultDTO;
+import hu.chordie.ChordCalculator.DTOs.ChordComponentsDTO;
+import hu.chordie.ChordCalculator.DTOs.ChordDTO;
+import hu.chordie.ChordCalculator.DTOs.LabeledStringDTO;
+import hu.chordie.ChordCalculator.DTOs.StringCatchDTO;
+import hu.chordie.ChordCalculator.Exceptions.BadExpressionException;
+import hu.chordie.ChordCalculator.Helper.DtoConverter;
+import hu.chordie.ChordCalculator.Model.Catch;
+import hu.chordie.ChordCalculator.Model.CatchPerfection;
+import hu.chordie.ChordCalculator.Model.Sound;
+import hu.chordie.ChordCalculator.Model.StringCatch;
+import hu.chordie.ChordCalculator.Model.Chord.BaseType;
+import hu.chordie.ChordCalculator.Model.Chord.Chord;
+import hu.chordie.ChordCalculator.Model.Chord.ChordType;
+import hu.chordie.ChordCalculator.Model.Entities.Instrument;
+import hu.chordie.ChordCalculator.Repositories.InstrumentRepository;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController

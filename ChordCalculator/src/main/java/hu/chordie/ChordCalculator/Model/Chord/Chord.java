@@ -1,10 +1,10 @@
-package hu.chordie.chordCalculator.model.chord;
+package hu.chordie.ChordCalculator.Model.Chord;
 
 import com.google.common.collect.Lists;
 
-import hu.chordie.chordCalculator.model.*;
-import hu.chordie.chordCalculator.model.entities.Instrument;
-import hu.chordie.chordCalculator.model.entities.MString;
+import hu.chordie.ChordCalculator.Model.*;
+import hu.chordie.ChordCalculator.Model.Entities.Instrument;
+import hu.chordie.ChordCalculator.Model.Entities.MString;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.*;
